@@ -1,0 +1,12 @@
+{
+  "name": "TODO",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "content_scripts": [{
+    "js": ["inject.js"],
+    "matches": ["*://github.com/*"]
+  }],
+  "web_accessible_resources": [
+    "http://localhost:3000/static/js/bundle.js"
+  ]
+}
