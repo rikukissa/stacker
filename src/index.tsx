@@ -1,4 +1,5 @@
 import { stringify } from "querystring";
+import { AccessToken, getBranches, getForks, getPullRequest, UnauthorizedError } from "./api";
 
 interface IBase {
   id: string,
@@ -67,22 +68,19 @@ async function selectBase(base: IBase, location: ILocation, pr: IPullRequest) {
   render(await (await fetch(url)).text());
 }
 
-async function getPRData(location: ILocation) {
+async function getPRData(accessToken: AccessToken, location: ILocation) {
   const { owner, repo, pullRequest } = location;
 
-  return (await fetch(
-    `https://api.github.com/repos/${owner}/${repo}/pulls/${pullRequest}`
-  )).json();
+  return getPullRequest(accessToken)(owner, repo, pullRequest);
 }
 
-async function getBases(location: ILocation) {
+async function getBases(accessToken: AccessToken, location: ILocation) {
   const { owner, repo } = location;
-  const FORKS_URL = `https://api.github.com/repos/${owner}/${repo}/forks`;
-  const BRANCHES_URL = `https://api.github.com/repos/${owner}/${repo}/branches`;
-  
+
   const bases : IBase[] = [];
-  const forks = await (await fetch(FORKS_URL)).json();
-  const branches = await (await fetch(BRANCHES_URL)).json();
+
+  const forks = await getForks(accessToken)(owner, repo);
+  const branches = await getBranches(accessToken)(owner, repo);
 
   branches.forEach((branch: IGithubBranch) => {
     bases.push({
@@ -110,8 +108,8 @@ async function getBases(location: ILocation) {
   return bases;
 }
 
-function isPluginEnabled(href: string) {  
-  return href.includes('github.com') && href.indexOf('/pull');
+function isPluginEnabled(href: string) {
+  return href.includes('github.com') && href.includes('/pull');
 }
 
 (async function run() {
@@ -120,9 +118,10 @@ function isPluginEnabled(href: string) {
   if(!isPluginEnabled(document.location.href)) {
     return
   }
+  const accessToken = window.localStorage.getItem('TODO_token')
 
-  const pr = await getPRData(location);
-  const bases = await getBases(location);
+  const pr = await getPRData(accessToken, location);
+  const bases = await getBases(accessToken, location);
 
   const $select = document.createElement("select");
 
@@ -132,10 +131,10 @@ function isPluginEnabled(href: string) {
     option.value = base.id;
     $select.appendChild(option);
   });
-  
+
   const $toolBar = document.querySelectorAll(".float-right.pr-review-tools")[0]
   const $diffSwitch = document.querySelectorAll(".float-right.pr-review-tools .diffbar-item")[0]
-  
+
   $toolBar.insertBefore($select, $diffSwitch)
 
   $select.addEventListener("change", event => {
@@ -144,7 +143,18 @@ function isPluginEnabled(href: string) {
     if(!selectedBase) {
       // TODO probably can't even happen
       return;
-    } 
+    }
     selectBase(selectedBase, location, pr);
   });
-})();
+})().catch(err => {
+  if(err instanceof UnauthorizedError) {
+    const token = window.prompt('Please enter an access token')
+    if(token) {
+      window.localStorage.setItem('TODO_token', token);
+      window.location.reload()
+    }
+  }
+
+  console.log(err);
+
+});
