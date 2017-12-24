@@ -85,7 +85,7 @@ async function getBases(accessToken: AccessToken, location: ILocation) {
   branches.forEach((branch: IGithubBranch) => {
     bases.push({
       head: branch.commit.sha,
-      id: `${owner}/${repo}/${branch.name}`,
+      id: `${owner}:${repo}:${branch.name}`,
       name: branch.name,
       owner
     });
@@ -99,7 +99,7 @@ async function getBases(accessToken: AccessToken, location: ILocation) {
     forkBranches.forEach((branch: IGithubBranch) => {
       bases.push({
         head: branch.commit.sha,
-        id: fork.full_name + "/" + branch.name,
+        id: `${fork.owner.login}:${fork.full_name}:${branch.name}`,
         name: branch.name,
         owner: fork.owner.login,
       });
@@ -109,7 +109,24 @@ async function getBases(accessToken: AccessToken, location: ILocation) {
 }
 
 function isPluginEnabled(href: string) {
-  return href.includes('github.com') && href.includes('/pull');
+  return href.includes('github.com') && href.includes('/pull/');
+}
+interface IGithubPullRequest {
+  body: string
+}
+
+function getStackerInfo(pr: IGithubPullRequest) {
+  const matches = pr.body.match(/<!--(.*)-->/)
+  if(!matches) {
+    return null;
+  }
+  const [, json] = matches
+
+  try {
+    return JSON.parse(json)
+  } catch(err) {
+    return null
+  }
 }
 
 (async function run() {
@@ -127,7 +144,7 @@ function isPluginEnabled(href: string) {
 
   bases.forEach(base => {
     const option = document.createElement("option");
-    option.innerHTML = `${base.owner} / ${base.name}`;
+    option.innerHTML = `${base.owner} - ${base.name}`;
     option.value = base.id;
     $select.appendChild(option);
   });
@@ -146,6 +163,19 @@ function isPluginEnabled(href: string) {
     }
     selectBase(selectedBase, location, pr);
   });
+
+  const info = getStackerInfo(pr)
+
+  if(info) {
+    const selectedBase = bases.find(base => base.id === info.baseBranch);
+    $select.value = info.baseBranch
+    if(!selectedBase) {
+      // TODO probably can't even happen
+      return;
+    }
+    selectBase(selectedBase, location, pr);
+  }
+
 })().catch(err => {
   if(err instanceof UnauthorizedError) {
     const token = window.prompt('Please enter an access token')
