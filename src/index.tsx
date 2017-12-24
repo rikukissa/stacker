@@ -65,7 +65,7 @@ async function selectBase(base: IBase, location: ILocation, pr: IPullRequest) {
 
   const url = `https://github.com/${owner}/${repo}/diffs?${query}`;
 
-  render(await (await fetch(url)).text());
+  render(await (await fetch(url, { credentials: 'include' })).text());
 }
 
 async function getPRData(accessToken: AccessToken, location: ILocation) {
