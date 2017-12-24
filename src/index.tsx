@@ -5,7 +5,8 @@ interface IBase {
   id: string,
   head: string,
   owner: string,
-  name: string
+  name: string,
+  selected: boolean
 }
 
 interface ILocation {
@@ -74,7 +75,11 @@ async function getPRData(accessToken: AccessToken, location: ILocation) {
   return getPullRequest(accessToken)(owner, repo, pullRequest);
 }
 
-async function getBases(accessToken: AccessToken, location: ILocation) {
+function createId(owner: string, repo: string, branchName: string) {
+  return `${owner}:${repo}:${branchName}`
+}
+
+async function getBases(accessToken: AccessToken, pr: IGithubPullRequest, location: ILocation) {
   const { owner, repo } = location;
 
   const bases : IBase[] = [];
@@ -85,9 +90,10 @@ async function getBases(accessToken: AccessToken, location: ILocation) {
   branches.forEach((branch: IGithubBranch) => {
     bases.push({
       head: branch.commit.sha,
-      id: `${owner}:${repo}:${branch.name}`,
+      id: createId(owner, repo, branch.name),
       name: branch.name,
-      owner
+      owner,
+      selected: branch.name === pr.base.ref
     });
   });
 
@@ -99,9 +105,10 @@ async function getBases(accessToken: AccessToken, location: ILocation) {
     forkBranches.forEach((branch: IGithubBranch) => {
       bases.push({
         head: branch.commit.sha,
-        id: `${fork.owner.login}:${fork.full_name}:${branch.name}`,
+        id: createId(fork.owner.login, fork.full_name, branch.name),
         name: branch.name,
         owner: fork.owner.login,
+        selected: false
       });
     });
   }
@@ -113,6 +120,7 @@ function isPluginEnabled(href: string) {
 }
 interface IGithubPullRequest {
   body: string
+  base: { ref: string }
 }
 
 function getStackerInfo(pr: IGithubPullRequest) {
@@ -138,7 +146,10 @@ function getStackerInfo(pr: IGithubPullRequest) {
   const accessToken = window.localStorage.getItem('TODO_token')
 
   const pr = await getPRData(accessToken, location);
-  const bases = await getBases(accessToken, location);
+
+  const bases = (await getBases(accessToken, pr, location)).filter(base =>
+    !(base.owner === pr.head.repo.owner.login && base.name === pr.head.ref)
+  );
 
   const $select = document.createElement("select");
 
@@ -148,6 +159,12 @@ function getStackerInfo(pr: IGithubPullRequest) {
     option.value = base.id;
     $select.appendChild(option);
   });
+
+  const prsSelectedBase = bases.find((base) => base.selected)
+
+  if(prsSelectedBase) {
+    $select.value = prsSelectedBase.id
+  }
 
   const $toolBar = document.querySelectorAll(".float-right.pr-review-tools")[0]
   const $diffSwitch = document.querySelectorAll(".float-right.pr-review-tools .diffbar-item")[0]
