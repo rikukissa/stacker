@@ -6,7 +6,7 @@ export interface ILocation {
 
 export function isPRView(location: Location): boolean {
   return (
-    location.href.includes("github.com") && location.href.includes("/pull/")
+    location.href.includes("github.com") && location.href.includes("/pull")
   );
 }
 

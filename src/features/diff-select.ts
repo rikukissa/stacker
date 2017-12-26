@@ -2,13 +2,21 @@ import { stringify } from "querystring";
 import {
   getBranches,
   getForks,
+  getPullRequest,
   IGithubBranch,
   IGithubFork,
   IGithubPullRequest
 } from "../api";
 import { createId, IBase } from "../lib/base";
 import { IStackerContext } from "../lib/context";
-import { isFilesView } from "../lib/location";
+import { getLocation, isFilesView } from "../lib/location";
+
+interface IDiffSelectContext {
+  context: IStackerContext;
+  pullRequest: IGithubPullRequest;
+  head: IBase;
+  base: IBase;
+}
 
 function getStackerInfo(pr: IGithubPullRequest) {
   const matches = pr.body.match(/<!--(.*)-->/);
@@ -24,12 +32,12 @@ function getStackerInfo(pr: IGithubPullRequest) {
   }
 }
 
-async function getBases(context: IStackerContext) {
-  const forks = await getForks(context.accessToken)(
-    context.pullRequest.base.repo
+async function getBases(featureContext: IDiffSelectContext) {
+  const forks = await getForks(featureContext.context.accessToken)(
+    featureContext.pullRequest.base.repo
   );
-  const branches = await getBranches(context.accessToken)(
-    context.pullRequest.base.repo
+  const branches = await getBranches(featureContext.context.accessToken)(
+    featureContext.pullRequest.base.repo
   );
 
   const bases: IBase[] = [];
@@ -38,13 +46,13 @@ async function getBases(context: IStackerContext) {
     bases.push({
       head: branch.commit.sha,
       id: createId(
-        context.pullRequest.base.repo.owner.login,
-        context.pullRequest.base.repo.name,
+        featureContext.pullRequest.base.repo.owner.login,
+        featureContext.pullRequest.base.repo.name,
         branch.name
       ),
       name: branch.name,
-      owner: context.pullRequest.base.repo.owner.login,
-      selected: branch.name === context.pullRequest.base.ref
+      owner: featureContext.pullRequest.base.repo.owner.login,
+      selected: branch.name === featureContext.pullRequest.base.ref
     });
   });
 
@@ -82,7 +90,7 @@ function render(html: string): void {
   $files.innerHTML = `<div class="js-diff-progressive-container">${html}</div>`;
 }
 
-async function selectBase(context: IStackerContext, base: IBase) {
+async function selectBase(context: IDiffSelectContext, base: IBase) {
   const params = {
     base_sha: base.head,
     commentable: true,
@@ -103,7 +111,7 @@ async function selectBase(context: IStackerContext, base: IBase) {
   render(await response.text());
 }
 
-function createSelectInput(context: IStackerContext, bases: IBase[]) {
+function createSelectInput(context: IDiffSelectContext, bases: IBase[]) {
   const $select = document.createElement("select");
 
   bases.filter(base => base.id !== context.head.id).forEach(base => {
@@ -120,11 +128,47 @@ export default async function initialize(context: IStackerContext) {
     return;
   }
 
-  const bases = await getBases(context);
+  const location = getLocation(document.location);
+  const pullRequest = await getPullRequest(context.accessToken)(
+    location.ownerLogin,
+    location.repoName,
+    location.prNumber
+  );
 
-  const $select = createSelectInput(context, bases);
+  const featureContext = {
+    base: {
+      head: pullRequest.head.sha,
+      id: createId(
+        pullRequest.base.repo.owner.login,
+        pullRequest.base.repo.name,
+        pullRequest.base.ref
+      ),
+      name: pullRequest.base.ref,
+      owner: pullRequest.base.repo.owner.login,
+      selected: true
+    },
+    context,
+    head: {
+      head: pullRequest.head.sha,
+      id: createId(
+        pullRequest.head.user.login,
+        pullRequest.head.repo.name,
+        pullRequest.head.ref
+      ),
+      name: pullRequest.head.ref,
+      owner: pullRequest.head.user.login,
+      selected: false
+    },
+    pullRequest
+  };
 
-  const prsSelectedBase = bases.find(base => base.id === context.base.id);
+  const bases = await getBases(featureContext);
+
+  const $select = createSelectInput(featureContext, bases);
+
+  const prsSelectedBase = bases.find(
+    base => base.id === featureContext.base.id
+  );
 
   if (prsSelectedBase) {
     $select.value = prsSelectedBase.id;
@@ -144,10 +188,10 @@ export default async function initialize(context: IStackerContext) {
       // TODO probably can't even happen
       return;
     }
-    selectBase(context, selectedBase);
+    selectBase(featureContext, selectedBase);
   });
 
-  const info = getStackerInfo(context.pullRequest);
+  const info = getStackerInfo(featureContext.pullRequest);
 
   if (info) {
     const selectedBase = bases.find(base => base.id === info.baseBranch);
@@ -156,6 +200,6 @@ export default async function initialize(context: IStackerContext) {
       // TODO probably can't even happen
       return;
     }
-    selectBase(context, selectedBase);
+    selectBase(featureContext, selectedBase);
   }
 }
