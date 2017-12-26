@@ -1,6 +1,6 @@
 import { h } from "dom-chef";
 import { css } from "emotion";
-// import Graph from 'graph-data-structure'
+
 import * as select from "select-dom";
 import { getPullRequests, IGithubPullRequest } from "../api";
 import { BaseId, createIdForPullRequest } from "../lib/base";
@@ -15,6 +15,8 @@ const badge = css`
   display: inline-block;
   padding: 1px 3px 1px 5px;
   border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
 `;
 
 const ball = css`
@@ -53,7 +55,7 @@ function getStackNumbers(
     color: 0,
     node: pullRequestGraph,
     number: 0,
-    parentColor: 0,
+    parentColor: 0
   }
 ): IStackNode[] {
   return pullRequestGraph.children.reduce(
@@ -82,21 +84,28 @@ function getStackNumbers(
 function getBadge(pullRequest: IGithubPullRequest, pullRequestGraph: INode) {
   return (
     <div>
-      {getStackNumbers(pullRequest, pullRequestGraph).map(stackNode => (
-        <div
-          className={badge}
-          style={{ "background-color": COLORS[stackNode.color] }}
-        >
-          {(stackNode.node.parent &&
-            stackNode.parentColor !== stackNode.color) && (
-            <div
-              className={ball}
-              style={{ "background-color": COLORS[stackNode.parentColor] }}
-            />
-          )}
-          <span>{stackNode.number}.</span>
-        </div>
-      ))}
+      {getStackNumbers(pullRequest, pullRequestGraph).map(stackNode => {
+        if(stackNode.node.children.length === 0 && stackNode.node.parent === null) {
+          return null
+        }
+
+        return (
+          <div
+            className={badge}
+            style={{ "background-color": COLORS[stackNode.color] }}
+          >
+            {stackNode.node.parent &&
+              stackNode.parentColor !== stackNode.color && (
+                <div
+                  className={ball}
+                  style={{ "background-color": COLORS[stackNode.parentColor] }}
+                />
+              )}
+
+            <span>part {stackNode.number + 1}.</span>
+          </div>
+        );
+      })}
     </div>
   );
 }
