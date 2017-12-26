@@ -1,5 +1,6 @@
 import { h } from "dom-chef";
 import { css } from "emotion";
+import { isAccessible } from "get-contrast";
 
 import * as select from "select-dom";
 import { getPullRequests, IGithubPullRequest } from "../api";
@@ -8,25 +9,35 @@ import { IStackerContext } from "../lib/context";
 import { getOwner, getRepo, isPullsListView } from "../lib/location";
 import { getStackerInfo } from "../lib/prInfo";
 
+const badges = css`
+  display: inline-block;
+`;
+
 const badge = css`
   color: #fff;
-  position: relative;
   text-align: center;
   display: inline-block;
-  padding: 1px 3px 1px 5px;
+  padding: 0 5px;
   border-radius: 3px;
   font-size: 12px;
   font-weight: 600;
+  &:not(:first-child) {
+    margin-left: 0.5em;
+  }
 `;
 
 const ball = css`
-  width: 9px;
-  height: 9px;
-  border-radius: 4px;
-  position: absolute;
-  bottom: -4px;
-  left: -4px;
-  border: 1px solid #fff;
+  color: #fff;
+  height: 100%;
+  display: inline-block;
+  padding: 2px 5px;
+  margin: 0 -5px 0 3px;
+  border-radius: 0 3px 3px 0;
+`;
+
+const numberStyle = css`
+  padding: 2px 0;
+  display: inline-block;
 `;
 
 interface IStackNode {
@@ -83,26 +94,48 @@ function getStackNumbers(
 
 function getBadge(pullRequest: IGithubPullRequest, pullRequestGraph: INode) {
   return (
-    <div>
+    <div className={badges}>
       {getStackNumbers(pullRequest, pullRequestGraph).map(stackNode => {
-        if(stackNode.node.children.length === 0 && stackNode.node.parent === null) {
-          return null
+        if (
+          stackNode.node.children.length === 0 &&
+          stackNode.node.parent === null
+        ) {
+          return null;
         }
+
+        const childCount = stackNode.node.children.length;
+
+        const branches =
+          stackNode.node.parent &&
+          stackNode.parentColor !== stackNode.color;
+
+        const mainColor = branches
+          ? COLORS[stackNode.parentColor]
+          : COLORS[stackNode.color];
+        const childColor = branches
+          ? COLORS[stackNode.color]
+          : COLORS[stackNode.parentColor];
 
         return (
           <div
             className={badge}
-            style={{ "background-color": COLORS[stackNode.color] }}
+            style={{
+              "background-color": mainColor,
+              color: !isAccessible(mainColor, "#fff") ? "#1c2733" : null
+            }}
           >
-            {stackNode.node.parent &&
-              stackNode.parentColor !== stackNode.color && (
-                <div
-                  className={ball}
-                  style={{ "background-color": COLORS[stackNode.parentColor] }}
-                />
-              )}
-
-            <span>part {stackNode.number + 1}.</span>
+            <span className={numberStyle}>part {stackNode.number + 1}</span>
+            {branches && childCount > 0 && (
+              <div
+                className={ball}
+                style={{
+                  "background-color": childColor,
+                  color: !isAccessible(childColor, "#fff") ? "#1c2733" : null
+                }}
+              >
+                <span>+{childCount}</span>
+              </div>
+            )}
           </div>
         );
       })}
@@ -117,12 +150,9 @@ function render(
 ): void {
   const $pullRequest = select(`#issue_${pullRequest.number}`) as Element;
 
-  const $prInfo = select(
-    ".float-left.col-9.p-2.lh-condensed",
-    $pullRequest
-  ) as Element;
+  const $prInfo = select(".mt-1.text-small.text-gray", $pullRequest) as Element;
 
-  const $prName = select(".link-gray-dark.no-underline", $prInfo) as Element;
+  const $prName = select(".d-inline-block", $prInfo) as Element;
 
   const listItemVisible = Boolean($pullRequest);
 
