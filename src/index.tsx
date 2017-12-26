@@ -1,5 +1,6 @@
 import { UnauthorizedError } from "./api";
 import diffSelect from './features/diff-select'
+import showStackingInList from './features/show-stacking-in-list'
 import { createContext } from "./lib/context";
 import { isPRView } from "./lib/location";
 
@@ -9,6 +10,7 @@ import { isPRView } from "./lib/location";
   }
   const context = await createContext(document.location)
   diffSelect(context)
+  showStackingInList(context)
 
 })().catch(err => {
   if(err instanceof UnauthorizedError) {

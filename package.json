@@ -4,9 +4,12 @@
   "private": true,
   "dependencies": {
     "@types/qs": "^6.5.1",
+    "dom-chef": "^3.0.0",
+    "emotion": "^8.0.12",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-scripts-ts": "2.8.0"
+    "react-scripts-ts": "2.8.0",
+    "select-dom": "^4.1.1"
   },
   "scripts": {
     "start": "HTTPS=true react-scripts-ts start",
