@@ -8,11 +8,9 @@ async function run() {
     return;
   }
   const context = await createContext(document.location);
-  await diffSelect(context);
-}
-
-const observer = new MutationObserver(() => {
-  run().catch(err => {
+  try {
+    await diffSelect(context);
+  } catch (err) {
     if (err instanceof UnauthorizedError) {
       const token = window.prompt("Please enter an access token");
       if (token) {
@@ -20,14 +18,18 @@ const observer = new MutationObserver(() => {
         window.location.reload();
       }
     }
+    // tslint:disable-next-line no-console
     console.log(err);
-  });
-});
+  }
+}
 
-// Start observing the target node for configured mutations
+const observer = new MutationObserver(run);
 const el = document.querySelector("#js-repo-pjax-container");
+
 if (el) {
   observer.observe(el, {
     childList: true
   });
 }
+
+run();
