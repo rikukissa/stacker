@@ -217,6 +217,9 @@ export default async function initialize(context: IStackerContext) {
     getRepo(context.location)
   );
   const prGraph = createPRGraph(pullRequests);
+
+  Array.from(document.querySelectorAll(`.${badge}`)).forEach(el => el.remove());
+
   pullRequests.forEach(pr => render(pr, pullRequests, prGraph));
 
   // console.log(pullRequests.map(getStackerInfo));
