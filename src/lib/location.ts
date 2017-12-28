@@ -14,6 +14,10 @@ export function isFilesView(location: Location) {
   return /pull\/(\d+)\/files/.test(location.href);
 }
 
+export function isPullHome(location: Location) {
+  return /pull\/(\d+)$/.test(location.href);
+}
+
 export function isPullsListView(location: Location) {
   return /pulls/.test(location.href);
 }

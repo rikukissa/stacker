@@ -28,6 +28,7 @@ export interface IGithubBase {
   user: IGithubOwner;
 }
 export interface IGithubPullRequest {
+  title: string;
   id: number;
   body: string;
   base: IGithubBase;
@@ -106,4 +107,19 @@ export function getBranches(accessToken: AccessToken) {
       `https://api.github.com/repos/${repo.owner.login}/${repo.name}/branches`,
       accessToken
     );
+}
+
+export function savePullRequest(accessToken: AccessToken) {
+  return (pullRequest: IGithubPullRequest): Promise<IGithubPullRequest> => {
+    return makeRequest(
+      `https://api.github.com/repos/${pullRequest.base.repo.owner.login}/${
+        pullRequest.base.repo.name
+      }/pulls/${pullRequest.number}`,
+      accessToken,
+      {
+        data: { body: pullRequest.body },
+        method: "PATCH"
+      }
+    );
+  };
 }
