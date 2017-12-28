@@ -1,3 +1,4 @@
+import axios from "axios";
 /* tslint:disable max-classes-per-file */
 export class UnauthorizedError {}
 export class APILimitError {}
@@ -40,27 +41,35 @@ export interface IGithubFork {
   full_name: string;
 }
 
-async function makeRequest(url: string, accessToken: AccessToken) {
+async function makeRequest(
+  url: string,
+  accessToken: AccessToken,
+  options: any = { headers: {} }
+) {
   const params = accessToken
     ? {
+        ...options,
         headers: {
+          ...options.headers,
           Authorization: `Bearer ${accessToken}`
         }
       }
-    : undefined;
+    : options;
 
-  const response = await fetch(url, params);
-
-  if (!response.ok) {
-    if (response.status === 403) {
-      throw new APILimitError();
-    }
-    if (response.status === 404) {
-      throw new UnauthorizedError();
-    }
-    throw Error(response.statusText);
-  }
-  return response.json();
+  return axios({
+    url: url + "?" + Date.now(),
+    ...params
+  })
+    .then(response => response.data)
+    .catch(err => {
+      if (err.status === 403) {
+        throw new APILimitError();
+      }
+      if (err.status === 404) {
+        throw new UnauthorizedError();
+      }
+      throw Error(err.statusText);
+    });
 }
 
 export function getPullRequest(accessToken: AccessToken) {
