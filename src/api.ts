@@ -66,13 +66,13 @@ async function makeRequest(
   })
     .then(response => response.data)
     .catch(err => {
-      if (err.status === 403) {
+      if (err.response.status === 403) {
         throw new APILimitError();
       }
-      if (err.status === 404) {
+      if (err.response.status === 404) {
         throw new UnauthorizedError();
       }
-      throw Error(err.statusText);
+      throw Error(err.response.statusText);
     });
 }
 
