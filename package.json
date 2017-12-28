@@ -1,19 +1,30 @@
 {
-  "name": "pr-base-switcher",
+  "name": "pr-base-switcher-ts",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/qs": "^6.5.1",
+    "axios": "^0.17.1",
+    "dom-chef": "^3.0.0",
+    "emotion": "^8.0.12",
+    "get-contrast": "^2.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.0.17"
+    "react-scripts-ts": "2.8.0",
+    "select-dom": "^4.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "HTTPS=true react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
-    "prettier": "^1.9.2"
+    "@types/jest": "^21.1.9",
+    "@types/node": "^8.5.2",
+    "@types/react": "^16.0.31",
+    "@types/react-dom": "^16.0.3",
+    "prettier": "^1.9.2",
+    "tslint-config-prettier": "^1.6.0"
   }
 }
