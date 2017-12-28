@@ -1,14 +1,14 @@
 import { AccessToken } from "../api";
-
+import { getConfig } from "../lib/config";
 export interface IStackerContext {
   location: Location;
-  accessToken: AccessToken;
+  accessToken: AccessToken | null;
 }
 
 export async function createContext(
   location: Location
 ): Promise<IStackerContext> {
-  const accessToken = window.localStorage.getItem("TODO_token");
+  const accessToken = getConfig().token;
 
   return {
     accessToken,
