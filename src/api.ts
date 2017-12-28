@@ -41,6 +41,9 @@ export interface IGithubFork {
   branches_url: string;
   full_name: string;
 }
+export interface IGithubCommit {
+  sha: string;
+}
 
 async function makeRequest(
   url: string,
@@ -107,6 +110,18 @@ export function getBranches(accessToken: AccessToken) {
       `https://api.github.com/repos/${repo.owner.login}/${repo.name}/branches`,
       accessToken
     );
+}
+
+export function getPullRequestCommits(accessToken: AccessToken) {
+  return (pullRequest: IGithubPullRequest): Promise<IGithubCommit[]> => {
+    const repo = pullRequest.base.repo;
+    return makeRequest(
+      `https://api.github.com/repos/${repo.owner.login}/${repo.name}/pulls/${
+        pullRequest.number
+      }/commits`,
+      accessToken
+    );
+  };
 }
 
 export function savePullRequest(accessToken: AccessToken) {

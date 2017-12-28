@@ -1,5 +1,6 @@
 import { UnauthorizedError } from "./api";
 import diffSelect from "./features/diff-select";
+import fadeOutUnrelatedCommits from "./features/fade-out-unrelated-commits";
 import parentPRSelect from "./features/parent-pr-select";
 import showStackingInList from "./features/show-stacking-in-list";
 import { createContext } from "./lib/context";
@@ -14,6 +15,7 @@ async function run() {
     await diffSelect(context);
     await showStackingInList(context);
     await parentPRSelect(context);
+    await fadeOutUnrelatedCommits(context);
   } catch (err) {
     if (err instanceof UnauthorizedError) {
       const token = window.prompt("Please enter an access token");
