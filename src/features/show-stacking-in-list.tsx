@@ -48,10 +48,10 @@ interface IStackNode {
 }
 
 const COLORS = [
-  "#0e8a16",
-  "#fbca04",
+  "#7057ff",
+  "#ffdb0b",
+  "#1ddb82",
   "#1d76db",
-  "#006b75",
   "#5319e7",
   "#b60205",
   "#0052cc",
@@ -106,8 +106,7 @@ function getBadge(pullRequest: IGithubPullRequest, pullRequestGraph: INode) {
         const childCount = stackNode.node.children.length;
 
         const branches =
-          stackNode.node.parent &&
-          stackNode.parentColor !== stackNode.color;
+          stackNode.node.parent && stackNode.parentColor !== stackNode.color;
 
         const mainColor = branches
           ? COLORS[stackNode.parentColor]
@@ -125,17 +124,18 @@ function getBadge(pullRequest: IGithubPullRequest, pullRequestGraph: INode) {
             }}
           >
             <span className={numberStyle}>part {stackNode.number + 1}</span>
-            {branches && childCount > 0 && (
-              <div
-                className={ball}
-                style={{
-                  "background-color": childColor,
-                  color: !isAccessible(childColor, "#fff") ? "#1c2733" : null
-                }}
-              >
-                <span>+{childCount}</span>
-              </div>
-            )}
+            {branches &&
+              childCount > 0 && (
+                <div
+                  className={ball}
+                  style={{
+                    "background-color": childColor,
+                    color: !isAccessible(childColor, "#fff") ? "#1c2733" : null
+                  }}
+                >
+                  <span>+{childCount}</span>
+                </div>
+              )}
           </div>
         );
       })}
