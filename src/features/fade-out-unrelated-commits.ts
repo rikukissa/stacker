@@ -1,5 +1,5 @@
 import { css } from "emotion";
-import { getPullRequest, getPullRequests } from "../api";
+import { getPullRequest, getPullRequests, getPullRequestCommits } from "../api";
 import { getBasePullRequest } from "../lib/base";
 import { IStackerContext } from "../lib/context";
 import { getLocation, isPullHome } from "../lib/location";
@@ -30,22 +30,19 @@ export default async function initialize(context: IStackerContext) {
     return;
   }
 
-  const lastCommitSHA = basePR.head.sha;
+  const commits = await getPullRequestCommits(context.accessToken)(basePR);
 
   const $commits = Array.from(
     document.querySelectorAll(".timeline-commits .commit")
   );
-  const $parentHeadCommit = $commits.find(el => {
-    const $commitId = el.querySelector(".commit-id");
-    if (!$commitId) {
-      return false;
+
+  $commits.forEach($commit => {
+    const $sha = $commit.querySelector(".commit-id");
+    if (!$sha) {
+      return;
     }
-    return lastCommitSHA.startsWith($commitId.innerHTML);
-  });
-  if (!$parentHeadCommit) {
-    return;
-  }
-  $commits.slice(0, $commits.indexOf($parentHeadCommit)).forEach($commit => {
-    $commit.classList.add(faded);
+    if (commits.find(commit => commit.sha.startsWith($sha.innerHTML))) {
+      $commit.classList.add(faded);
+    }
   });
 }
