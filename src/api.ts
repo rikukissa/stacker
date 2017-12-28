@@ -1,3 +1,4 @@
+import axios from "axios";
 /* tslint:disable max-classes-per-file */
 export class UnauthorizedError {}
 export class APILimitError {}
@@ -27,6 +28,7 @@ export interface IGithubBase {
   user: IGithubOwner;
 }
 export interface IGithubPullRequest {
+  title: string;
   id: number;
   body: string;
   base: IGithubBase;
@@ -40,27 +42,35 @@ export interface IGithubFork {
   full_name: string;
 }
 
-async function makeRequest(url: string, accessToken: AccessToken) {
+async function makeRequest(
+  url: string,
+  accessToken: AccessToken,
+  options: any = { headers: {} }
+) {
   const params = accessToken
     ? {
+        ...options,
         headers: {
+          ...options.headers,
           Authorization: `Bearer ${accessToken}`
         }
       }
-    : undefined;
+    : options;
 
-  const response = await fetch(url, params);
-
-  if (!response.ok) {
-    if (response.status === 403) {
-      throw new APILimitError();
-    }
-    if (response.status === 404) {
-      throw new UnauthorizedError();
-    }
-    throw Error(response.statusText);
-  }
-  return response.json();
+  return axios({
+    url: url + "?" + Date.now(),
+    ...params
+  })
+    .then(response => response.data)
+    .catch(err => {
+      if (err.status === 403) {
+        throw new APILimitError();
+      }
+      if (err.status === 404) {
+        throw new UnauthorizedError();
+      }
+      throw Error(err.statusText);
+    });
 }
 
 export function getPullRequest(accessToken: AccessToken) {
@@ -97,4 +107,19 @@ export function getBranches(accessToken: AccessToken) {
       `https://api.github.com/repos/${repo.owner.login}/${repo.name}/branches`,
       accessToken
     );
+}
+
+export function savePullRequest(accessToken: AccessToken) {
+  return (pullRequest: IGithubPullRequest): Promise<IGithubPullRequest> => {
+    return makeRequest(
+      `https://api.github.com/repos/${pullRequest.base.repo.owner.login}/${
+        pullRequest.base.repo.name
+      }/pulls/${pullRequest.number}`,
+      accessToken,
+      {
+        data: { body: pullRequest.body },
+        method: "PATCH"
+      }
+    );
+  };
 }
