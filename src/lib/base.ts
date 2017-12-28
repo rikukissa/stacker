@@ -27,11 +27,9 @@ export function getBasePullRequest(
 ) {
   const stackerInfo = getStackerInfo(pullRequest);
 
-  return (
-    stackerInfo &&
-    stackerInfo.baseBranch &&
-    pullRequests.find(
-      pr => createIdForPullRequest(pr) === stackerInfo.baseBranch
-    )
-  );
+  return stackerInfo && stackerInfo.baseBranch
+    ? pullRequests.find(
+        pr => createIdForPullRequest(pr) === stackerInfo.baseBranch
+      )
+    : null;
 }

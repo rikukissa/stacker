@@ -11,7 +11,10 @@ export function isPRView(location: Location): boolean {
 }
 
 export function isFilesView(location: Location) {
-  return /pull\/(\d+)\/files/.test(location.href);
+  return /pull\/(\d+)\/files$/.test(location.href);
+}
+export function isFilesDiffView(location: Location) {
+  return /pull\/(\d+)\/files\/[a-z0-9]+\.\.[a-z0-9]+$/i.test(location.href);
 }
 
 export function isPullHome(location: Location) {
