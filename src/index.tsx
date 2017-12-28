@@ -1,5 +1,6 @@
 import { UnauthorizedError } from "./api";
 import diffSelect from "./features/diff-select";
+import showStackingInList from "./features/show-stacking-in-list";
 import { createContext } from "./lib/context";
 import { isPRView } from "./lib/location";
 
@@ -10,6 +11,7 @@ async function run() {
   const context = await createContext(document.location);
   try {
     await diffSelect(context);
+    await showStackingInList(context);
   } catch (err) {
     if (err instanceof UnauthorizedError) {
       const token = window.prompt("Please enter an access token");

@@ -19,13 +19,15 @@ export interface IGithubRepo {
   name: string;
 }
 
+type BranchName = string;
 export interface IGithubBase {
-  ref: string;
+  ref: BranchName;
   repo: IGithubRepo;
   sha: string;
   user: IGithubOwner;
 }
 export interface IGithubPullRequest {
+  id: number;
   body: string;
   base: IGithubBase;
   number: number;
@@ -69,6 +71,14 @@ export function getPullRequest(accessToken: AccessToken) {
   ): Promise<IGithubPullRequest> =>
     makeRequest(
       `https://api.github.com/repos/${owner}/${repo}/pulls/${prNumber}`,
+      accessToken
+    );
+}
+
+export function getPullRequests(accessToken: AccessToken) {
+  return (owner: string, repo: string): Promise<IGithubPullRequest[]> =>
+    makeRequest(
+      `https://api.github.com/repos/${owner}/${repo}/pulls`,
       accessToken
     );
 }

@@ -10,26 +10,13 @@ import {
 import { createId, IBase } from "../lib/base";
 import { IStackerContext } from "../lib/context";
 import { getLocation, isFilesView } from "../lib/location";
+import { getStackerInfo } from "../lib/prInfo";
 
 interface IDiffSelectContext {
   context: IStackerContext;
   pullRequest: IGithubPullRequest;
   head: IBase;
   base: IBase;
-}
-
-function getStackerInfo(pr: IGithubPullRequest) {
-  const matches = pr.body.match(/<!--(.*)-->/);
-  if (!matches) {
-    return null;
-  }
-  const [, json] = matches;
-
-  try {
-    return JSON.parse(json);
-  } catch (err) {
-    return null;
-  }
 }
 
 async function getBases(featureContext: IDiffSelectContext) {
