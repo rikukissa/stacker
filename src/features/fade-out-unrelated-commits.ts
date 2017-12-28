@@ -1,5 +1,5 @@
 import { css } from "emotion";
-import { getPullRequest, getPullRequests, getPullRequestCommits } from "../api";
+import { getPullRequest, getPullRequestCommits, getPullRequests } from "../api";
 import { getBasePullRequest } from "../lib/base";
 import { IStackerContext } from "../lib/context";
 import { getLocation, isPullHome } from "../lib/location";
