@@ -1,4 +1,5 @@
 import { IGithubPullRequest } from "../api";
+import { getStackerInfo } from "./prInfo";
 
 export type BaseId = string;
 export interface IBase {
@@ -17,5 +18,20 @@ export function createIdForPullRequest(pullRequest: IGithubPullRequest) {
     pullRequest.base.repo.owner.login,
     pullRequest.base.repo.name,
     pullRequest.head.ref
+  );
+}
+
+export function getBasePullRequest(
+  pullRequest: IGithubPullRequest,
+  pullRequests: IGithubPullRequest[]
+) {
+  const stackerInfo = getStackerInfo(pullRequest);
+
+  return (
+    stackerInfo &&
+    stackerInfo.baseBranch &&
+    pullRequests.find(
+      pr => createIdForPullRequest(pr) === stackerInfo.baseBranch
+    )
   );
 }

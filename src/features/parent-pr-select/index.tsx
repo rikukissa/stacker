@@ -5,10 +5,10 @@ import {
   IGithubPullRequest,
   savePullRequest
 } from "../../api";
-import { createIdForPullRequest } from "../../lib/base";
+import { createIdForPullRequest, getBasePullRequest } from "../../lib/base";
 import { IStackerContext } from "../../lib/context";
 import { getLocation, isPullHome } from "../../lib/location";
-import { getStackerInfo, updateStackerInfo } from "../../lib/prInfo";
+import { updateStackerInfo } from "../../lib/prInfo";
 import PRSelector, { ID } from "./components/PRSelector";
 
 async function selectParentPullRequest(
@@ -56,21 +56,6 @@ function render(
   $notifications.parentElement.insertBefore(
     PRSelector(pullRequests, basePR, selectPullRequest),
     $notifications
-  );
-}
-
-function getBasePullRequest(
-  pullRequest: IGithubPullRequest,
-  pullRequests: IGithubPullRequest[]
-) {
-  const stackerInfo = getStackerInfo(pullRequest);
-
-  return (
-    stackerInfo &&
-    stackerInfo.baseBranch &&
-    pullRequests.find(
-      pr => createIdForPullRequest(pr) === stackerInfo.baseBranch
-    )
   );
 }
 
