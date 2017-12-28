@@ -4,10 +4,13 @@ import { isAccessible } from "get-contrast";
 
 import * as select from "select-dom";
 import { getPullRequests, IGithubPullRequest } from "../api";
-import { BaseId, createIdForPullRequest } from "../lib/base";
+import {
+  BaseId,
+  createIdForPullRequest,
+  getBasePullRequest
+} from "../lib/base";
 import { IStackerContext } from "../lib/context";
 import { getOwner, getRepo, isPullsListView } from "../lib/location";
-import { getStackerInfo } from "../lib/prInfo";
 
 const badges = css`
   display: inline-block;
@@ -177,10 +180,8 @@ function createPRGraph(pullRequests: IGithubPullRequest[]): INode {
   const lookupList = {};
 
   for (const pullRequest of pullRequests) {
-    const stackerInfo = getStackerInfo(pullRequest);
-
-    const parent = stackerInfo && stackerInfo.baseBranch;
-
+    const base = getBasePullRequest(pullRequest, pullRequests);
+    const parent = base ? createIdForPullRequest(base) : null;
     const node = {
       children: [],
       id: createIdForPullRequest(pullRequest),
