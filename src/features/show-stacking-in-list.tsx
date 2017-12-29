@@ -1,8 +1,5 @@
 import { h } from "dom-chef";
 import { css } from "emotion";
-import { isAccessible } from "get-contrast";
-
-import * as select from "select-dom";
 import { getPullRequests, IGithubPullRequest } from "../api";
 import {
   BaseId,
@@ -19,27 +16,24 @@ const badges = css`
 const badge = css`
   color: #fff;
   text-align: center;
-  display: inline-block;
-  padding: 0 5px;
-  border-radius: 3px;
-  font-size: 12px;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  font-size: 14px;
   font-weight: 600;
-  &:not(:first-child) {
-    margin-left: 0.5em;
-  }
 `;
 
 const ball = css`
   color: #fff;
-  height: 100%;
   display: inline-block;
-  padding: 2px 5px;
-  margin: 0 -5px 0 3px;
-  border-radius: 0 3px 3px 0;
+  padding: 1px 2px;
+  font-size: 12px;
+  vertical-align: middle;
+  border-radius: 3px;
+  margin-left: 3px;
 `;
 
 const numberStyle = css`
-  padding: 2px 0;
   display: inline-block;
 `;
 
@@ -52,13 +46,13 @@ interface IStackNode {
 
 const COLORS = [
   "#7057ff",
-  "#ffdb0b",
-  "#1ddb82",
-  "#1d76db",
-  "#5319e7",
+  "#fbca04",
+  "#28a745",
   "#b60205",
-  "#0052cc",
-  "#e99695",
+  "#5319e7",
+  "#1d76db",
+  "#19eaea",
+  "#dd8b58",
   "#d93f0b"
 ];
 
@@ -74,7 +68,12 @@ function getStackNumbers(
 ): IStackNode[] {
   return pullRequestGraph.children.reduce(
     (found, node: INode, index) => {
-      const color = index > 0 ? stackNode.color + index : stackNode.color;
+      const shouldChangeColor =
+        pullRequestGraph.children.length > 1 && node.children.length > 0;
+
+      const color = shouldChangeColor
+        ? stackNode.color + index + (node.parent ? 1 : 0)
+        : stackNode.color;
 
       const parentColor = stackNode.color;
 
@@ -122,8 +121,7 @@ function getBadge(pullRequest: IGithubPullRequest, pullRequestGraph: INode) {
           <div
             className={badge}
             style={{
-              "background-color": mainColor,
-              color: !isAccessible(mainColor, "#fff") ? "#1c2733" : null
+              color: mainColor
             }}
           >
             <span className={numberStyle}>part {stackNode.number + 1}</span>
@@ -132,8 +130,7 @@ function getBadge(pullRequest: IGithubPullRequest, pullRequestGraph: INode) {
                 <div
                   className={ball}
                   style={{
-                    "background-color": childColor,
-                    color: !isAccessible(childColor, "#fff") ? "#1c2733" : null
+                    "background-color": childColor
                   }}
                 >
                   <span>+{childCount}</span>
@@ -151,11 +148,13 @@ function render(
   pullRequests: IGithubPullRequest[],
   pullRequestGraph: INode
 ): void {
-  const $pullRequest = select(`#issue_${pullRequest.number}`) as Element;
+  const $pullRequest = document.querySelector(`#issue_${pullRequest.number}`);
 
-  const $prInfo = select(".mt-1.text-small.text-gray", $pullRequest) as Element;
+  const $prInfo =
+    $pullRequest &&
+    $pullRequest.querySelector(".link-gray-dark.no-underline.h4");
 
-  const $prName = select(".d-inline-block", $prInfo) as Element;
+  // const $prName = $prInfo && $prInfo.querySelector(".d-inline-block");
 
   const listItemVisible = Boolean($pullRequest);
 
@@ -165,7 +164,12 @@ function render(
 
   // const stackerInfo = getStackerInfo(pullRequest);
 
-  $prInfo.insertBefore(getBadge(pullRequest, pullRequestGraph), $prName);
+  if ($prInfo && $prInfo.parentElement) {
+    $prInfo.parentElement.insertBefore(
+      getBadge(pullRequest, pullRequestGraph),
+      $prInfo.nextSibling
+    );
+  }
 }
 
 interface INode {
