@@ -1,5 +1,5 @@
 import { IGithubPullRequest } from "../api";
-import { getStackerInfo } from "./prInfo";
+import { getStackerInfo, IStackerInfo } from "./prInfo";
 
 export type BaseId = string;
 export interface IBase {
@@ -21,15 +21,30 @@ export function createIdForPullRequest(pullRequest: IGithubPullRequest) {
   );
 }
 
+export function getBasePullRequestWithStackerInfo(
+  stackerInfo: IStackerInfo,
+  pullRequests: IGithubPullRequest[]
+): IGithubPullRequest | null {
+  if (!(stackerInfo && stackerInfo.baseBranch)) {
+    return null;
+  }
+  const basePR = pullRequests.find(
+    pr => createIdForPullRequest(pr) === stackerInfo.baseBranch
+  );
+
+  if (!basePR) {
+    return null;
+  }
+  return basePR;
+}
+
 export function getBasePullRequest(
   pullRequest: IGithubPullRequest,
   pullRequests: IGithubPullRequest[]
 ) {
-  const stackerInfo = getStackerInfo(pullRequest);
-
-  return stackerInfo && stackerInfo.baseBranch
-    ? pullRequests.find(
-        pr => createIdForPullRequest(pr) === stackerInfo.baseBranch
-      )
-    : null;
+  const stackerInfo = getStackerInfo(pullRequest.body);
+  if (!stackerInfo) {
+    return null;
+  }
+  return getBasePullRequestWithStackerInfo(stackerInfo, pullRequests);
 }
