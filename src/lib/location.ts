@@ -23,7 +23,7 @@ export function isPullHome(location: Location) {
 }
 
 export function isNewPullRequestView(location: Location) {
-  return /compare\/(.+)\.\.\.(.+)$/.test(location.href);
+  return /\/compare\//.test(location.href);
 }
 
 export function isPullsListView(location: Location) {
