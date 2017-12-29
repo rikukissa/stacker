@@ -1,15 +1,42 @@
-import * as select from "select-dom";
 import {
   getPullRequest,
   getPullRequests,
   IGithubPullRequest,
   savePullRequest
 } from "../../api";
-import { createIdForPullRequest, getBasePullRequest } from "../../lib/base";
+import {
+  createIdForPullRequest,
+  getBasePullRequest,
+  getBasePullRequestWithStackerInfo
+} from "../../lib/base";
 import { IStackerContext } from "../../lib/context";
-import { getLocation, isPullHome } from "../../lib/location";
-import { updateStackerInfo } from "../../lib/prInfo";
+import {
+  getLocation,
+  isNewPullRequestView,
+  isPullHome
+} from "../../lib/location";
+import { getStackerInfo, updateStackerInfo } from "../../lib/prInfo";
 import PRSelector, { ID } from "./components/PRSelector";
+
+function updateTextareaValue(newParent: IGithubPullRequest) {
+  const newStackerInfo = {
+    baseBranch: createIdForPullRequest(newParent)
+  };
+  const $textarea = document.querySelector(
+    'textarea[name="pull_request[body]"]'
+  ) as HTMLTextAreaElement;
+  if ($textarea) {
+    $textarea.value = updateStackerInfo($textarea.value, newStackerInfo);
+  }
+}
+
+function getTextareaStackerInfo() {
+  const $textarea = document.querySelector(
+    'textarea[name="pull_request[body]"]'
+  ) as HTMLTextAreaElement | null;
+
+  return $textarea && getStackerInfo($textarea.value);
+}
 
 async function selectParentPullRequest(
   context: IStackerContext,
@@ -27,11 +54,7 @@ async function selectParentPullRequest(
     body: updatedComment
   });
 
-  // Update PR textarea content
-  const $textarea = select('textarea[name="pull_request[body]"]');
-  if ($textarea) {
-    $textarea.value = updateStackerInfo($textarea.value, newStackerInfo);
-  }
+  updateTextareaValue(newParent);
 
   return updatedPullRequest;
 }
@@ -41,9 +64,11 @@ function render(
   basePR: IGithubPullRequest | null,
   selectPullRequest: (pr: IGithubPullRequest) => void
 ) {
-  const $notifications = select(".sidebar-notifications") as HTMLElement;
+  const $milestone = document.querySelector(
+    ".sidebar-milestone"
+  ) as HTMLElement | null;
 
-  if (!$notifications || !$notifications.parentElement) {
+  if (!$milestone || !$milestone.parentElement) {
     return;
   }
 
@@ -53,9 +78,9 @@ function render(
     $existingSelector.remove();
   }
 
-  $notifications.parentElement.insertBefore(
+  $milestone.parentElement.insertBefore(
     PRSelector(pullRequests, basePR, selectPullRequest),
-    $notifications
+    $milestone.nextSibling
   );
 }
 
@@ -83,8 +108,11 @@ function attachMutationObserver(context: IStackerContext) {
   }
 }
 
-export default async function initialize(context: IStackerContext) {
-  if (!isPullHome(context.location)) {
+async function initializeHome(context: IStackerContext) {
+  if (
+    !isPullHome(context.location) &&
+    !isNewPullRequestView(context.location)
+  ) {
     return;
   }
 
@@ -114,6 +142,35 @@ export default async function initialize(context: IStackerContext) {
   const basePR = getBasePullRequest(pullRequest, pullRequests);
 
   render(pullRequests, basePR || null, selectPullRequest);
+}
 
-  attachMutationObserver(context);
+async function initializeNewPullRequest(context: IStackerContext) {
+  const location = getLocation(document.location);
+  const pullRequests = await getPullRequests(context.accessToken)(
+    location.ownerLogin,
+    location.repoName
+  );
+
+  async function selectPullRequest(newParentPR: IGithubPullRequest) {
+    updateTextareaValue(newParentPR);
+    render(pullRequests, newParentPR, selectPullRequest);
+  }
+  const stackerInfo = getTextareaStackerInfo();
+
+  const basePR = stackerInfo
+    ? getBasePullRequestWithStackerInfo(stackerInfo, pullRequests)
+    : null;
+  render(pullRequests, basePR, selectPullRequest);
+}
+
+export default async function initialize(context: IStackerContext) {
+  if (isPullHome(context.location)) {
+    await initializeHome(context);
+    attachMutationObserver(context);
+  }
+
+  if (isNewPullRequestView(context.location)) {
+    await initializeNewPullRequest(context);
+    attachMutationObserver(context);
+  }
 }
