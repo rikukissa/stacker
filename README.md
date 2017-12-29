@@ -1,5 +1,9 @@
-# Stacker
-Split your huge pull requests into small, easily understandable pieces
+<p align="center" style="color: #343a40">
+  <img src="./.github/logo.svg" alt="emotion" height="150" width="150">
+  <h1 align="center">Stacker</h1>
+</p>
+<p align="center" style="font-size: 1.2rem;">Split your huge pull requests into small, easily understandable pieces</p>
+
 
 ##  Features
 ### "Files changed" view only shows changes related to this PR
