@@ -22,6 +22,7 @@ const badge = css`
   display: inline-block;
   padding: 0 5px;
   border-radius: 3px;
+
   font-size: 12px;
   font-weight: 600;
   &:not(:first-child) {
