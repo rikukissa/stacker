@@ -6,7 +6,8 @@ export interface ILocation {
 
 export function isPRView(location: Location): boolean {
   return (
-    location.href.includes("github.com") && location.href.includes("/pull")
+    location.href.includes("github.com") &&
+    (location.href.includes("/pull") || isNewPullRequestView(location))
   );
 }
 
@@ -19,6 +20,10 @@ export function isFilesDiffView(location: Location) {
 
 export function isPullHome(location: Location) {
   return /pull\/(\d+)$/.test(location.href);
+}
+
+export function isNewPullRequestView(location: Location) {
+  return /\/compare\//.test(location.href);
 }
 
 export function isPullsListView(location: Location) {

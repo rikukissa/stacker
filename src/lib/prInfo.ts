@@ -1,6 +1,4 @@
-import { IGithubPullRequest } from "../api";
-
-interface IStackerInfo {
+export interface IStackerInfo {
   baseBranch: string;
 }
 
@@ -15,8 +13,8 @@ function getStackerJSON(body: string): string | null {
   return matches[1];
 }
 
-export function getStackerInfo(pr: IGithubPullRequest): IStackerInfo | null {
-  const json = getStackerJSON(pr.body);
+export function getStackerInfo(body: string): IStackerInfo | null {
+  const json = getStackerJSON(body);
 
   if (!json) {
     return null;
