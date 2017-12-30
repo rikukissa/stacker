@@ -1,4 +1,4 @@
-import { h } from "dom-chef";
+import { h } from "jsx-dom";
 import { getPullRequests } from "../api";
 import {
   createIdForPullRequest,

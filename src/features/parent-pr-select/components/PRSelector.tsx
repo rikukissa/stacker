@@ -1,4 +1,6 @@
-import { h } from "dom-chef";
+// tslint:disable-next-line no-submodule-imports
+import { h } from "jsx-dom/svg";
+
 import { IGithubPullRequest } from "../../../api";
 import PullRequest from "./PullRequest";
 
@@ -49,7 +51,6 @@ export default function PRSelector(
                 aria-label="Close"
                 className="octicon octicon-x js-menu-close"
                 height="16"
-                role="img"
                 version="1.1"
                 viewBox="0 0 12 16"
                 width="12"
@@ -68,7 +69,6 @@ export default function PRSelector(
                   aria-label="Close"
                   className="octicon octicon-x js-menu-close"
                   height="16"
-                  role="img"
                   version="1.1"
                   viewBox="0 0 12 16"
                   width="12"
@@ -99,7 +99,6 @@ export default function PRSelector(
                 <div
                   data-filterable-for="prs-filter-field"
                   data-filterable-type="substring"
-                  role="menu"
                 >
                   {pullRequests.map(pr => PullRequest(pr, selectPR))}
                 </div>
