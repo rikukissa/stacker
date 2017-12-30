@@ -12,13 +12,15 @@
   },
   "scripts": {
     "start": "HTTPS=true react-scripts-ts start",
-    "build": "react-scripts-ts build",
+    "build": "react-scripts-ts build && ./post-build",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "pack-extension": "node scripts/pack.js"
   },
   "devDependencies": {
     "@types/jest": "^21.1.9",
     "@types/node": "^8.5.2",
+    "crx": "^3.2.1",
     "prettier": "^1.9.2",
     "tslint-config-prettier": "^1.6.0"
   }
