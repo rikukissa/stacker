@@ -12,7 +12,7 @@
 </p>
 
 
-|<img alt="Pull request order visible in pull requests" src="./.github/list-view.png" height="266px" /> | <img alt="Select parent pull request" src="./.github/parent-selector.png" height="266px" /> |
+|<img alt="Pull request order visible in pull requests" src="./.github/list-view.png" height="266px" /> | <img alt="Select parent pull request" src="./.github/parent-selector.png" height="240px" /> |
 |--|--|
 
 <p align="center">
