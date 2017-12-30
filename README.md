@@ -12,22 +12,22 @@
 </p>
 
 
-|<img alt="Pull request order visible in pull requests" src="./.github/list-view.png" height="266px" /> | <img alt="Select parent pull request" src="./.github/parent-selector.png" height="240px" /> |
+|<img alt="Pull request order visible in pull requests" src="./.github/list-view.png" width="513px" /> | <img alt="Select parent pull request" src="./.github/parent-selector.png" width="320px" /> |
 |--|--|
 
 <p align="center">
   <strong>View only changes made in this pull request</strong>
 </p>
 
-|<img alt="Only relevant changes visible" src="./.github/diff-all-visible.png" />|
+|<img width="860px" alt="Only relevant changes visible" src="./.github/diff-all-visible.png" />|
 |--|
-|<img alt="Only relevant changes visible" src="./.github/diff-pr-visible.png" />|
+|<img width="860px" alt="Only relevant changes visible" src="./.github/diff-pr-visible.png" />|
 
 <p align="center">
   <strong>Automatic warnings on sequential pull requests</strong>
 </p>
 
-|<img alt="Automatic warnings on sequential pull requests" src="./.github/warning.png" />|
+|<img width="789px" alt="Automatic warnings on sequential pull requests" src="./.github/warning.png" />|
 |--|
 
 
