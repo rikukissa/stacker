@@ -91,7 +91,7 @@ export default async function initialize(context: IStackerContext) {
           onClick={() => setConfig({ noAutomaticDiff: false })}
           className="subset-files-tab"
         >
-          Viewing all a changes.{" "}
+          Viewing all ab changes.{" "}
           <a className="stale-files-tab-link" href={diffViewUrl}>
             🔎 &nbsp;View only this PR
           </a>
