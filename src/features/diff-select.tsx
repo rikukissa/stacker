@@ -93,7 +93,7 @@ export default async function initialize(context: IStackerContext) {
         >
           Viewing all changes.{" "}
           <a className="stale-files-tab-link" href={diffViewUrl}>
-            🔎 View only this PR
+            🔎 &nbsp;View only this PR
           </a>
         </div>,
         $stats
