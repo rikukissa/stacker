@@ -187,7 +187,7 @@ arr-diff@^2.0.0:
   dependencies:
     arr-flatten "^1.0.1"
 
-arr-flatten@^1.0.1, arr-flatten@^1.0.3:
+arr-flatten@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/arr-flatten/-/arr-flatten-1.1.0.tgz#36048bbff4e7b47e136644316c99669ea5ae91f1"
 
@@ -1403,13 +1403,6 @@ dns-txt@^2.0.2:
   resolved "https://registry.yarnpkg.com/dns-txt/-/dns-txt-2.0.2.tgz#b91d806f5d27188e4ab3e7d107d881a1cc4642b6"
   dependencies:
     buffer-indexof "^1.0.0"
-
-dom-chef@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/dom-chef/-/dom-chef-3.0.0.tgz#b961af70a1ae88328c88355ea02b2b7808f7984d"
-  dependencies:
-    arr-flatten "^1.0.3"
-    svg-tag-names "^1.1.1"
 
 dom-converter@~0.1:
   version "0.1.4"
@@ -3122,6 +3115,12 @@ jsprim@^1.2.2:
     extsprintf "1.3.0"
     json-schema "0.2.3"
     verror "1.10.0"
+
+jsx-dom@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/jsx-dom/-/jsx-dom-5.2.0.tgz#3f862f04811170eb23a57c42b6139f57cb6cdfee"
+  dependencies:
+    tslib "^1.8.0"
 
 kind-of@^3.0.2:
   version "3.2.2"
@@ -5195,10 +5194,6 @@ supports-color@^4.0.0, supports-color@^4.2.1, supports-color@^4.4.0:
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-4.5.0.tgz#be7a0de484dec5c5cddf8b3d59125044912f635b"
   dependencies:
     has-flag "^2.0.0"
-
-svg-tag-names@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/svg-tag-names/-/svg-tag-names-1.1.1.tgz#9641b29ef71025ee094c7043f7cdde7d99fbd50a"
 
 svgo@^0.7.0:
   version "0.7.2"

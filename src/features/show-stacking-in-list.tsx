@@ -1,5 +1,5 @@
-import { h } from "dom-chef";
 import { css } from "emotion";
+import { h } from "jsx-dom";
 import { getPullRequests, IGithubPullRequest } from "../api";
 import {
   BaseId,
@@ -102,7 +102,7 @@ function getBadge(pullRequest: IGithubPullRequest, pullRequestGraph: INode) {
           stackNode.node.children.length === 0 &&
           stackNode.node.parent === null
         ) {
-          return null;
+          return <div />;
         }
 
         const childCount = stackNode.node.children.length;
@@ -125,17 +125,18 @@ function getBadge(pullRequest: IGithubPullRequest, pullRequestGraph: INode) {
             }}
           >
             <span className={numberStyle}>part {stackNode.number + 1}</span>
-            {branches &&
-              childCount > 0 && (
-                <div
-                  className={ball}
-                  style={{
-                    "background-color": childColor
-                  }}
-                >
-                  <span>+{childCount}</span>
-                </div>
-              )}
+            {branches && childCount > 0 ? (
+              <div
+                className={ball}
+                style={{
+                  "background-color": childColor
+                }}
+              >
+                <span>+{childCount}</span>
+              </div>
+            ) : (
+              <div />
+            )}
           </div>
         );
       })}
