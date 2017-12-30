@@ -1,3 +1,5 @@
+import { IGithubPullRequest } from "../api";
+
 export interface ILocation {
   ownerLogin: string;
   repoName: string;
@@ -43,4 +45,10 @@ export function getOwner(location: Location) {
 
 export function getRepo(location: Location) {
   return getLocation(location).repoName;
+}
+
+export function getPullRequestURL(pullRequest: IGithubPullRequest) {
+  return `/${pullRequest.base.repo.owner.login}/${
+    pullRequest.base.repo.name
+  }/pull/${pullRequest.number}`;
 }

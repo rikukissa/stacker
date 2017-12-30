@@ -10,6 +10,7 @@ import {
   getBasePullRequestWithStackerInfo
 } from "../../lib/base";
 import { IStackerContext } from "../../lib/context";
+import { getBodyTextarea } from "../../lib/dom";
 import {
   getLocation,
   isNewPullRequestView,
@@ -22,19 +23,15 @@ function updateTextareaValue(newParent: IGithubPullRequest) {
   const newStackerInfo = {
     baseBranch: createIdForPullRequest(newParent)
   };
-  const $textarea = document.querySelector(
-    'textarea[name="pull_request[body]"]'
-  ) as HTMLTextAreaElement;
+
+  const $textarea = getBodyTextarea();
   if ($textarea) {
     $textarea.value = updateStackerInfo($textarea.value, newStackerInfo);
   }
 }
 
 function getTextareaStackerInfo() {
-  const $textarea = document.querySelector(
-    'textarea[name="pull_request[body]"]'
-  ) as HTMLTextAreaElement | null;
-
+  const $textarea = getBodyTextarea();
   return $textarea && getStackerInfo($textarea.value);
 }
 
