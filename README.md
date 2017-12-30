@@ -22,6 +22,13 @@
 |<img alt="Only relevant changes visible" src="./.github/only-relevant.png" height="200px" />|
 |--|
 
+<p align="center">
+  <strong>Automatic warnings on sequential pull requests</strong>
+</p>
+
+|<img alt="Automatic warnings on sequential pull requests" src="./.github/warning.png" />|
+|--|
+
 
 ## Workflow
 
