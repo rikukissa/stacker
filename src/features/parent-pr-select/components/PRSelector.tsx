@@ -1,4 +1,6 @@
-import { h } from "jsx-dom";
+// tslint:disable-next-line no-submodule-imports
+import { h } from "jsx-dom/svg";
+
 import { IGithubPullRequest } from "../../../api";
 import PullRequest from "./PullRequest";
 
