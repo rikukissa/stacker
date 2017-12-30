@@ -48,7 +48,9 @@ function getDiffViewUrl(commits: IGithubCommit[]): string | null {
   } else if (commits.length > 1) {
     return (
       window.location.href +
-      `/${commits[0].sha}..${commits[commits.length - 1].sha}`
+      // TODO this is a too big of an assumption
+      // https://softwareengineering.stackexchange.com/questions/314215/can-a-git-commit-have-more-than-2-parents
+      `/${commits[0].parents[0].sha}..${commits[commits.length - 1].sha}`
     );
   } else {
     return null;
@@ -93,7 +95,7 @@ export default async function initialize(context: IStackerContext) {
         >
           Viewing all changes.{" "}
           <a className="stale-files-tab-link" href={diffViewUrl}>
-            🔎 View only this PR
+            🔎 &nbsp;View only this PR
           </a>
         </div>,
         $stats

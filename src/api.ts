@@ -43,6 +43,7 @@ export interface IGithubFork {
 }
 export interface IGithubCommit {
   sha: string;
+  parents: Array<{ sha: string }>;
 }
 
 async function makeRequest(
