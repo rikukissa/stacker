@@ -8,6 +8,7 @@
     "emotion": "^8.0.12",
     "jsx-dom": "^5.2.0",
     "react-scripts-ts": "2.8.0",
+    "routes": "^2.1.0",
     "select-dom": "^4.1.1"
   },
   "scripts": {
