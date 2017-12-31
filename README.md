@@ -2,13 +2,26 @@
   <img src="./.github/logo.svg" alt="emotion" height="150" width="150">
   <h1 align="center">Stacker</h1>
 </p>
-<p align="center">Split your huge pull requests into small, easily understandable pieces</p>
+<p align="center">Split your huge pull requests into small, easily understandable pieces<br/> <a href="https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf">Download the Chrome extension</a></p>
 
+Stacker is a Chrome extension that allows you to mark pull requests as dependend of each other. This way, instead of creating one large PR for your feature, you are able to create multiple smaller ones, while still having the same base branch for each pull request.
+
+## Installation
+1. Download the extension
+2. Generate a new personal access token with following permissions: <br/><img alt="Required permissions" src="./.github/permissions.png" width="174px" />
+3. Open any repository's "Pull requests" view on Github and input the access token when Stacker prompts you about it
+
+## Workflow
+1. Create a new pull request
+2. Select a parent pull request
+3. Done! After this everyone with the extension can see your pull request as a dependant PR
 
 ## Features
 
 <p align="center">
   <strong>Mark pull request as dependent of your previous work</strong>
+
+  When reviewing stacked pull requests, it's important to know in what order the work should be reviewed. Most commonly the proposed solution is to prefix pull request titles with **[PART-2]**, which works fine. Stacker does this automatically for you and uses different colors to make distinction between the different chains of pull requests.
 </p>
 
 
@@ -17,6 +30,8 @@
 
 <p align="center">
   <strong>View only changes made in this pull request</strong>
+
+  By default on the "Files changed" tab, Github shows you all changes from all commits included in your pull request. Oftentimes when working with stacked pull requests this is not what you want. Stacker automatically figures out which commits are actually part of the pull request and redirects you to a diff view with only these changes.
 </p>
 
 |<img width="860px" alt="Only relevant changes visible" src="./.github/diff-all-visible.png" />|
@@ -25,17 +40,13 @@
 
 <p align="center">
   <strong>Automatic warnings on sequential pull requests</strong>
+
+  Stacker adds a warning to every pull request that has been marked dependent on some other pull request. This is to prevent accidental merging before the parent pull request is merged.
 </p>
 
 |<img width="789px" alt="Automatic warnings on sequential pull requests" src="./.github/warning.png" />|
 |--|
 
-
-## Workflow
-
-1. Create a new pull request
-2. Select a parent pull request
-3. Done! After this everyone with the extension can see your pull request as a dependant PR
 
 
 ## Related work
