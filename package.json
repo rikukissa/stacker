@@ -15,7 +15,8 @@
     "build": "react-scripts-ts build && ./post-build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
-    "pack-extension": "node scripts/pack.js"
+    "pack-extension": "node scripts/pack.js",
+    "compress-extension": "node scripts/compress.js"
   },
   "devDependencies": {
     "@types/jest": "^21.1.9",
