@@ -12,13 +12,22 @@ export default function createRouter(routes: {
 
   const pushState = window.history.pushState;
 
+  function match(pathname: string) {
+    const route = router.match(pathname);
+    if (!route) {
+      return;
+    }
+    route.fn(route.params);
+  }
+
   window.history.pushState = (...args: any[]) => {
     const [, , url] = args;
-    console.log(parse(url).pathname);
-
-    console.log(router.match(parse(url).pathname));
-
+    const parts = parse(url);
+    if (parts.pathname) {
+      match(parts.pathname);
+    }
     return pushState.apply(history, args);
   };
-  console.log(router.match(location.pathname));
+
+  match(location.pathname);
 }

@@ -11,11 +11,7 @@ import {
 } from "../../lib/base";
 import { IStackerContext } from "../../lib/context";
 import { getBodyTextarea } from "../../lib/dom";
-import {
-  getLocation,
-  isNewPullRequestView,
-  isPullHome
-} from "../../lib/location";
+
 import { getStackerInfo, updateStackerInfo } from "../../lib/prInfo";
 import PRSelector, { ID } from "./components/PRSelector";
 
@@ -82,7 +78,11 @@ function render(
 }
 
 let sidebarObserver: MutationObserver | null;
-function attachMutationObserver(context: IStackerContext) {
+function attachMutationObserver<T>(
+  context: IStackerContext,
+  pathParams: T,
+  callback: (context: IStackerContext, pathParams: T) => void
+) {
   // Attach mutation observer
   if (sidebarObserver) {
     sidebarObserver.disconnect();
@@ -93,7 +93,7 @@ function attachMutationObserver(context: IStackerContext) {
       sidebarObserver.disconnect();
       sidebarObserver = null;
     }
-    initialize(context);
+    callback(context, pathParams);
   });
 
   const el = document.querySelector(".discussion-sidebar");
@@ -104,25 +104,23 @@ function attachMutationObserver(context: IStackerContext) {
     });
   }
 }
+interface IHomePathParams {
+  owner: string;
+  repo: string;
+  prNumber: string;
+}
 
-async function initializeHome(context: IStackerContext) {
-  if (
-    !isPullHome(context.location) &&
-    !isNewPullRequestView(context.location)
-  ) {
-    return;
-  }
-
-  const location = getLocation(document.location);
-  const pullRequests = await getPullRequests(context.accessToken)(
-    location.ownerLogin,
-    location.repoName
-  );
+export async function initializeHome(
+  context: IStackerContext,
+  pathParams: IHomePathParams
+) {
+  const { owner, repo, prNumber } = pathParams;
+  const pullRequests = await getPullRequests(context.accessToken)(owner, repo);
 
   const pullRequest = await getPullRequest(context.accessToken)(
-    location.ownerLogin,
-    location.repoName,
-    location.prNumber
+    owner,
+    repo,
+    prNumber
   );
 
   async function selectPullRequest(newParentPR: IGithubPullRequest) {
@@ -139,14 +137,21 @@ async function initializeHome(context: IStackerContext) {
   const basePR = getBasePullRequest(pullRequest, pullRequests);
 
   render(pullRequests, basePR || null, selectPullRequest);
+
+  attachMutationObserver(context, pathParams, initializeHome);
 }
 
-async function initializeNewPullRequest(context: IStackerContext) {
-  const location = getLocation(document.location);
-  const pullRequests = await getPullRequests(context.accessToken)(
-    location.ownerLogin,
-    location.repoName
-  );
+interface INewPRPathParams {
+  owner: string;
+  repo: string;
+}
+
+export async function initializeNewPullRequest(
+  context: IStackerContext,
+  pathParams: INewPRPathParams
+) {
+  const { owner, repo } = pathParams;
+  const pullRequests = await getPullRequests(context.accessToken)(owner, repo);
 
   async function selectPullRequest(newParentPR: IGithubPullRequest) {
     updateTextareaValue(newParentPR);
@@ -158,16 +163,6 @@ async function initializeNewPullRequest(context: IStackerContext) {
     ? getBasePullRequestWithStackerInfo(stackerInfo, pullRequests)
     : null;
   render(pullRequests, basePR, selectPullRequest);
-}
 
-export default async function initialize(context: IStackerContext) {
-  if (isPullHome(context.location)) {
-    await initializeHome(context);
-    attachMutationObserver(context);
-  }
-
-  if (isNewPullRequestView(context.location)) {
-    await initializeNewPullRequest(context);
-    attachMutationObserver(context);
-  }
+  attachMutationObserver(context, pathParams, initializeNewPullRequest);
 }
