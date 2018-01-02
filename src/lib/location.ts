@@ -1,4 +1,5 @@
 import { IGithubPullRequest } from "../api";
+import { getConfig } from "./config";
 
 export interface ILocation {
   ownerLogin: string;
@@ -7,8 +8,10 @@ export interface ILocation {
 }
 
 export function isPRView(location: Location): boolean {
+  const config = getConfig();
+
   return (
-    location.href.includes("github.com") &&
+    config.baseUrls.some(url => location.href.includes(url)) &&
     (location.href.includes("/pull") || isNewPullRequestView(location))
   );
 }

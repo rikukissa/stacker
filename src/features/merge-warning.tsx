@@ -19,7 +19,7 @@ export default async function initialize(context: IStackerContext) {
 
   const location = getLocation(context.location);
 
-  const pullRequests = await getPullRequests(context.accessToken)(
+  const pullRequests = await getPullRequests(context)(
     location.ownerLogin,
     location.repoName
   );

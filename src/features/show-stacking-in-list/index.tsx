@@ -218,7 +218,7 @@ export default async function initialize(context: IStackerContext) {
     return;
   }
 
-  const pullRequests = await getPullRequests(context.accessToken)(
+  const pullRequests = await getPullRequests(context)(
     getOwner(context.location),
     getRepo(context.location)
   );

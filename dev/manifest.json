@@ -4,7 +4,7 @@
   "manifest_version": 2,
   "content_scripts": [{
     "js": ["inject.js"],
-    "matches": ["*://github.com/*"]
+    "matches": ["*://*/*"]
   }],
   "web_accessible_resources": [
     "http://localhost:3000/static/js/bundle.js"

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { IStackerContext } from "./lib/context";
 /* tslint:disable max-classes-per-file */
 export class UnauthorizedError {}
 export class APILimitError {}
@@ -47,22 +48,28 @@ export interface IGithubCommit {
 }
 
 async function makeRequest(
-  url: string,
-  accessToken: AccessToken,
+  path: string,
+  context: IStackerContext,
   options: any = { headers: {} }
 ) {
-  const params = accessToken
+  const params = context.accessToken
     ? {
         ...options,
         headers: {
           ...options.headers,
-          Authorization: `Bearer ${accessToken}`
+          Authorization: `Bearer ${context.accessToken}`
         }
       }
     : options;
 
+  const nocachePath = `${path}?${Date.now()}`;
+
+  const isGithub = context.location.host === "github.com";
+
   return axios({
-    url: url + "?" + Date.now(),
+    url: isGithub
+      ? `//api.github.com${nocachePath}`
+      : `//${context.location.host}/api/v3/${nocachePath}`,
     ...params
   })
     .then(response => response.data)
@@ -70,68 +77,56 @@ async function makeRequest(
       if (err.response.status === 403) {
         throw new APILimitError();
       }
-      if (err.response.status === 404) {
+      if (err.response.status === 404 || err.response.status === 401) {
         throw new UnauthorizedError();
       }
       throw Error(err.response.statusText);
     });
 }
 
-export function getPullRequest(accessToken: AccessToken) {
+export function getPullRequest(context: IStackerContext) {
   return (
     owner: string,
     repo: string,
     prNumber: string
   ): Promise<IGithubPullRequest> =>
-    makeRequest(
-      `https://api.github.com/repos/${owner}/${repo}/pulls/${prNumber}`,
-      accessToken
-    );
+    makeRequest(`/repos/${owner}/${repo}/pulls/${prNumber}`, context);
 }
 
-export function getPullRequests(accessToken: AccessToken) {
+export function getPullRequests(context: IStackerContext) {
   return (owner: string, repo: string): Promise<IGithubPullRequest[]> =>
-    makeRequest(
-      `https://api.github.com/repos/${owner}/${repo}/pulls`,
-      accessToken
-    );
+    makeRequest(`/repos/${owner}/${repo}/pulls`, context);
 }
 
-export function getForks(accessToken: AccessToken) {
+export function getForks(context: IStackerContext) {
   return (repo: IGithubRepo) =>
-    makeRequest(
-      `https://api.github.com/repos/${repo.owner.login}/${repo.name}/forks`,
-      accessToken
-    );
+    makeRequest(`/repos/${repo.owner.login}/${repo.name}/forks`, context);
 }
 
-export function getBranches(accessToken: AccessToken) {
+export function getBranches(context: IStackerContext) {
   return (repo: IGithubRepo): Promise<IGithubBranch[]> =>
-    makeRequest(
-      `https://api.github.com/repos/${repo.owner.login}/${repo.name}/branches`,
-      accessToken
-    );
+    makeRequest(`/repos/${repo.owner.login}/${repo.name}/branches`, context);
 }
 
-export function getPullRequestCommits(accessToken: AccessToken) {
+export function getPullRequestCommits(context: IStackerContext) {
   return (pullRequest: IGithubPullRequest): Promise<IGithubCommit[]> => {
     const repo = pullRequest.base.repo;
     return makeRequest(
-      `https://api.github.com/repos/${repo.owner.login}/${repo.name}/pulls/${
+      `/repos/${repo.owner.login}/${repo.name}/pulls/${
         pullRequest.number
       }/commits`,
-      accessToken
+      context
     );
   };
 }
 
-export function savePullRequest(accessToken: AccessToken) {
+export function savePullRequest(context: IStackerContext) {
   return (pullRequest: IGithubPullRequest): Promise<IGithubPullRequest> => {
     return makeRequest(
-      `https://api.github.com/repos/${pullRequest.base.repo.owner.login}/${
+      `/repos/${pullRequest.base.repo.owner.login}/${
         pullRequest.base.repo.name
       }/pulls/${pullRequest.number}`,
-      accessToken,
+      context,
       {
         data: { body: pullRequest.body },
         method: "PATCH"

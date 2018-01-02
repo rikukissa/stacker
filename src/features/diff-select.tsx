@@ -14,13 +14,13 @@ async function getNewCommits(
   context: IStackerContext
 ): Promise<IGithubCommit[]> {
   const location = getLocation(document.location);
-  const pullRequest = await getPullRequest(context.accessToken)(
+  const pullRequest = await getPullRequest(context)(
     location.ownerLogin,
     location.repoName,
     location.prNumber
   );
 
-  const pullRequests = await getPullRequests(context.accessToken)(
+  const pullRequests = await getPullRequests(context)(
     location.ownerLogin,
     location.repoName
   );
@@ -31,10 +31,8 @@ async function getNewCommits(
     return Promise.resolve([]);
   }
 
-  const commits = await getPullRequestCommits(context.accessToken)(pullRequest);
-  const parentCommits = await getPullRequestCommits(context.accessToken)(
-    basePullRequest
-  );
+  const commits = await getPullRequestCommits(context)(pullRequest);
+  const parentCommits = await getPullRequestCommits(context)(basePullRequest);
 
   return commits.filter(
     commit =>

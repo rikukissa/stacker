@@ -46,7 +46,7 @@ async function selectParentPullRequest(
   };
   const updatedComment = updateStackerInfo(pullRequest.body, newStackerInfo);
 
-  const updatedPullRequest = await savePullRequest(context.accessToken)({
+  const updatedPullRequest = await savePullRequest(context)({
     ...pullRequest,
     body: updatedComment
   });
@@ -115,16 +115,16 @@ async function initializeHome(context: IStackerContext) {
 
   const location = getLocation(document.location);
 
-  const pullRequest = await getPullRequest(context.accessToken)(
+  const pullRequests = (await getPullRequests(context)(
+    location.ownerLogin,
+    location.repoName
+  )).filter(pr => pr.id !== pullRequest.id);
+
+  const pullRequest = await getPullRequest(context)(
     location.ownerLogin,
     location.repoName,
     location.prNumber
   );
-
-  const pullRequests = (await getPullRequests(context.accessToken)(
-    location.ownerLogin,
-    location.repoName
-  )).filter(pr => pr.id !== pullRequest.id);
 
   async function selectPullRequest(newParentPR: IGithubPullRequest) {
     const updatedPullRequest = await selectParentPullRequest(
@@ -144,7 +144,7 @@ async function initializeHome(context: IStackerContext) {
 
 async function initializeNewPullRequest(context: IStackerContext) {
   const location = getLocation(document.location);
-  const pullRequests = await getPullRequests(context.accessToken)(
+  const pullRequests = await getPullRequests(context)(
     location.ownerLogin,
     location.repoName
   );
