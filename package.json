@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/puppeteer": "^0.13.9",
     "@types/qs": "^6.5.1",
     "axios": "^0.17.1",
     "emotion": "^8.0.12",
     "jsx-dom": "^5.2.0",
     "react-scripts-ts": "2.8.0",
-    "select-dom": "^4.1.1"
+    "select-dom": "^4.1.1",
+    "puppeteer": "^0.13.0"
   },
   "scripts": {
     "start": "HTTPS=true react-scripts-ts start",

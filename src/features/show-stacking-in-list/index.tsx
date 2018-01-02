@@ -1,13 +1,13 @@
 import { css } from "emotion";
 import { h } from "jsx-dom";
-import { getPullRequests, IGithubPullRequest } from "../api";
+import { getPullRequests, IGithubPullRequest } from "../../api";
 import {
   BaseId,
   createIdForPullRequest,
   getBasePullRequest
-} from "../lib/base";
-import { IStackerContext } from "../lib/context";
-import { getOwner, getRepo, isPullsListView } from "../lib/location";
+} from "../../lib/base";
+import { IStackerContext } from "../../lib/context";
+import { getOwner, getRepo, isPullsListView } from "../../lib/location";
 
 const badges = css`
   display: inline-block;
@@ -119,7 +119,7 @@ function getBadge(pullRequest: IGithubPullRequest, pullRequestGraph: INode) {
 
         return (
           <div
-            className={badge}
+            className={`stacker-part-badge ${badge}`}
             style={{
               color: mainColor
             }}
