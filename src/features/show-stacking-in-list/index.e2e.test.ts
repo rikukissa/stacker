@@ -27,6 +27,9 @@ describe("'part X' labels in list view", () => {
       headless: false
     });
     page = await browser.newPage();
+    page.on("dialog", async (dialog: puppeteer.Dialog) => {
+      await dialog.accept(process.env.GITHUB_TOKEN);
+    });
     await page.goto("https://github.com/rikukissa/stacker-e2e-repo/pulls");
   });
   afterEach(async () => {
