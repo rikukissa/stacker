@@ -13,7 +13,7 @@
     "puppeteer": "^0.13.0"
   },
   "scripts": {
-    "start": "HTTPS=true react-scripts-ts start",
+    "start": "BROWSER=none HTTPS=true react-scripts-ts start",
     "build": "react-scripts-ts build && ./post-build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
