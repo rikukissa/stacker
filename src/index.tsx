@@ -4,14 +4,29 @@ import fadeOutUnrelatedCommits from "./features/fade-out-unrelated-commits";
 import mergeWarning from "./features/merge-warning";
 import parentPRSelect from "./features/parent-pr-select";
 import showStackingInList from "./features/show-stacking-in-list";
-import { setConfig } from "./lib/config";
+import { getConfig, setConfig } from "./lib/config";
 import { createContext } from "./lib/context";
 import { isPRView } from "./lib/location";
+
+function promptForToken() {
+  const token = window.prompt("Please enter an access token");
+  if (token) {
+    setConfig({ token });
+    window.location.reload();
+  }
+}
 
 async function run() {
   if (!isPRView(document.location)) {
     return;
   }
+
+  const token = getConfig().token;
+
+  if (!token) {
+    return promptForToken();
+  }
+
   const context = await createContext(document.location);
   try {
     await diffSelect(context);
@@ -21,11 +36,7 @@ async function run() {
     await mergeWarning(context);
   } catch (err) {
     if (err instanceof UnauthorizedError) {
-      const token = window.prompt("Please enter an access token");
-      if (token) {
-        setConfig({ token });
-        window.location.reload();
-      }
+      promptForToken();
     }
     // tslint:disable-next-line no-console
     console.log(err);
