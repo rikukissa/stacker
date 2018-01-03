@@ -24,6 +24,7 @@
     "@types/jest": "^21.1.9",
     "@types/node": "^8.5.2",
     "crx": "^3.2.1",
+    "patch-package": "^5.0.0",
     "prettier": "^1.9.2",
     "svgexport": "^0.3.2",
     "tslint-config-prettier": "^1.6.0"

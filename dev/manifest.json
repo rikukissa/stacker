@@ -6,7 +6,10 @@
     "js": ["inject.js"],
     "matches": ["*://*/*"]
   }],
-  "web_accessible_resources": [
-    "http://localhost:3000/static/js/bundle.js"
-  ]
+  "browser_action": {
+    "default_title": "TODO",
+    "default_popup": "popup.html"
+  },
+  "permissions": [ "contextMenus", "management", "tabs", "storage"],
+  "content_security_policy": "default-src 'self'; script-src 'self' http://localhost:3000 https://localhost:3000 'unsafe-eval'; connect-src http://localhost:3000 https://localhost:3000; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
 }
