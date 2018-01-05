@@ -17,11 +17,12 @@ function promptForToken() {
 }
 
 async function run() {
-  if (!isPRView(document.location)) {
+  const config = await getConfig();
+  if (!isPRView(document.location, config)) {
     return;
   }
 
-  const token = getConfig().token;
+  const token = config.token;
 
   if (!token) {
     return promptForToken();

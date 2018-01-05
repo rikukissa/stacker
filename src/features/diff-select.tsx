@@ -66,7 +66,7 @@ async function redirectToPullRequestView(
 }
 
 export default async function initialize(context: IStackerContext) {
-  const config = getConfig();
+  const config = await getConfig();
 
   if (isFilesView(context.location)) {
     const newCommits = await getNewCommits(context);

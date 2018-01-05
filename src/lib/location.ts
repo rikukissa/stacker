@@ -1,5 +1,5 @@
 import { IGithubPullRequest } from "../api";
-import { getConfig } from "./config";
+import { IConfig } from "./config";
 
 export interface ILocation {
   ownerLogin: string;
@@ -7,11 +7,9 @@ export interface ILocation {
   prNumber: string;
 }
 
-export function isPRView(location: Location): boolean {
-  const config = getConfig();
-
+export function isPRView(location: Location, config: IConfig): boolean {
   return (
-    config.baseUrls.some(url => location.href.includes(url)) &&
+    config.domains.some(url => location.href.includes(url)) &&
     (location.href.includes("/pull") || isNewPullRequestView(location))
   );
 }

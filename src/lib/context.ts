@@ -8,7 +8,7 @@ export interface IStackerContext {
 export async function createContext(
   location: Location
 ): Promise<IStackerContext> {
-  const accessToken = getConfig().token;
+  const accessToken = (await getConfig()).token;
 
   return {
     accessToken,
