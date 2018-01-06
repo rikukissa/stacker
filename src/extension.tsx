@@ -1,34 +1,22 @@
-import { UnauthorizedError } from "./api";
 import diffSelect from "./features/diff-select";
 import fadeOutUnrelatedCommits from "./features/fade-out-unrelated-commits";
 import mergeWarning from "./features/merge-warning";
 import parentPRSelect from "./features/parent-pr-select";
 import showStackingInList from "./features/show-stacking-in-list";
-import { getConfig, setConfig } from "./lib/config";
+import { getConfig } from "./lib/config";
 import { createContext } from "./lib/context";
-import { isPRView } from "./lib/location";
-
-function promptForToken() {
-  const token = window.prompt("Please enter an access token");
-  if (token) {
-    setConfig({ token });
-    window.location.reload();
-  }
-}
+import { getConfigDomain, isPRView } from "./lib/location";
 
 async function run() {
   const config = await getConfig();
-  if (!isPRView(document.location, config)) {
+
+  const configDomain = getConfigDomain(location, config);
+
+  if (!configDomain || !isPRView(document.location, config)) {
     return;
   }
 
-  const token = config.token;
-
-  if (!token) {
-    return promptForToken();
-  }
-
-  const context = await createContext(document.location);
+  const context = await createContext(document.location, configDomain);
   try {
     await diffSelect(context);
     await showStackingInList(context);
@@ -36,9 +24,7 @@ async function run() {
     await fadeOutUnrelatedCommits(context);
     await mergeWarning(context);
   } catch (err) {
-    if (err instanceof UnauthorizedError) {
-      promptForToken();
-    }
+    // TODO show error somewhere
     // tslint:disable-next-line no-console
     console.log(err);
   }

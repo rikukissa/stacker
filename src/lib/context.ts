@@ -1,14 +1,15 @@
 import { AccessToken } from "../api";
-import { getConfig } from "../lib/config";
+import { IDomain } from "../lib/config";
 export interface IStackerContext {
   location: Location;
   accessToken: AccessToken | null;
 }
 
 export async function createContext(
-  location: Location
+  location: Location,
+  configDomain: IDomain
 ): Promise<IStackerContext> {
-  const accessToken = (await getConfig()).token;
+  const accessToken = configDomain.token;
 
   return {
     accessToken,

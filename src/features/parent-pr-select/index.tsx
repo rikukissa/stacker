@@ -115,16 +115,16 @@ async function initializeHome(context: IStackerContext) {
 
   const location = getLocation(document.location);
 
-  const pullRequests = (await getPullRequests(context)(
-    location.ownerLogin,
-    location.repoName
-  )).filter(pr => pr.id !== pullRequest.id);
-
   const pullRequest = await getPullRequest(context)(
     location.ownerLogin,
     location.repoName,
     location.prNumber
   );
+
+  const pullRequests = (await getPullRequests(context)(
+    location.ownerLogin,
+    location.repoName
+  )).filter(pr => pr.id !== pullRequest.id);
 
   async function selectPullRequest(newParentPR: IGithubPullRequest) {
     const updatedPullRequest = await selectParentPullRequest(

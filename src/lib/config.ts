@@ -1,6 +1,9 @@
+export interface IDomain {
+  domain: string;
+  token: string;
+}
 export interface IConfig {
-  token: string | null;
-  domains: string[];
+  domains: IDomain[];
   noAutomaticDiff: boolean;
 }
 
@@ -14,14 +17,13 @@ declare global {
 }
 
 const defaultConfig = {
-  domains: ["github.com"],
-  noAutomaticDiff: false,
-  token: null
+  domains: [{ domain: "github.com", token: "" }],
+  noAutomaticDiff: false
 };
 
 export function getConfig(): Promise<IConfig> {
   return new Promise(resolve => {
-    window.chrome.storage.sync.get("config", (config: PartialConfig) =>
+    window.chrome.storage.sync.get((config: PartialConfig) =>
       resolve({
         ...defaultConfig,
         ...config
@@ -34,7 +36,7 @@ export async function setConfig(config: PartialConfig): Promise<IConfig> {
   const currentConfig = await getConfig();
   const newConfig: IConfig = { ...currentConfig, ...config };
   return new Promise(resolve => {
-    window.chrome.storage.sync.set({ config: newConfig }, () => {
+    window.chrome.storage.sync.set(newConfig, () => {
       resolve(currentConfig);
     });
   }) as Promise<IConfig>;
