@@ -1,5 +1,5 @@
-import { join } from "path";
 import * as puppeteer from "puppeteer";
+import { createBrowser, getTextContent } from "../../tests/utils";
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 
@@ -8,28 +8,15 @@ const COMMIT_PART = {
   "Changes to feature 1": 2
 };
 
-async function getTextContent(element: puppeteer.JSHandle) {
-  const property = await element.getProperty("textContent");
-  return (await property).jsonValue();
-}
-
 describe("'part X' labels in list view", () => {
   let browser: puppeteer.Browser;
   let page: puppeteer.Page;
 
   beforeEach(async () => {
-    browser = await puppeteer.launch({
-      args: [
-        `--disable-extensions-except=${join(__dirname, "../../../dev")}`,
-        `--load-extension=${join(__dirname, "../../../dev")}`,
-        `--ignore-certificate-errors`
-      ],
-      headless: false
-    });
-    page = await browser.newPage();
-    page.on("dialog", async (dialog: puppeteer.Dialog) => {
-      await dialog.accept(process.env.GITHUB_TOKEN);
-    });
+    const setup = await createBrowser();
+    browser = setup.browser;
+    page = setup.page;
+
     await page.goto("https://github.com/rikukissa/stacker-e2e-repo/pulls");
   });
   afterEach(async () => {
