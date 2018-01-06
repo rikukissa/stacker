@@ -1,6 +1,11 @@
 import { join } from "path";
 import * as puppeteer from "puppeteer";
 
+const PLUGIN_PATH =
+  process.env.NODE_ENV === "ci"
+    ? join(__dirname, "../../build")
+    : join(__dirname, "../../dev");
+
 export async function getTextContent(element: puppeteer.JSHandle) {
   const property = await element.getProperty("textContent");
   return (await property).jsonValue();
@@ -9,8 +14,8 @@ export async function getTextContent(element: puppeteer.JSHandle) {
 export async function createBrowser() {
   const browser = await puppeteer.launch({
     args: [
-      `--disable-extensions-except=${join(__dirname, "../../dev")}`,
-      `--load-extension=${join(__dirname, "../../dev")}`,
+      `--disable-extensions-except=${PLUGIN_PATH}`,
+      `--load-extension=${PLUGIN_PATH}`,
       `--ignore-certificate-errors`
     ],
     headless: false
