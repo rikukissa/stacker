@@ -18,6 +18,7 @@ export async function createBrowser() {
       `--load-extension=${PLUGIN_PATH}`,
       `--ignore-certificate-errors`
     ],
+    executablePath: process.env.GOOGLE_CHROME_BINARY,
     headless: false
   });
 

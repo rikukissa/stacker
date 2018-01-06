@@ -10,3 +10,5 @@ addons:
 script:
   - yarn build
   - yarn test
+env:
+  - GOOGLE_CHROME_BINARY=/usr/bin/google-chrome-beta
