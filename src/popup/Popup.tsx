@@ -152,65 +152,69 @@ export default function Popup({
           </button>
         </header>
         <section className={option}>
-          <table className={domains}>
-            <thead>
-              <tr>
-                <th className={label}>Domain</th>
-                <th className={label}>
-                  Access token&nbsp;
-                  <a
-                    className={link}
-                    target="_blank"
-                    href="https://github.com/settings/tokens"
-                  >
-                    (?)
-                  </a>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {config.domains.map(domain => (
+          {config.domains.length === 0 &&
+            "Add a domain to let Stacker do its thing ✨"}
+          {config.domains.length > 0 && (
+            <table className={domains}>
+              <thead>
                 <tr>
-                  <td>
-                    <input
-                      className={input}
-                      type="text"
-                      placeholder="github.com"
-                      value={domain.domain}
-                      onChange={event =>
-                        onDomainChanged(domain, {
-                          ...domain,
-                          domain: (event.target as HTMLInputElement).value
-                        })
-                      }
-                    />
-                  </td>
-                  <td>
-                    <input
-                      className={input}
-                      type="password"
-                      value={domain.token}
-                      onChange={event =>
-                        onDomainChanged(domain, {
-                          ...domain,
-                          token: (event.target as HTMLInputElement).value
-                        })
-                      }
-                    />
-                  </td>
-                  {/* <td className={domainStatus}>👍</td> */}
-                  <td>
-                    <button
-                      className={actionLink}
-                      onClick={() => onDeleteDomain(domain)}
+                  <th className={label}>Domain</th>
+                  <th className={label}>
+                    Access token&nbsp;
+                    <a
+                      className={link}
+                      target="_blank"
+                      href="https://github.com/settings/tokens"
                     >
-                      Delete
-                    </button>
-                  </td>
+                      (?)
+                    </a>
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {config.domains.map(domain => (
+                  <tr>
+                    <td>
+                      <input
+                        className={input}
+                        type="text"
+                        placeholder="github.com"
+                        value={domain.domain}
+                        onChange={event =>
+                          onDomainChanged(domain, {
+                            ...domain,
+                            domain: (event.target as HTMLInputElement).value
+                          })
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        className={input}
+                        type="password"
+                        value={domain.token}
+                        onChange={event =>
+                          onDomainChanged(domain, {
+                            ...domain,
+                            token: (event.target as HTMLInputElement).value
+                          })
+                        }
+                      />
+                    </td>
+                    {/* <td className={domainStatus}>👍</td> */}
+                    <td>
+                      <button
+                        className={actionLink}
+                        onClick={() => onDeleteDomain(domain)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </section>
       </div>
     </div>
