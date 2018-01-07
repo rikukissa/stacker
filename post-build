@@ -4,7 +4,6 @@ mv build/index.html build/popup.html
 rm build/service-worker.js
 mv build/static/js/*.js.map build/static/js/bundle.js.map
 mv build/static/js/*.js build/static/js/bundle.js
-rm -r build/static
 
 ./node_modules/.bin/svgexport ./.github/logo.svg build/icon16.png :16
 ./node_modules/.bin/svgexport ./.github/logo.svg build/icon48.png :48
