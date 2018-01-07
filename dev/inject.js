@@ -1,7 +1,5 @@
-var script = document.createElement("script");
-script.src = "https://localhost:3000/static/js/bundle.js";
+const src = "https://localhost:3000/static/js/bundle.js";
 
-(document.head || document.documentElement).appendChild(script);
-script.onload = function() {
-  script.parentNode.removeChild(script);
-};
+fetch(src)
+  .then(res => res.text())
+  .then(script => eval(script));

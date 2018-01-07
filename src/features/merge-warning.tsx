@@ -1,4 +1,4 @@
-import { h } from "jsx-dom";
+import { h } from "preact";
 import { getPullRequests } from "../api";
 import {
   createIdForPullRequest,
@@ -8,6 +8,7 @@ import { IStackerContext } from "../lib/context";
 import { getBodyTextarea } from "../lib/dom";
 import { getLocation, getPullRequestURL } from "../lib/location";
 import { getStackerInfo } from "../lib/prInfo";
+import { toDOMNode } from "../lib/vdom";
 
 function getTextareaStackerInfo() {
   const $textarea = getBodyTextarea();
@@ -19,7 +20,7 @@ export default async function initialize(context: IStackerContext) {
 
   const location = getLocation(context.location);
 
-  const pullRequests = await getPullRequests(context.accessToken)(
+  const pullRequests = await getPullRequests(context)(
     location.ownerLogin,
     location.repoName
   );
@@ -55,14 +56,16 @@ export default async function initialize(context: IStackerContext) {
   }
 
   $comment.insertBefore(
-    <p id={WARNING_ID} data-stacker-pr={createIdForPullRequest(basePR)}>
-      ⚠️ &nbsp;This pull request depends on{" "}
-      <strong>
-        <a href={getPullRequestURL(basePR)} target="_blank">
-          #{basePR.number} {basePR.title}
-        </a>
-      </strong>. Consider merging it before merging this one.
-    </p>,
+    toDOMNode(
+      <p id={WARNING_ID} data-stacker-pr={createIdForPullRequest(basePR)}>
+        ⚠️ &nbsp;This pull request depends on{" "}
+        <strong>
+          <a href={getPullRequestURL(basePR)} target="_blank">
+            #{basePR.number} {basePR.title}
+          </a>
+        </strong>. Consider merging it before merging this one.
+      </p>
+    ),
     $comment.firstElementChild.nextSibling
   );
 }

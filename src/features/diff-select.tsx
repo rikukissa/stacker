@@ -1,4 +1,4 @@
-import { h } from "jsx-dom";
+import { h } from "preact";
 import {
   getPullRequest,
   getPullRequestCommits,
@@ -9,18 +9,19 @@ import { getBasePullRequest } from "../lib/base";
 import { getConfig, setConfig } from "../lib/config";
 import { IStackerContext } from "../lib/context";
 import { getLocation, isFilesDiffView, isFilesView } from "../lib/location";
+import { toDOMNode } from "../lib/vdom";
 
 async function getNewCommits(
   context: IStackerContext
 ): Promise<IGithubCommit[]> {
   const location = getLocation(document.location);
-  const pullRequest = await getPullRequest(context.accessToken)(
+  const pullRequest = await getPullRequest(context)(
     location.ownerLogin,
     location.repoName,
     location.prNumber
   );
 
-  const pullRequests = await getPullRequests(context.accessToken)(
+  const pullRequests = await getPullRequests(context)(
     location.ownerLogin,
     location.repoName
   );
@@ -31,10 +32,8 @@ async function getNewCommits(
     return Promise.resolve([]);
   }
 
-  const commits = await getPullRequestCommits(context.accessToken)(pullRequest);
-  const parentCommits = await getPullRequestCommits(context.accessToken)(
-    basePullRequest
-  );
+  const commits = await getPullRequestCommits(context)(pullRequest);
+  const parentCommits = await getPullRequestCommits(context)(basePullRequest);
 
   return commits.filter(
     commit =>
@@ -68,7 +67,7 @@ async function redirectToPullRequestView(
 }
 
 export default async function initialize(context: IStackerContext) {
-  const config = getConfig();
+  const config = await getConfig();
 
   if (isFilesView(context.location)) {
     const newCommits = await getNewCommits(context);
@@ -88,16 +87,18 @@ export default async function initialize(context: IStackerContext) {
 
     if ($stats && $stats.parentElement && diffViewUrl) {
       $stats.parentElement.insertBefore(
-        <div
-          id="stacker-files-notification"
-          onClick={() => setConfig({ noAutomaticDiff: false })}
-          className="subset-files-tab"
-        >
-          Viewing all changes.{" "}
-          <a className="stale-files-tab-link" href={diffViewUrl}>
-            🔎 &nbsp;View only this PR
-          </a>
-        </div>,
+        toDOMNode(
+          <div
+            id="stacker-files-notification"
+            onClick={() => setConfig({ noAutomaticDiff: false })}
+            className="subset-files-tab"
+          >
+            Viewing all changes.{" "}
+            <a className="stale-files-tab-link" href={diffViewUrl}>
+              🔎 &nbsp;View only this PR
+            </a>
+          </div>
+        ),
         $stats
       );
     }

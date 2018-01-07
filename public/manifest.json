@@ -5,7 +5,7 @@
   "description": "Stacked pull requests for Github",
   "update_url": "http://www.example.com/update.xml",
   "content_scripts": [{
-    "js": ["bundle.js"],
+    "js": ["static/js/bundle.js"],
     "matches": ["*://*/*"]
   }],
   "icons": {
@@ -13,6 +13,6 @@
     "48": "icon48.png",
     "128": "icon128.png"
   },
-  "permissions": ["*://*/*" ],
+  "permissions": ["*://*/*", "storage"],
   "content_security_policy": "default-src 'self'; script-src 'self'; style-src * 'unsafe-inline'; img-src 'self' data:;"
 }

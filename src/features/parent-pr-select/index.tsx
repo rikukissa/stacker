@@ -17,6 +17,7 @@ import {
   isPullHome
 } from "../../lib/location";
 import { getStackerInfo, updateStackerInfo } from "../../lib/prInfo";
+import { toDOMNode } from "../../lib/vdom";
 import PRSelector, { ID } from "./components/PRSelector";
 
 function updateTextareaValue(newParent: IGithubPullRequest) {
@@ -46,7 +47,7 @@ async function selectParentPullRequest(
   };
   const updatedComment = updateStackerInfo(pullRequest.body, newStackerInfo);
 
-  const updatedPullRequest = await savePullRequest(context.accessToken)({
+  const updatedPullRequest = await savePullRequest(context)({
     ...pullRequest,
     body: updatedComment
   });
@@ -76,7 +77,7 @@ function render(
   }
 
   $milestone.parentElement.insertBefore(
-    PRSelector(pullRequests, basePR, selectPullRequest),
+    toDOMNode(PRSelector(pullRequests, basePR, selectPullRequest)),
     $milestone.nextSibling
   );
 }
@@ -115,13 +116,13 @@ async function initializeHome(context: IStackerContext) {
 
   const location = getLocation(document.location);
 
-  const pullRequest = await getPullRequest(context.accessToken)(
+  const pullRequest = await getPullRequest(context)(
     location.ownerLogin,
     location.repoName,
     location.prNumber
   );
 
-  const pullRequests = (await getPullRequests(context.accessToken)(
+  const pullRequests = (await getPullRequests(context)(
     location.ownerLogin,
     location.repoName
   )).filter(pr => pr.id !== pullRequest.id);
@@ -144,7 +145,7 @@ async function initializeHome(context: IStackerContext) {
 
 async function initializeNewPullRequest(context: IStackerContext) {
   const location = getLocation(document.location);
-  const pullRequests = await getPullRequests(context.accessToken)(
+  const pullRequests = await getPullRequests(context)(
     location.ownerLogin,
     location.repoName
   );

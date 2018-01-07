@@ -1,4 +1,4 @@
-import { h } from "jsx-dom";
+import { h } from "preact";
 import { IGithubPullRequest } from "../../../api";
 import { createIdForPullRequest } from "../../../lib/base";
 

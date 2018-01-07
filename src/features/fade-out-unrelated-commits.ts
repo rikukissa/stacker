@@ -14,12 +14,12 @@ export default async function initialize(context: IStackerContext) {
   }
   const location = getLocation(document.location);
 
-  const pullRequests = await getPullRequests(context.accessToken)(
+  const pullRequests = await getPullRequests(context)(
     location.ownerLogin,
     location.repoName
   );
 
-  const pullRequest = await getPullRequest(context.accessToken)(
+  const pullRequest = await getPullRequest(context)(
     location.ownerLogin,
     location.repoName,
     location.prNumber
@@ -30,7 +30,7 @@ export default async function initialize(context: IStackerContext) {
     return;
   }
 
-  const commits = await getPullRequestCommits(context.accessToken)(basePR);
+  const commits = await getPullRequestCommits(context)(basePR);
 
   const $commits = Array.from(
     document.querySelectorAll(".timeline-commits .commit")

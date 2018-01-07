@@ -1,4 +1,4 @@
-import { h } from "jsx-dom/svg";
+import { h } from "preact";
 
 import { IGithubPullRequest } from "../../../api";
 import PullRequest from "./PullRequest";
