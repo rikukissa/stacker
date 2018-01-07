@@ -17,6 +17,7 @@ import {
   isPullHome
 } from "../../lib/location";
 import { getStackerInfo, updateStackerInfo } from "../../lib/prInfo";
+import { toDOMNode } from "../../lib/vdom";
 import PRSelector, { ID } from "./components/PRSelector";
 
 function updateTextareaValue(newParent: IGithubPullRequest) {
@@ -76,7 +77,7 @@ function render(
   }
 
   $milestone.parentElement.insertBefore(
-    PRSelector(pullRequests, basePR, selectPullRequest),
+    toDOMNode(PRSelector(pullRequests, basePR, selectPullRequest)),
     $milestone.nextSibling
   );
 }

@@ -3298,12 +3298,6 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
-jsx-dom@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/jsx-dom/-/jsx-dom-5.2.0.tgz#3f862f04811170eb23a57c42b6139f57cb6cdfee"
-  dependencies:
-    tslib "^1.8.0"
-
 kew@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/kew/-/kew-0.7.0.tgz#79d93d2d33363d6fdd2970b335d9141ad591d79b"
@@ -4474,6 +4468,10 @@ postcss@^6.0.1, postcss@^6.0.2, postcss@^6.0.6:
     chalk "^2.3.0"
     source-map "^0.6.1"
     supports-color "^4.4.0"
+
+postinstall-prepare@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/postinstall-prepare/-/postinstall-prepare-1.0.1.tgz#dac9b5d91b054389141b13c0192eb68a0aa002b5"
 
 preact@^8.2.7:
   version "8.2.7"

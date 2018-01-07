@@ -1,5 +1,5 @@
 import { css } from "emotion";
-import { h } from "jsx-dom";
+import { h } from "preact";
 import { getPullRequests, IGithubPullRequest } from "../../api";
 import {
   BaseId,
@@ -8,6 +8,7 @@ import {
 } from "../../lib/base";
 import { IStackerContext } from "../../lib/context";
 import { getOwner, getRepo, isPullsListView } from "../../lib/location";
+import { toDOMNode } from "../../lib/vdom";
 
 const badges = css`
   display: inline-block;
@@ -167,7 +168,7 @@ function render(
 
   if ($prInfo && $prInfo.parentElement) {
     $prInfo.parentElement.insertBefore(
-      getBadge(pullRequest, pullRequestGraph),
+      toDOMNode(getBadge(pullRequest, pullRequestGraph)),
       $prInfo.nextSibling
     );
   }

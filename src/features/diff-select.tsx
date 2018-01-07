@@ -1,4 +1,4 @@
-import { h } from "jsx-dom";
+import { h } from "preact";
 import {
   getPullRequest,
   getPullRequestCommits,
@@ -9,6 +9,7 @@ import { getBasePullRequest } from "../lib/base";
 import { getConfig, setConfig } from "../lib/config";
 import { IStackerContext } from "../lib/context";
 import { getLocation, isFilesDiffView, isFilesView } from "../lib/location";
+import { toDOMNode } from "../lib/vdom";
 
 async function getNewCommits(
   context: IStackerContext
@@ -86,16 +87,18 @@ export default async function initialize(context: IStackerContext) {
 
     if ($stats && $stats.parentElement && diffViewUrl) {
       $stats.parentElement.insertBefore(
-        <div
-          id="stacker-files-notification"
-          onClick={() => setConfig({ noAutomaticDiff: false })}
-          className="subset-files-tab"
-        >
-          Viewing all changes.{" "}
-          <a className="stale-files-tab-link" href={diffViewUrl}>
-            🔎 &nbsp;View only this PR
-          </a>
-        </div>,
+        toDOMNode(
+          <div
+            id="stacker-files-notification"
+            onClick={() => setConfig({ noAutomaticDiff: false })}
+            className="subset-files-tab"
+          >
+            Viewing all changes.{" "}
+            <a className="stale-files-tab-link" href={diffViewUrl}>
+              🔎 &nbsp;View only this PR
+            </a>
+          </div>
+        ),
         $stats
       );
     }
