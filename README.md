@@ -2,7 +2,10 @@
   <img src="./.github/logo.svg" alt="logo" height="150" width="150">
   <h1 align="center">Stacker</h1>
 </p>
+
 <p align="center">Intuitive and automated way for creating and reviewing stacked pull requests on Github<br/> <a href="https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf">Download the Chrome extension</a></p>
+
+![Status](https://travis-ci.com/rikukissa/stacker.svg?token=zwBSeTmkrmCBprBpJMHF&branch=develop)
 
 Stacker is a Chrome extension that makes working with stacked pull requests easier both for PR authors and reviewers. Github's UI provides a lot of useful features for working with stacked PRs out of the box. However, many of those features require you to follow manual, repeatitive steps, that this extension automates for you.
 
