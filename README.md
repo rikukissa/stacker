@@ -1,23 +1,65 @@
 <p align="center" style="color: #343a40">
-  <img src="./.github/logo.svg" alt="emotion" height="150" width="150">
+  <img src="./.github/logo.svg" alt="logo" height="150" width="150">
   <h1 align="center">Stacker</h1>
 </p>
-<p align="center">Split your huge pull requests into small, easily understandable pieces<br/> <a href="https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf">Download the Chrome extension</a></p>
+<p align="center">Intuitive and automated way for creating and reviewing stacked pull requests on Github<br/> <a href="https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf">Download the Chrome extension</a></p>
 
-Stacker is a Chrome extension that allows you to mark pull requests as dependend of each other. This way, instead of creating one large PR for your feature, you are able to create multiple smaller ones, while still having the same base branch for each pull request.
+Stacker is a Chrome extension that makes working with stacked pull requests easier both for PR authors and reviewers. Github's UI provides a lot of useful features for working with stacked PRs out of the box. However, many of those features require you to follow manual, repeatitive steps, that this extension automates for you.
 
-## Installation
-1. Download the extension
-2. Generate a new personal access token with following permissions: <br/><img alt="Required permissions" src="./.github/permissions.png" width="174px" />
-3. Open any repository's "Pull requests" view on Github and input the access token when Stacker prompts you about it
+## So what are stacked pull requests?
 
-## Workflow
-1. Create a new pull request
-2. Select a parent pull request
-3. Done! After this everyone with the extension can see your pull request as a dependant PR
+TODO
+
+## Stacking options
+
+[purple]: https://placehold.it/15/7057ff/000000?text=+
+[yellow]: https://placehold.it/15/FBCA04/000000?text=+
+
+[Change the base branch of a Pull Request](https://github.com/blog/2224-change-the-base-branch-of-a-pull-request)
+
+### Each PRs' base set to parent PR's branch
+
+<img src="./.github/based-pr.svg" height="150">
+
+Pros:
+- Diff ("Files change" view) only shows changes from ![PR 2][yellow]
+
+
+Cons:
+- ![PR 1][purple] can't be merged to upstream before ![PR 2][yellow] is reviewed and merged to ![PR 1][purple].
+ - Feature can only be shipped forward when all child PRs are ready.
+- If ![PR 1][purple] still gets merged before, failing to update ![PR 2][yellow]'s base before merging will lead into it being merged to a stale branch.
+
+### All PRs based on upstream (Suggested when using the extension)
+
+<img src="./.github/upstream-pr.svg" height="150">
+
+Pros:
+- No tinkering with PRs' base
+
+Cons:
+- "Files changed" view and all the other ![PR 2][yellow]'s views are now cluttered with changes related to ![PR 1][purple].
+  - Stacker automatically hides all of these
+- ![PR 1][purple] can get merged accidentally if ![PR 2][yellow] is merged first
+
 
 ---
 
+## Installation
+**Give it a go:**
+
+1. Download [the extension](https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf)
+
+**If you like it and want to keep on using it:**
+
+2. Generate a new personal access token with following permissions: <br/><img alt="Required permissions" src="./.github/permissions.png" width="174px" />
+3. Open up Stacker options by clicking the extension icon at the right-top corner of your Chrome window. You'll notice that **access token** field for github.com domain is empty. Paste your token there and you're all set!
+
+**For Github Enterprise users:**
+
+4. Add a new domain and access token from Stacker options (step 3).
+
+---
 
 ## Features
 
@@ -65,3 +107,5 @@ Stacker is a Chrome extension that allows you to mark pull requests as dependend
 ---
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+
+**Thanks for reading 🙂**
