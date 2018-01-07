@@ -12,12 +12,12 @@ addons:
     packages:
       # This is required to run new chrome on old trusty
       - libnss3
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3
 script:
   - yarn build
   - yarn test
 env:
   - GOOGLE_CHROME_BINARY=/usr/bin/chromium-browser
-
-before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"

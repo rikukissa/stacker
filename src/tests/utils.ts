@@ -1,10 +1,9 @@
 import { join } from "path";
 import * as puppeteer from "puppeteer";
 
-const PLUGIN_PATH =
-  process.env.NODE_ENV === "ci"
-    ? join(__dirname, "../../build")
-    : join(__dirname, "../../dev");
+const PLUGIN_PATH = process.env.CI
+  ? join(__dirname, "../../build")
+  : join(__dirname, "../../dev");
 
 export async function getTextContent(element: puppeteer.JSHandle) {
   const property = await element.getProperty("textContent");
