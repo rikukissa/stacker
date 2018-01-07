@@ -1,9 +1,8 @@
 {
-  "version": "0.0.2",
+  "version": "0.1.0",
   "name": "Stacker",
   "manifest_version": 2,
   "description": "Stacked pull requests for Github",
-  "update_url": "http://www.example.com/update.xml",
   "content_scripts": [{
     "js": ["{{BUNDLE}}"],
     "matches": ["*://*/*"]
