@@ -7,4 +7,5 @@ rm build/service-worker.js
 ./node_modules/.bin/svgexport ./.github/logo.svg build/icon128.png 128:128 pad
 
 BUNDLE_NAME=$(ls build/static/js/*.js | sed -- 's/build\///g');
-sed -i "" "s|{{BUNDLE}}|${BUNDLE_NAME}|g" build/manifest.json
+sed "s|{{BUNDLE}}|${BUNDLE_NAME}|g" build/manifest.json > build/manifest.final.json
+mv build/manifest.final.json build/manifest.json
