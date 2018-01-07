@@ -15,35 +15,106 @@ TODO
 
 ## Stacking options
 
-[purple]: https://placehold.it/15/7057ff/000000?text=+
-[yellow]: https://placehold.it/15/FBCA04/000000?text=+
+<table>
+  <thead>
+  </thead>
+    <tr>
+      <td width="50%" align="center">
+        <br />
+        <img align="center" src="./.github/based-pr.svg" height="150"><br />
+        <br />
+        <br />
+        <strong>
+          Each PRs' <a href="https://github.com/blog/2224-change-the-base-branch-of-a-pull-request">base</a> set to parent PR's branch
+        </strong>
+        <br />
+        <br />
+      </td>
+      <td width="50%" align="center">
+        <br />
+        <img src="./.github/upstream-pr.svg" height="150">
+        <br />
+        <br />
+        <strong>
+          All PRs based on upstream<br / > (Suggested when using the extension)
+        </strong>
+        <br />
+      </td>
+    </tr>
+  <tbody>
+    <tr>
+      <td width="50%">
+        <strong>Pros:</strong>
+        <ul>
+          <li>
+            Easier to review
+            <ul>
+              <li>
+                All PR views only shows changes from <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" />
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </td>
+      <td width="50%">
+        <strong>Pros:</strong>
+        <ul>
+          <li>No tinkering with PRs' base</li>
+        </ul>
+      </td>
+    <tr>
+    <tr>
+      <td width="50%">
+        <strong>Cons:</strong>
+        <ul>
+          <li>
+            Feature can only be shipped forward after all child PRs are ready.
+            <ul>
+              <li>
+                <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" /> can't be merged to upstream before <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" /> is reviewed and merged to <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" />.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" /> can be accidentally merged to a wrong branch
+            <ul>
+              <li>
+                If <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" /> still gets merged before, failing to update <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" />'s
+                base before merging will lead into it being merged to a stale branch.
+            </li>
+            </ul>
+          </li>
+        </ul>
+      </td>
+      <td width="50%">
+        <strong>Cons:</strong>
+        <ul>
+          <li>
+            "Files changed" view and all the other <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" />'s views are now cluttered with changes from <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" />.
+            <ul>
+              <li>
+                ✨ Stacker automatically hides all of these
+              </li>
+            </ul>
+          </li>
+          <li>
+            <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" /> can get merged accidentally if <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" /> is merged first
+            <ul>
+              <li>
+                ✨ Stacker shows a warning in PR's message
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-[Change the base branch of a Pull Request](https://github.com/blog/2224-change-the-base-branch-of-a-pull-request)
-
-### Each PRs' base set to parent PR's branch
-
-<img src="./.github/based-pr.svg" height="150">
-
-Pros:
-- Diff ("Files change" view) only shows changes from ![PR 2][yellow]
 
 
-Cons:
-- ![PR 1][purple] can't be merged to upstream before ![PR 2][yellow] is reviewed and merged to ![PR 1][purple].
- - Feature can only be shipped forward when all child PRs are ready.
-- If ![PR 1][purple] still gets merged before, failing to update ![PR 2][yellow]'s base before merging will lead into it being merged to a stale branch.
 
-### All PRs based on upstream (Suggested when using the extension)
 
-<img src="./.github/upstream-pr.svg" height="150">
-
-Pros:
-- No tinkering with PRs' base
-
-Cons:
-- "Files changed" view and all the other ![PR 2][yellow]'s views are now cluttered with changes related to ![PR 1][purple].
-  - Stacker automatically hides all of these
-- ![PR 1][purple] can get merged accidentally if ![PR 2][yellow] is merged first
 
 
 ---
