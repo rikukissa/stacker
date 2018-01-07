@@ -120,11 +120,11 @@ TODO
 ---
 
 ## Installation
-**Give it a go:**
+**Give it a go** (public repositories):
 
 1. Download [the extension](https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf)
 
-**If you like it and want to keep on using it:**
+**If you like it and want to keep on using it** (+ private repositories):
 
 2. Generate a new personal access token with following permissions: <br/><img alt="Required permissions" src="./.github/permissions.png" width="174px" />
 3. Open up Stacker options by clicking the extension icon at the right-top corner of your Chrome window. You'll notice that **access token** field for github.com domain is empty. Paste your token there and you're all set!
