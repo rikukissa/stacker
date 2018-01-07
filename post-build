@@ -5,3 +5,7 @@ rm build/service-worker.js
 mv build/static/js/*.js.map build/bundle.js.map
 mv build/static/js/*.js build/bundle.js
 rm -r build/static
+
+./node_modules/.bin/svgexport ./.github/logo.svg build/icon16.png :16
+./node_modules/.bin/svgexport ./.github/logo.svg build/icon48.png :48
+./node_modules/.bin/svgexport ./.github/logo.svg build/icon128.png :128
