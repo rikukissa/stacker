@@ -5,9 +5,13 @@
   "description": "Stacked pull requests for Github",
   "update_url": "http://www.example.com/update.xml",
   "content_scripts": [{
-    "js": ["static/js/bundle.js"],
+    "js": ["{{BUNDLE}}"],
     "matches": ["*://*/*"]
   }],
+  "browser_action": {
+    "default_title": "Stacker",
+    "default_popup": "popup.html"
+  },
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",
