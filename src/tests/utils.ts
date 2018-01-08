@@ -10,6 +10,28 @@ export async function getTextContent(element: puppeteer.JSHandle) {
   return (await property).jsonValue();
 }
 
+async function setToken(page: puppeteer.Page) {
+  await page.goto("chrome://extensions/");
+
+  await page.waitFor(".extension-list-item-wrapper");
+
+  const $extension = await page.$(".extension-list-item-wrapper");
+
+  const extensionId =
+    $extension && (await (await $extension.getProperty("id")).jsonValue());
+
+  await page.goto(`chrome-extension://${extensionId}/popup.html`);
+
+  await page.waitFor("input[type=password]");
+  const $password = await page.$("input[type=password]");
+
+  if (!$password) {
+    throw new Error("Password field not found from extension page");
+  }
+
+  await $password.type(process.env.GITHUB_TOKEN || "");
+}
+
 export async function createBrowser() {
   const browser = await puppeteer.launch({
     args: [
@@ -19,8 +41,9 @@ export async function createBrowser() {
     ],
     headless: false
   });
-
   const page = await browser.newPage();
+
+  await setToken(page);
 
   return { browser, page };
 }
