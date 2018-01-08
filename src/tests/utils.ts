@@ -23,13 +23,17 @@ async function setToken(page: puppeteer.Page) {
   await page.goto(`chrome-extension://${extensionId}/popup.html`);
 
   await page.waitFor("input[type=password]");
+  const $domain = await page.$("input[type=text]");
   const $password = await page.$("input[type=password]");
 
-  if (!$password) {
+  if (!$password || !$domain) {
     throw new Error("Password field not found from extension page");
   }
 
   await $password.type(process.env.GITHUB_TOKEN || "");
+
+  // To emit a change event from password field
+  await $domain.focus();
 }
 
 export async function createBrowser() {
