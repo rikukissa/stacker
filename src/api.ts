@@ -69,7 +69,7 @@ async function makeRequest(
   return axios({
     url: isGithub
       ? `//api.github.com${nocachePath}`
-      : `//${context.location.host}/api/v3/${nocachePath}`,
+      : `//${context.location.host}/api/v3${nocachePath}`,
     ...params
   })
     .then(response => response.data)
