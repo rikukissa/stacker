@@ -23,6 +23,6 @@ describe("parent PR select", () => {
   });
 
   it("appears right under Milestone selector", async () => {
-    // await page.waitFor("#stacker-pr-selector");
+    await page.waitFor("#stacker-pr-selector");
   });
 });
