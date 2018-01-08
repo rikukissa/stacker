@@ -27,6 +27,7 @@ export interface IGithubBase {
   repo: IGithubRepo;
   sha: string;
   user: IGithubOwner;
+  label: string;
 }
 export interface IGithubPullRequest {
   title: string;

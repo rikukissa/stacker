@@ -1,28 +1,51 @@
 import { h } from "preact";
-import { getPullRequests } from "../api";
+import { getPullRequest, getPullRequests } from "../../api";
 import {
   createIdForPullRequest,
   getBasePullRequestWithStackerInfo
-} from "../lib/base";
-import { IStackerContext } from "../lib/context";
-import { getBodyTextarea } from "../lib/dom";
-import { getLocation, getPullRequestURL } from "../lib/location";
-import { getStackerInfo } from "../lib/prInfo";
-import { toDOMNode } from "../lib/vdom";
+} from "../../lib/base";
+import { IStackerContext } from "../../lib/context";
+import { getBodyTextarea } from "../../lib/dom";
+import { getLocation, getPullRequestURL } from "../../lib/location";
+import { getStackerInfo } from "../../lib/prInfo";
+import { toDOMNode } from "../../lib/vdom";
+
+const FEATURE_INITIALIZED_FLAG = "stacker-merge-warning-initialized";
+
+function markUninitialized($comment: Element) {
+  $comment.classList.remove(FEATURE_INITIALIZED_FLAG);
+}
+
+function markInitialized($comment: Element) {
+  $comment.classList.add(FEATURE_INITIALIZED_FLAG);
+}
 
 function getTextareaStackerInfo() {
   const $textarea = getBodyTextarea();
   return $textarea && getStackerInfo($textarea.value);
 }
 const WARNING_ID = "stacker-merge-warning";
+
 export default async function initialize(context: IStackerContext) {
   const $comment = document.querySelector(".comment-body");
+
+  if (!$comment) {
+    return;
+  }
+
+  markUninitialized($comment);
 
   const location = getLocation(context.location);
 
   const pullRequests = await getPullRequests(context)(
     location.ownerLogin,
     location.repoName
+  );
+
+  const pullRequest = await getPullRequest(context)(
+    location.ownerLogin,
+    location.repoName,
+    location.prNumber
   );
 
   const stackerInfo = getTextareaStackerInfo();
@@ -47,11 +70,16 @@ export default async function initialize(context: IStackerContext) {
     }
   }
 
-  if (!(stackerInfo && $comment && $comment.firstElementChild)) {
+  if (!(stackerInfo && $comment.firstElementChild)) {
     return;
   }
 
   if (!basePR) {
+    return;
+  }
+
+  if (pullRequest.base.label === basePR.head.label) {
+    markInitialized($comment);
     return;
   }
 
@@ -68,4 +96,6 @@ export default async function initialize(context: IStackerContext) {
     ),
     $comment.firstElementChild.nextSibling
   );
+
+  markInitialized($comment);
 }
