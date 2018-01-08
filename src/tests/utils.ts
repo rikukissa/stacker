@@ -22,10 +22,6 @@ export async function createBrowser() {
 
   const page = await browser.newPage();
 
-  page.on("dialog", async (dialog: puppeteer.Dialog) => {
-    await dialog.accept(process.env.GITHUB_TOKEN);
-  });
-
   return { browser, page };
 }
 
