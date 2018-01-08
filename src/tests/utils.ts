@@ -26,7 +26,8 @@ export async function createBrowser() {
 }
 
 export async function login(page: puppeteer.Page) {
-  if (!(process.env.GITHUB_USERNAME && process.env.GITHUB_PASSWORD)) {
+  const { GITHUB_USERNAME, GITHUB_PASSWORD } = process.env;
+  if (!(GITHUB_USERNAME && GITHUB_PASSWORD)) {
     throw new Error(
       "Missing required environment variables GITHUB_USERNAME or GITHUB_PASSWORD"
     );
@@ -43,8 +44,8 @@ export async function login(page: puppeteer.Page) {
     throw new Error("Submit button or username/password fields not found");
   }
 
-  await $username.type(process.env.GITHUB_USERNAME);
-  await $password.type(process.env.GITHUB_PASSWORD);
+  await $username.type(GITHUB_USERNAME);
+  await $password.type(GITHUB_PASSWORD);
 
   await $submit.click();
   await page.waitForNavigation();
