@@ -7,7 +7,7 @@ import { IProps, Status } from "./Popup";
  */
 
 function isValidDomain(domain: IDomain) {
-  return domain.domain !== "" && domain.token !== "";
+  return domain.domain !== "";
 }
 
 function storeConfig(config: IConfig) {
