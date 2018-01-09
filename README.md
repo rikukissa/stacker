@@ -14,7 +14,7 @@ Stacker is a Chrome extension that makes working with stacked pull requests easi
 
 TODO
 
-## Stacking options
+## Two workflows you'll encounter when doing pull requests
 
 <table>
   <thead>
@@ -26,8 +26,9 @@ TODO
         <br />
         <br />
         <strong>
-          Each PRs' <a href="https://github.com/blog/2224-change-the-base-branch-of-a-pull-request">base</a> set to parent PR's branch
-        </strong>
+          Parent based pull request
+        </strong><br />
+          PR's <a href="https://github.com/blog/2224-change-the-base-branch-of-a-pull-request">base</a> is set to parent PR branch
         <br />
         <br />
       </td>
@@ -36,31 +37,55 @@ TODO
         <img src="./.github/upstream-pr.svg" height="150">
         <br />
         <br />
-        <strong>
-          All PRs based on upstream<br / > (Suggested when using the extension)
-        </strong>
+          <strong>
+            Upstream based pull request
+          </strong><br />
+          PR shares the same history with its parent, while still keeping its base as <strong>upstream</strong>
         <br />
       </td>
     </tr>
   <tbody>
     <tr>
       <td width="50%">
-        <strong>Pros:</strong>
         <ul>
           <li>
-            Easier to review
+            <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" />
+            is a clear extension for <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" />. Together they form a working piece of new functionality.
+          </li>
+          <li>
+            <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" /> is easily reviewable once the reviewer understands changes proposed in <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" />.
             <ul>
               <li>
-                All PR views only shows changes from <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" />
+                Github's "Files changed" view only shows changes made in <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" />
               </li>
             </ul>
           </li>
         </ul>
       </td>
       <td width="50%">
-        <strong>Pros:</strong>
         <ul>
-          <li>No tinkering with PRs' base</li>
+          <li>
+            <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" />
+            requires some functionality from <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" /> for it to work. They can be considered as two separate increments.
+          </li>
+          <li>
+            <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" />
+            includes changes from both PRs, making it more difficult to review.
+            <ul>
+              <li>
+                ✨ This is where Stacker can help you:<br />
+                It changes Github's default "Files changed" view to show you only changes from the pull request you're reviewing.
+              </li>
+            </ul>
+          </li>
+          <li>
+            There's no easy way of seeing that <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" /> should be a continuum for <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" />
+            <ul>
+              <li>
+                ✨ We've added clear colored labels to Github's "Pull requests" view showing you which PRs form a complete feature. On top of this, each label includes a number to help you understand in which orde the pull requests should be reviewed.
+              </li>
+            </ul>
+          </li>
         </ul>
       </td>
     <tr>
