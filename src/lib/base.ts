@@ -10,6 +10,13 @@ export interface IBase {
   selected: boolean;
 }
 
+export function isBasedOn(
+  pullRequest: IGithubPullRequest,
+  parentPullRequest: IGithubPullRequest
+) {
+  return pullRequest.base.label === parentPullRequest.head.label;
+}
+
 export function createId(owner: string, repo: string, branchName: string) {
   return `${owner}:${repo}:${branchName}`;
 }

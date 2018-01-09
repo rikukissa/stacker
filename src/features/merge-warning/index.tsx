@@ -3,7 +3,8 @@ import { getPullRequest, getPullRequests, IGithubPullRequest } from "../../api";
 import {
   createIdForPullRequest,
   getBasePullRequest,
-  getBasePullRequestWithStackerInfo
+  getBasePullRequestWithStackerInfo,
+  isBasedOn
 } from "../../lib/base";
 import { IStackerContext } from "../../lib/context";
 import { getBodyTextarea } from "../../lib/dom";
@@ -41,13 +42,6 @@ function getChildPullRequests(
     }
     return createIdForPullRequest(base) === id;
   });
-}
-
-function isBasedOn(
-  pullRequest: IGithubPullRequest,
-  parentPullRequest: IGithubPullRequest
-) {
-  return pullRequest.base.label === parentPullRequest.head.label;
 }
 
 function BasedChildrenWarning(pullRequests: IGithubPullRequest[]) {

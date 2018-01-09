@@ -3,37 +3,22 @@ import {
   getPullRequest,
   getPullRequestCommits,
   getPullRequests,
-  IGithubCommit
-} from "../api";
-import { getBasePullRequest } from "../lib/base";
-import { getConfig, setConfig } from "../lib/config";
-import { IStackerContext } from "../lib/context";
-import { getLocation, isFilesDiffView, isFilesView } from "../lib/location";
-import { toDOMNode } from "../lib/vdom";
+  IGithubCommit,
+  IGithubPullRequest
+} from "../../api";
+import { getBasePullRequest, isBasedOn } from "../../lib/base";
+import { getConfig, setConfig } from "../../lib/config";
+import { IStackerContext } from "../../lib/context";
+import { getLocation, isFilesDiffView, isFilesView } from "../../lib/location";
+import { toDOMNode } from "../../lib/vdom";
 
 async function getNewCommits(
-  context: IStackerContext
+  context: IStackerContext,
+  pullRequest: IGithubPullRequest,
+  parentPullRequest: IGithubPullRequest
 ): Promise<IGithubCommit[]> {
-  const location = getLocation(document.location);
-  const pullRequest = await getPullRequest(context)(
-    location.ownerLogin,
-    location.repoName,
-    location.prNumber
-  );
-
-  const pullRequests = await getPullRequests(context)(
-    location.ownerLogin,
-    location.repoName
-  );
-
-  const basePullRequest = getBasePullRequest(pullRequest, pullRequests);
-
-  if (!basePullRequest) {
-    return Promise.resolve([]);
-  }
-
   const commits = await getPullRequestCommits(context)(pullRequest);
-  const parentCommits = await getPullRequestCommits(context)(basePullRequest);
+  const parentCommits = await getPullRequestCommits(context)(parentPullRequest);
 
   return commits.filter(
     commit =>
@@ -68,14 +53,37 @@ async function redirectToPullRequestView(
 
 export default async function initialize(context: IStackerContext) {
   const config = await getConfig();
+  const $stats = document.querySelector(".float-right.pr-review-tools");
 
-  if (isFilesView(context.location)) {
-    const newCommits = await getNewCommits(context);
+  if (isFilesView(context.location) && $stats && $stats.parentElement) {
+    const location = getLocation(document.location);
+
+    const pullRequest = await getPullRequest(context)(
+      location.ownerLogin,
+      location.repoName,
+      location.prNumber
+    );
+
+    const pullRequests = await getPullRequests(context)(
+      location.ownerLogin,
+      location.repoName
+    );
+
+    const parentPullRequest = getBasePullRequest(pullRequest, pullRequests);
+
+    if (!parentPullRequest || isBasedOn(pullRequest, parentPullRequest)) {
+      return $stats.classList.add("stacker-diff-view-initialized");
+    }
+
+    const newCommits = await getNewCommits(
+      context,
+      pullRequest,
+      parentPullRequest
+    );
     if (!config.noAutomaticDiff) {
       return redirectToPullRequestView(context, newCommits);
     }
 
-    const $stats = document.querySelector(".float-right.pr-review-tools");
     const diffViewUrl = getDiffViewUrl(newCommits);
 
     const $existingNotification = document.getElementById(
@@ -85,7 +93,7 @@ export default async function initialize(context: IStackerContext) {
       $existingNotification.remove();
     }
 
-    if ($stats && $stats.parentElement && diffViewUrl) {
+    if (diffViewUrl) {
       $stats.parentElement.insertBefore(
         toDOMNode(
           <div
