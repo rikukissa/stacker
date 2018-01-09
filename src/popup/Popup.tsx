@@ -64,24 +64,6 @@ const button = css`
   }
 `;
 
-const primaryButton = css`
-  color: #fff;
-  background-color: #28a745;
-  background-image: linear-gradient(-180deg, #34d058 0%, #28a745 90%);
-  &:active {
-    background-color: #279f43;
-    background-image: none;
-    border-color: rgba(27, 31, 35, 0.5);
-    box-shadow: inset 0 0.15em 0.3em rgba(27, 31, 35, 0.15);
-  }
-  &:hover {
-    background-color: #269f42;
-    background-image: linear-gradient(-180deg, #2fcb53 0%, #269f42 90%);
-    background-position: 0 -0.5em;
-    border-color: rgba(27, 31, 35, 0.5);
-  }
-`;
-
 const input = css`
   padding: 6px 8px;
   font-size: 14px;
@@ -144,11 +126,8 @@ export default function Popup({
       <div>
         <header className={optionHeader}>
           <h2 className={optionTitle}>Github domains</h2>
-          <button
-            className={`${button} ${primaryButton}`}
-            onClick={onAddDomain}
-          >
-            Add
+          <button className={button} onClick={onAddDomain}>
+            Add new domain
           </button>
         </header>
         <section className={option}>
