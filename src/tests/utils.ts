@@ -39,6 +39,8 @@ async function setToken(page: puppeteer.Page) {
 export async function createBrowser() {
   const browser = await puppeteer.launch({
     args: [
+      `--no-sandbox`,
+      `--disable-setuid-sandbox`,
       `--disable-extensions-except=${PLUGIN_PATH}`,
       `--load-extension=${PLUGIN_PATH}`,
       `--ignore-certificate-errors`

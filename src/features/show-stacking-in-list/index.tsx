@@ -47,7 +47,7 @@ interface IStackNode {
 
 const COLORS = [
   "#7057ff",
-  "#fbca04",
+  "#fb8d04",
   "#28a745",
   "#b60205",
   "#5319e7",
