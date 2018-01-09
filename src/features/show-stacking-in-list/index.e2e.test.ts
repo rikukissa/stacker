@@ -36,6 +36,10 @@ describe("'part X' labels in list view", () => {
       const partContainer = await $title.getProperty("nextSibling");
       const partText = await getTextContent(partContainer);
 
+      if (!COMMIT_PART[title]) {
+        continue;
+      }
+
       expect(partText).toEqual(`part ${COMMIT_PART[title]}`);
     }
   });
