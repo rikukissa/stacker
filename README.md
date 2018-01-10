@@ -10,83 +10,106 @@
 
 Stacker is a Chrome extension that makes working with stacked pull requests easier both for PR authors and reviewers. Github's UI provides a lot of useful features for working with stacked PRs out of the box. However, many of those features require you to follow manual, repeatitive steps, that this extension automates for you.
 
-## So what are stacked pull requests?
+# So what are stacked pull requests?
 
 TODO
 
-## Two workflows you'll encounter when doing pull requests
+# Two workflows you'll encounter when doing pull requests
 
 <table>
-  <tbody>
+  <thead>
     <tr>
       <td width="50%" align="center">
         <br />
         <img align="center" src="./.github/based-pr.svg" height="150"><br />
         <br />
-        <br />
-        <strong>
-          Parent based pull request
-        </strong>
-        <br />
-        PR's <a href="https://github.com/blog/2224-change-the-base-branch-of-a-pull-request">base</a> is set to parent PR branch
+        <p>
+          <strong>
+            Parent based pull request
+          </strong>
+          <br />
+          PR's <a href="https://github.com/blog/2224-change-the-base-branch-of-a-pull-request">base</a>
+          is set to parent PR branch
+        </p>
       </td>
       <td width="50%" align="center">
+        <br />
         <br />
         <img src="./.github/upstream-pr.svg" height="150">
         <br />
         <br />
-        <strong>
-          Upstream based pull request
-        </strong><br />
-        PR shares the same history with its parent, while still keeping its base as <strong>upstream</strong>
+        <p>
+          <strong>
+            Upstream based pull request
+          </strong>
+          <br />
+          PR shares the same history with its parent, while still keeping its base as <strong>upstream</strong>
+        </p>
       </td>
     </tr>
+  </thead>
+  <tbody>
     <tr>
       <td>
+        <br />
         <p align="center">
-          <img alt="PR 2" src="./.github/PR2.svg" />
-          is a clear extension of <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" />.<br /> Together they form a working piece of new functionality.
+          <img alt="PR 2" src="./.github/PR2.png" height="11px" />
+          is a clear extension of <img alt="PR 1" src="./.github/PR1.png" width="30px" />.<br /> Together they form a working piece of new functionality.
         </p>
       </td>
       <td>
         <p align="center">
-          <img alt="PR 2" src="./.github/PR2.svg" />
-          requires some functionality from <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" /> for it to work. <br /> They can be considered as two separate increments.
+          <br />
+          <img alt="PR 2" src="./.github/PR2.png" height="11px" />
+          requires some functionality from
+          <img alt="PR 1" src="./.github/PR1.png" width="30px" /> for it to work.
+          They can be considered as two separate increments.
         </p>
       </td>
     </tr>
   </tbody>
 </table>
 
+---
 
-### Parent based pull request
-#### <img alt="PR 2" src="./.github/PR2.svg" /> is easily reviewable once the reviewer understands changes proposed in <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" />.
+## Parent based pull request
 
-- Github's "Files changed" view only shows changes made in <img alt="PR 2" src="./.github/PR2.svg" />
+### Good parts
 
+**<img alt="PR 2" src="./.github/PR2.png" height="11px" /> is easily reviewable once the reviewer understands changes proposed in <img alt="PR 1" src="./.github/PR1.png" width="30px" />.**
 
-#### Feature can only be shipped forward after all child PRs are ready.
+- Github's "Files changed" view only shows changes made in <img alt="PR 2" src="./.github/PR2.png" height="11px" />
 
-- <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" /> can't be merged to upstream before <img alt="PR 2" src="./.github/PR2.svg" /> is reviewed and merged to <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" />.
+### Bad parts
 
-#### <img alt="PR 2" src="./.github/PR2.svg" /> can be accidentally merged to a stale branch
+**Feature can only be shipped forward after all child PRs are ready.**
 
-- If <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" /> still gets merged before, failing to update <img alt="PR 2" src="./.github/PR2.svg" />'s
+- <img alt="PR 1" src="./.github/PR1.png" height="11px" /> can't be merged to upstream before <img alt="PR 2" src="./.github/PR2.png" height="11px" /> is reviewed and merged to <img alt="PR 1" src="./.github/PR1.png" width="30px" />.
+
+**<img alt="PR 2" src="./.github/PR2.png" height="11px" /> can be accidentally merged to a stale branch**
+
+- If <img alt="PR 1" src="./.github/PR1.png" width="30px" /> still gets merged before, failing to update <img alt="PR 2" src="./.github/PR2.png" height="11px" />'s
 base before merging will lead into it being merged to a stale branch.
 
 ---
-### Upstream based pull request
+## Upstream based pull request
 
-#### <img alt="PR 2" src="./.github/PR2.svg" /> includes changes from both PRs, making it more difficult to review.
+### Good parts
+
+**TODO prs can be merged freely**
+
+### Bad parts
+
+**<img alt="PR 2" src="./.github/PR2.png" height="11px" /> includes changes from both PRs, making it more difficult to review.**
 
 - ✨ This is where Stacker can help you. It changes Github's default "Files changed" view to show you only changes from the pull request you're reviewing.
 
 
-#### There's no easy way of seeing that <img alt="PR 2" src="./.github/PR2.svg" /> should be a continuum for <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" />
+**There's no easy way of seeing that <img alt="PR 2" src="./.github/PR2.png" height="11px" /> should be a continuum for <img alt="PR 1" src="./.github/PR1.png" width="30px" />**
 
 - ✨ We've added clear colored labels to Github's "Pull requests" view showing you which PRs form a complete feature. On top of this, each label includes a number to help you understand in which orde the pull requests should be reviewed.
 
-#### <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" /> can get merged accidentally if <img alt="PR 2" src="./.github/PR2.svg" /> is merged first
+**<img alt="PR 1" src="./.github/PR1.png" width="30px" /> can get merged accidentally if <img alt="PR 2" src="./.github/PR2.png" height="11px" /> is merged first**
 
 - ✨ TODO stuff about warnings
 
@@ -94,7 +117,7 @@ base before merging will lead into it being merged to a stale branch.
 
 ---
 
-## Installation
+# Installation
 **Give it a go** (public repositories):
 
 1. Download [the extension](https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf)
@@ -110,7 +133,7 @@ base before merging will lead into it being merged to a stale branch.
 
 ---
 
-## Features
+# Features
 
 
 <h3 align="center">Mark pull request as dependent of your previous work</h3>
@@ -146,7 +169,7 @@ base before merging will lead into it being merged to a stale branch.
 
 ---
 
-## Related work
+# Related work
 
 - [Stacked Pull Requests: Keeping GitHub Diffs Small](https://graysonkoonce.com/stacked-pull-requests-keeping-github-diffs-small/)
 
