@@ -17,8 +17,7 @@ TODO
 ## Two workflows you'll encounter when doing pull requests
 
 <table>
-  <thead>
-  </thead>
+  <tbody>
     <tr>
       <td width="50%" align="center">
         <br />
@@ -27,119 +26,69 @@ TODO
         <br />
         <strong>
           Parent based pull request
-        </strong><br />
-          PR's <a href="https://github.com/blog/2224-change-the-base-branch-of-a-pull-request">base</a> is set to parent PR branch
+        </strong>
         <br />
-        <br />
+        PR's <a href="https://github.com/blog/2224-change-the-base-branch-of-a-pull-request">base</a> is set to parent PR branch
       </td>
       <td width="50%" align="center">
         <br />
         <img src="./.github/upstream-pr.svg" height="150">
         <br />
         <br />
-          <strong>
-            Upstream based pull request
-          </strong><br />
-          PR shares the same history with its parent, while still keeping its base as <strong>upstream</strong>
-        <br />
+        <strong>
+          Upstream based pull request
+        </strong><br />
+        PR shares the same history with its parent, while still keeping its base as <strong>upstream</strong>
       </td>
     </tr>
-  <tbody>
     <tr>
-      <td width="50%">
-        <ul>
-          <li>
-            <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" />
-            is a clear extension for <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" />. Together they form a working piece of new functionality.
-          </li>
-          <li>
-            <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" /> is easily reviewable once the reviewer understands changes proposed in <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" />.
-            <ul>
-              <li>
-                Github's "Files changed" view only shows changes made in <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" />
-              </li>
-            </ul>
-          </li>
-        </ul>
+      <td>
+        <p align="center">
+          <img alt="PR 2" src="./.github/PR2.svg" />
+          is a clear extension of <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" />.<br /> Together they form a working piece of new functionality.
+        </p>
       </td>
-      <td width="50%">
-        <ul>
-          <li>
-            <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" />
-            requires some functionality from <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" /> for it to work. They can be considered as two separate increments.
-          </li>
-          <li>
-            <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" />
-            includes changes from both PRs, making it more difficult to review.
-            <ul>
-              <li>
-                ✨ This is where Stacker can help you:<br />
-                It changes Github's default "Files changed" view to show you only changes from the pull request you're reviewing.
-              </li>
-            </ul>
-          </li>
-          <li>
-            There's no easy way of seeing that <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" /> should be a continuum for <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" />
-            <ul>
-              <li>
-                ✨ We've added clear colored labels to Github's "Pull requests" view showing you which PRs form a complete feature. On top of this, each label includes a number to help you understand in which orde the pull requests should be reviewed.
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </td>
-    <tr>
-    <tr>
-      <td width="50%">
-        <strong>Cons:</strong>
-        <ul>
-          <li>
-            Feature can only be shipped forward after all child PRs are ready.
-            <ul>
-              <li>
-                <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" /> can't be merged to upstream before <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" /> is reviewed and merged to <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" />.
-              </li>
-            </ul>
-          </li>
-          <li>
-            <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" /> can be accidentally merged to a wrong branch
-            <ul>
-              <li>
-                If <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" /> still gets merged before, failing to update <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" />'s
-                base before merging will lead into it being merged to a stale branch.
-            </li>
-            </ul>
-          </li>
-        </ul>
-      </td>
-      <td width="50%">
-        <strong>Cons:</strong>
-        <ul>
-          <li>
-            "Files changed" view and all the other <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" />'s views are now cluttered with changes from <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" />.
-            <ul>
-              <li>
-                ✨ Stacker automatically hides all of these
-              </li>
-            </ul>
-          </li>
-          <li>
-            <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" /> can get merged accidentally if <img alt="PR 2" src="https://placehold.it/15/FBCA04/000000?text=+" /> is merged first
-            <ul>
-              <li>
-                ✨ Stacker shows a warning in PR's message
-              </li>
-            </ul>
-          </li>
-        </ul>
+      <td>
+        <p align="center">
+          <img alt="PR 2" src="./.github/PR2.svg" />
+          requires some functionality from <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" /> for it to work. <br /> They can be considered as two separate increments.
+        </p>
       </td>
     </tr>
   </tbody>
 </table>
 
 
+### Parent based pull request
+#### <img alt="PR 2" src="./.github/PR2.svg" /> is easily reviewable once the reviewer understands changes proposed in <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" />.
+
+- Github's "Files changed" view only shows changes made in <img alt="PR 2" src="./.github/PR2.svg" />
 
 
+#### Feature can only be shipped forward after all child PRs are ready.
+
+- <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" /> can't be merged to upstream before <img alt="PR 2" src="./.github/PR2.svg" /> is reviewed and merged to <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" />.
+
+#### <img alt="PR 2" src="./.github/PR2.svg" /> can be accidentally merged to a stale branch
+
+- If <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" /> still gets merged before, failing to update <img alt="PR 2" src="./.github/PR2.svg" />'s
+base before merging will lead into it being merged to a stale branch.
+
+---
+### Upstream based pull request
+
+#### <img alt="PR 2" src="./.github/PR2.svg" /> includes changes from both PRs, making it more difficult to review.
+
+- ✨ This is where Stacker can help you. It changes Github's default "Files changed" view to show you only changes from the pull request you're reviewing.
+
+
+#### There's no easy way of seeing that <img alt="PR 2" src="./.github/PR2.svg" /> should be a continuum for <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" />
+
+- ✨ We've added clear colored labels to Github's "Pull requests" view showing you which PRs form a complete feature. On top of this, each label includes a number to help you understand in which orde the pull requests should be reviewed.
+
+#### <img alt="PR 1" src="https://placehold.it/15/7057ff/000000?text=+" /> can get merged accidentally if <img alt="PR 2" src="./.github/PR2.svg" /> is merged first
+
+- ✨ TODO stuff about warnings
 
 
 
