@@ -10,7 +10,7 @@
 
 Stacker is a Chrome extension that makes working with stacked pull requests easier both for PR authors and reviewers. Github's UI provides a lot of useful features for working with stacked PRs out of the box. However, many of those features require you to follow manual, repeatitive steps, that this extension automates for you.
 
-# So what are stacked pull requests?
+## So what are stacked pull requests?
 
 Often you might find yourself in a situation, where you want to suggest two separate increments to your project, but the latter one relies on some implementation details of the former one. Maybe you want to translate your app to French, but for that to be possible you first need to implement an internationalization support.
 
@@ -18,7 +18,7 @@ Even though in your case this might be trivial to implement, it sometimes makes 
 
 There are few different approaches for tackling this problem. The first one (parent based pull request) being the one more suitable when you consider your changes as being one complete feature that should be published at one go and the second one (upstream based pull request) more suitable for those cases where the increments aren't that tightly coupled or you're otherwise happy to publish them at different times.
 
-# Common pull request workflows
+## Common pull request workflows
 
 <table>
   <thead>
@@ -76,15 +76,15 @@ There are few different approaches for tackling this problem. The first one (par
 
 ---
 
-## Parent based pull request
+### Parent based pull request
 
-### Good parts
+#### Good parts
 
 **<img alt="PR 2" src="./.github/PR2.png" height="11px" /> is easily reviewable once the reviewer understands changes proposed in <img alt="PR 1" src="./.github/PR1.png" width="30px" />.**
 
 - Github's "Files changed" view only shows changes made in <img alt="PR 2" src="./.github/PR2.png" height="11px" />
 
-### Bad parts
+#### Bad parts
 
 **Feature can only be shipped forward after all child PRs are ready.**
 
@@ -96,13 +96,13 @@ There are few different approaches for tackling this problem. The first one (par
 base before merging will lead into it being merged to a stale branch.
 
 ---
-## Upstream based pull request
+### Upstream based pull request
 
-### Good parts
+#### Good parts
 
 **TODO**
 
-### Bad parts
+#### Bad parts
 
 **<img alt="PR 2" src="./.github/PR2.png" height="11px" /> includes changes from both PRs, making it more difficult to review.**
 
@@ -121,7 +121,7 @@ base before merging will lead into it being merged to a stale branch.
 
 ---
 
-# Installation
+## Installation
 **Give it a go** (public repositories):
 
 1. Download [the extension](https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf)
@@ -137,9 +137,9 @@ base before merging will lead into it being merged to a stale branch.
 
 ---
 
-# Features
+## Features
 
-## Mark pull request as dependent of your previous work
+### Mark pull request as dependent of your previous work
 
 |<img alt="Pull request order visible in pull requests" src="./.github/list-view.png" width="513px" /> | <img alt="Select parent pull request" src="./.github/parent-selector.png" width="320px" /> |
 |--|--|
@@ -148,7 +148,7 @@ base before merging will lead into it being merged to a stale branch.
 When reviewing stacked pull requests, it's important to know in what order the work should be reviewed. Most commonly the proposed solution is to prefix pull request titles with <strong>[PART-2]</strong>, which works fine. Stacker does this automatically for you and uses different colors to make distinction between the different chains of pull requests.
 
 
-## View only changes made in this pull request
+### View only changes made in this pull request
 
 |<img width="860px" alt="Only relevant changes visible" src="./.github/diff-all-visible.png" />|
 |--|
@@ -157,7 +157,7 @@ When reviewing stacked pull requests, it's important to know in what order the w
 
 By default on the "Files changed" tab, Github shows you all changes from all commits included in your pull request. Oftentimes when working with stacked pull requests this is not what you want. Stacker automatically figures out which commits are actually part of the pull request and redirects you to a diff view with only these changes.
 
-## Automatic warnings on child pull requests
+### Automatic warnings on child pull requests
 
 |<img width="789px" alt="Automatic warnings on child pull requests" src="./.github/warning.png" />|
 |--|
@@ -172,7 +172,7 @@ When a pull request has child pull requests, a warning is shown suggesting you t
 
 ---
 
-# Related work
+## Related work
 
 - [Stacked Pull Requests: Keeping GitHub Diffs Small](https://graysonkoonce.com/stacked-pull-requests-keeping-github-diffs-small/)
 
