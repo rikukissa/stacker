@@ -124,7 +124,7 @@ base before merging will lead into it being merged to a stale branch.
 
 **If you like it and want to keep on using it** (+ private repositories):
 
-2. Generate a new personal access token with following permissions: <br/><img alt="Required permissions" src="./.github/permissions.png" width="174px" />
+2. Generate a new [personal access token](https://github.com/settings/tokens) with following permissions: <br/><img alt="Required permissions" src="./.github/permissions.png" width="174px" />
 3. Open up Stacker options by clicking the extension icon at the right-top corner of your Chrome window. You'll notice that **access token** field for github.com domain is empty. Paste your token there and you're all set!
 
 **For Github Enterprise users:**
@@ -135,37 +135,33 @@ base before merging will lead into it being merged to a stale branch.
 
 # Features
 
-
-<h3 align="center">Mark pull request as dependent of your previous work</h3>
-
+## Mark pull request as dependent of your previous work
 
 |<img alt="Pull request order visible in pull requests" src="./.github/list-view.png" width="513px" /> | <img alt="Select parent pull request" src="./.github/parent-selector.png" width="320px" /> |
 |--|--|
 
-<p>
-  When reviewing stacked pull requests, it's important to know in what order the work should be reviewed. Most commonly the proposed solution is to prefix pull request titles with <strong>[PART-2]</strong>, which works fine. Stacker does this automatically for you and uses different colors to make distinction between the different chains of pull requests.
-</p>
 
-<h3 align="center">View only changes made in this pull request</h3>
+When reviewing stacked pull requests, it's important to know in what order the work should be reviewed. Most commonly the proposed solution is to prefix pull request titles with <strong>[PART-2]</strong>, which works fine. Stacker does this automatically for you and uses different colors to make distinction between the different chains of pull requests.
+
+
+## View only changes made in this pull request
 
 |<img width="860px" alt="Only relevant changes visible" src="./.github/diff-all-visible.png" />|
 |--|
 |<img width="860px" alt="Only relevant changes visible" src="./.github/diff-pr-visible.png" />|
 
-<p>
-  By default on the "Files changed" tab, Github shows you all changes from all commits included in your pull request. Oftentimes when working with stacked pull requests this is not what you want. Stacker automatically figures out which commits are actually part of the pull request and redirects you to a diff view with only these changes.
-</p>
+
+By default on the "Files changed" tab, Github shows you all changes from all commits included in your pull request. Oftentimes when working with stacked pull requests this is not what you want. Stacker automatically figures out which commits are actually part of the pull request and redirects you to a diff view with only these changes.
 
 
-<h3 align="center">Automatic warnings on sequential pull requests</h3>
+
+## Automatic warnings on sequential pull requests
 
 
 |<img width="789px" alt="Automatic warnings on sequential pull requests" src="./.github/warning.png" />|
 |--|
 
-<p>
-  Stacker adds a warning to every pull request that has been marked dependent on some other pull request. This is to prevent accidental merging before the parent pull request is merged.
-</p>
+Stacker adds a warning to every pull request that has been marked dependent on some other pull request. This is to prevent accidental merging before the parent pull request is merged.
 
 ---
 
