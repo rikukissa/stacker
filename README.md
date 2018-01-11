@@ -12,9 +12,13 @@ Stacker is a Chrome extension that makes working with stacked pull requests easi
 
 # So what are stacked pull requests?
 
-TODO
+Often you might find yourself in a situation, where you want to suggest two separate increments to your project, but the latter one relies on some implementation details of the former one. Maybe you want to translate your app to French, but for that to be possible you first need to implement an internationalization support.
 
-# Two workflows you'll encounter when doing pull requests
+Even though in your case this might be trivial to implement, it sometimes makes the reviewers' job easier if the proposed changes are split into multiple pull requests. --> TODO -->
+
+There are few different approaches for tackling this problem. The first one (parent based pull request) being the one more suitable when you consider your changes as being one complete feature that should be published at one go and the second one (upstream based pull request) more suitable for those cases where the increments aren't that tightly coupled or you're otherwise happy to publish them at different times.
+
+# Common pull request workflows
 
 <table>
   <thead>
@@ -96,7 +100,7 @@ base before merging will lead into it being merged to a stale branch.
 
 ### Good parts
 
-**TODO prs can be merged freely**
+**TODO**
 
 ### Bad parts
 
@@ -111,7 +115,7 @@ base before merging will lead into it being merged to a stale branch.
 
 **<img alt="PR 1" src="./.github/PR1.png" width="30px" /> can get merged accidentally if <img alt="PR 2" src="./.github/PR2.png" height="11px" /> is merged first**
 
-- ✨ TODO stuff about warnings
+- ✨ TODO
 
 
 
@@ -153,15 +157,18 @@ When reviewing stacked pull requests, it's important to know in what order the w
 
 By default on the "Files changed" tab, Github shows you all changes from all commits included in your pull request. Oftentimes when working with stacked pull requests this is not what you want. Stacker automatically figures out which commits are actually part of the pull request and redirects you to a diff view with only these changes.
 
+## Automatic warnings on child pull requests
 
-
-## Automatic warnings on sequential pull requests
-
-
-|<img width="789px" alt="Automatic warnings on sequential pull requests" src="./.github/warning.png" />|
+|<img width="789px" alt="Automatic warnings on child pull requests" src="./.github/warning.png" />|
 |--|
 
-Stacker adds a warning to every pull request that has been marked dependent on some other pull request. This is to prevent accidental merging before the parent pull request is merged.
+**Upstream based pull requests**
+
+Stacker adds a warning to every pull request that has been marked dependent on some other pull request. This is to prevent a situation where merging a child pull request would cause the parent getting merged too.
+
+**Parent based pull requests**
+
+When a pull request has child pull requests, a warning is shown suggesting you to first merge all children in before merging the PR you're viewing. This warning helps you avoid the situation where child PRs accidentally gets merged into a parent branch that has already been merged to upstream.
 
 ---
 
