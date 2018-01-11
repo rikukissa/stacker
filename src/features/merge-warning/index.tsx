@@ -77,10 +77,20 @@ function ParentPullRequestWarning(pullRequest: IGithubPullRequest) {
   );
 }
 
+function render(node: JSX.Element, $container: Element) {
+  if (!$container.lastElementChild) {
+    return;
+  }
+  $container.insertBefore(
+    toDOMNode(node),
+    $container.lastElementChild.nextSibling
+  );
+}
+
 export default async function initialize(context: IStackerContext) {
   const $comment = document.querySelector(".comment-body");
 
-  if (!$comment || !$comment.firstElementChild) {
+  if (!$comment) {
     return;
   }
 
@@ -127,10 +137,7 @@ export default async function initialize(context: IStackerContext) {
   ).filter(child => isBasedOn(child, pullRequest));
 
   if (basedPullRequests.length > 0) {
-    $comment.insertBefore(
-      toDOMNode(BasedChildrenWarning(basedPullRequests)),
-      $comment.firstElementChild.nextSibling
-    );
+    render(BasedChildrenWarning(basedPullRequests), $comment);
 
     markInitialized($comment);
     return;
@@ -148,10 +155,7 @@ export default async function initialize(context: IStackerContext) {
     return;
   }
 
-  $comment.insertBefore(
-    toDOMNode(ParentPullRequestWarning(parentPullRequest)),
-    $comment.firstElementChild.nextSibling
-  );
+  render(ParentPullRequestWarning(parentPullRequest), $comment);
 
   markInitialized($comment);
 }
