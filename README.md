@@ -82,7 +82,7 @@ There are few different approaches for tackling this problem. The first one (par
 
 **<img alt="PR 2" src="./.github/PR2.png" height="11px" /> is easily reviewable once the reviewer understands changes proposed in <img alt="PR 1" src="./.github/PR1.png" width="30px" />.**
 
-- Github's "Files changed" view only shows changes made in <img alt="PR 2" src="./.github/PR2.png" height="11px" />
+- Github's "Files changed" - view only shows changes made in <img alt="PR 2" src="./.github/PR2.png" height="11px" />
 
 #### Bad parts
 
@@ -92,7 +92,7 @@ There are few different approaches for tackling this problem. The first one (par
 
 **<img alt="PR 2" src="./.github/PR2.png" height="11px" /> can be accidentally merged to a stale branch**
 
-- If <img alt="PR 1" src="./.github/PR1.png" width="30px" /> still gets merged before, failing to update <img alt="PR 2" src="./.github/PR2.png" height="11px" />'s
+- If <img alt="PR 1" src="./.github/PR1.png" width="30px" /> still gets merged first, failing to update <img alt="PR 2" src="./.github/PR2.png" height="11px" />'s
 base before merging will lead into it being merged to a stale branch.
 
 ---
@@ -104,14 +104,14 @@ base before merging will lead into it being merged to a stale branch.
 
 #### Bad parts
 
-**<img alt="PR 2" src="./.github/PR2.png" height="11px" /> includes changes from both PRs, making it more difficult to review.**
+**<img alt="PR 2" src="./.github/PR2.png" height="11px" /> includes changes from both PRs making it more difficult to review.**
 
-- ✨ This is where Stacker can help you. It changes Github's default "Files changed" view to show you only changes from the pull request you're reviewing.
+- ✨ This is where Stacker can help you. It changes Github's default "Files changed" - view to show you only changes from the pull request you're reviewing.
 
 
-**There's no easy way of seeing that <img alt="PR 2" src="./.github/PR2.png" height="11px" /> should be a continuum for <img alt="PR 1" src="./.github/PR1.png" width="30px" />**
+**There's no easy way of seeing that <img alt="PR 2" src="./.github/PR2.png" height="11px" /> is a continuum for <img alt="PR 1" src="./.github/PR1.png" width="30px" />**
 
-- ✨ We've added clear colored labels to Github's "Pull requests" view showing you which PRs form a complete feature. On top of this, each label includes a number to help you understand in which orde the pull requests should be reviewed.
+- ✨ We've added clear colored labels to Github's "Pull requests" - view showing you which PRs together form a complete feature. On top of this, each label includes a number to help you understand in which order the pull requests should be reviewed.
 
 **<img alt="PR 1" src="./.github/PR1.png" width="30px" /> can get merged accidentally if <img alt="PR 2" src="./.github/PR2.png" height="11px" /> is merged first**
 
@@ -133,7 +133,7 @@ base before merging will lead into it being merged to a stale branch.
 
 **For Github Enterprise users:**
 
-4. Add a new domain and access token from Stacker options (step 3).
+4. Add a new domain and a access token (same as step 3).
 
 ---
 
@@ -145,7 +145,7 @@ base before merging will lead into it being merged to a stale branch.
 |--|--|
 
 
-When reviewing stacked pull requests, it's important to know in what order the work should be reviewed. Most commonly the proposed solution is to prefix pull request titles with <strong>[PART-2]</strong>, which works fine. Stacker does this automatically for you and uses different colors to make distinction between the different chains of pull requests.
+When reviewing stacked pull requests, it's important to know in which order the work should be reviewed. Most commonly the proposed solution is to prefix pull request titles with <strong>[PART-2]</strong>, which works just fine. Stacker does this automatically for you and uses different colors to make distinction between the different stacks of pull requests.
 
 
 ### View only changes made in this pull request
@@ -155,20 +155,20 @@ When reviewing stacked pull requests, it's important to know in what order the w
 |<img width="860px" alt="Only relevant changes visible" src="./.github/diff-pr-visible.png" />|
 
 
-By default on the "Files changed" tab, Github shows you all changes from all commits included in your pull request. Oftentimes when working with stacked pull requests this is not what you want. Stacker automatically figures out which commits are actually part of the pull request and redirects you to a diff view with only these changes.
+By default on the "Files changed" - tab, Github shows you all changes from all commits included in your pull request. Oftentimes when working with stacked pull requests this is not what you want. Stacker automatically figures out which commits are actually part of the pull request and redirects you to a diff view with only these changes.
 
 ### Automatic warnings on child pull requests
 
 |<img width="789px" alt="Automatic warnings on child pull requests" src="./.github/warning.png" />|
 |--|
 
-**Upstream based pull requests**
+**Upstream based pull requests:**
 
 Stacker adds a warning to every pull request that has been marked dependent on some other pull request. This is to prevent a situation where merging a child pull request would cause the parent getting merged too.
 
-**Parent based pull requests**
+**Parent based pull requests:**
 
-When a pull request has child pull requests, a warning is shown suggesting you to first merge all children in before merging the PR you're viewing. This warning helps you avoid the situation where child PRs accidentally gets merged into a parent branch that has already been merged to upstream.
+When a pull request has child pull requests a warning is shown suggesting you to first merge all children before merging the PR you're viewing. This warning helps you avoid the situation where child PRs accidentally get merged into a parent branch that has already been merged to upstream.
 
 ---
 
