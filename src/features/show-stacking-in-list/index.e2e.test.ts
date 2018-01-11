@@ -1,5 +1,5 @@
 import * as puppeteer from "puppeteer";
-import { createBrowser, getTextContent } from "../../tests/utils";
+import { createPage, getTextContent } from "../../tests/utils";
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 
@@ -9,18 +9,15 @@ const COMMIT_PART = {
 };
 
 describe("'part X' labels in list view", () => {
-  let browser: puppeteer.Browser;
   let page: puppeteer.Page;
 
   beforeEach(async () => {
-    const setup = await createBrowser();
-    browser = setup.browser;
-    page = setup.page;
-
+    page = await createPage();
     await page.goto("https://github.com/rikukissa/stacker-e2e-repo/pulls");
   });
+
   afterEach(async () => {
-    await browser.close();
+    await page.close();
   });
 
   it("shows correct label for each pull request", async () => {

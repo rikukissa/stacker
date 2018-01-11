@@ -5,6 +5,39 @@ const PLUGIN_PATH = process.env.CI
   ? join(__dirname, "../../build")
   : join(__dirname, "../../dev");
 
+let sharedBrowser: puppeteer.Browser;
+
+beforeAll(async () => {
+  sharedBrowser = await createBrowser();
+});
+
+afterAll(async () => {
+  await sharedBrowser.close();
+});
+
+export async function createPage(): Promise<puppeteer.Page> {
+  return sharedBrowser.newPage();
+}
+
+async function createBrowser() {
+  const browser = await puppeteer.launch({
+    args: [
+      `--no-sandbox`,
+      `--disable-setuid-sandbox`,
+      `--disable-extensions-except=${PLUGIN_PATH}`,
+      `--load-extension=${PLUGIN_PATH}`,
+      `--ignore-certificate-errors`
+    ],
+    headless: false
+  });
+  const page = await browser.newPage();
+
+  await login(page);
+  await setToken(page);
+  await page.close();
+  return browser;
+}
+
 export async function getTextContent(element: puppeteer.JSHandle) {
   const property = await element.getProperty("textContent");
   return (await property).jsonValue();
@@ -36,25 +69,7 @@ async function setToken(page: puppeteer.Page) {
   await $domain.focus();
 }
 
-export async function createBrowser() {
-  const browser = await puppeteer.launch({
-    args: [
-      `--no-sandbox`,
-      `--disable-setuid-sandbox`,
-      `--disable-extensions-except=${PLUGIN_PATH}`,
-      `--load-extension=${PLUGIN_PATH}`,
-      `--ignore-certificate-errors`
-    ],
-    headless: false
-  });
-  const page = await browser.newPage();
-
-  await setToken(page);
-
-  return { browser, page };
-}
-
-export async function login(page: puppeteer.Page) {
+async function login(page: puppeteer.Page) {
   const { GITHUB_USERNAME, GITHUB_PASSWORD } = process.env;
   if (!(GITHUB_USERNAME && GITHUB_PASSWORD)) {
     throw new Error(

@@ -1,20 +1,17 @@
 import * as puppeteer from "puppeteer";
-import { createBrowser, login } from "../../tests/utils";
+import { createPage } from "../../tests/utils";
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000;
 
 describe("Merge warning", () => {
-  let browser: puppeteer.Browser;
   let page: puppeteer.Page;
 
   beforeEach(async () => {
-    const setup = await createBrowser();
-    browser = setup.browser;
-    page = setup.page;
-    await login(page);
+    page = await createPage();
   });
+
   afterEach(async () => {
-    await browser.close();
+    await page.close();
   });
 
   describe("when viewing a upstream based child PR", () => {
