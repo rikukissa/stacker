@@ -26,15 +26,22 @@ async function getNewCommits(
   );
 }
 
-function getDiffViewUrl(commits: IGithubCommit[]): string | null {
+function getDiffViewUrl(
+  currentLocation: Location,
+  commits: IGithubCommit[]
+): string | null {
   if (commits.length === 1) {
-    return window.location.href.replace(/files$/, `commits/${commits[0].sha}`);
+    return (
+      currentLocation.pathname.replace(/files$/, `commits/${commits[0].sha}`) +
+      currentLocation.hash
+    );
   } else if (commits.length > 1) {
     return (
-      window.location.href +
+      currentLocation.pathname +
       // TODO this is a too big of an assumption
       // https://softwareengineering.stackexchange.com/questions/314215/can-a-git-commit-have-more-than-2-parents
-      `/${commits[0].parents[0].sha}..${commits[commits.length - 1].sha}`
+      `/${commits[0].parents[0].sha}..${commits[commits.length - 1].sha}` +
+      currentLocation.hash
     );
   } else {
     return null;
@@ -45,7 +52,7 @@ async function redirectToPullRequestView(
   context: IStackerContext,
   newCommits: IGithubCommit[]
 ) {
-  const newUrl = getDiffViewUrl(newCommits);
+  const newUrl = getDiffViewUrl(context.location, newCommits);
   if (newUrl) {
     window.location.href = newUrl;
   }
@@ -84,7 +91,7 @@ export default async function initialize(context: IStackerContext) {
       return redirectToPullRequestView(context, newCommits);
     }
 
-    const diffViewUrl = getDiffViewUrl(newCommits);
+    const diffViewUrl = getDiffViewUrl(context.location, newCommits);
 
     const $existingNotification = document.getElementById(
       "stacker-files-notification"
