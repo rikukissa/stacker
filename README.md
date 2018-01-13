@@ -3,20 +3,22 @@
   <h1 align="center">Stacker</h1>
 </p>
 
-<p align="center">Intuitive and automated way for creating and reviewing stacked pull requests on Github<br/> <a href="https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf">Download the Chrome extension</a></p>
+<p align="center">The best Github Pull Request Stacking Chrome Extension (Factory Bean) built so far<br/> <a href="https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf">Download the Chrome extension</a></p>
 
 ![Status](https://travis-ci.com/rikukissa/stacker.svg?token=zwBSeTmkrmCBprBpJMHF&branch=develop)
 [![Sponsored](https://img.shields.io/badge/chilicorn-sponsored-brightgreen.svg?logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAA4AAAAPCAMAAADjyg5GAAABqlBMVEUAAAAzmTM3pEn%2FSTGhVSY4ZD43STdOXk5lSGAyhz41iz8xkz2HUCWFFhTFFRUzZDvbIB00Zzoyfj9zlHY0ZzmMfY0ydT0zjj92l3qjeR3dNSkoZp4ykEAzjT8ylUBlgj0yiT0ymECkwKjWqAyjuqcghpUykD%2BUQCKoQyAHb%2BgylkAyl0EynkEzmkA0mUA3mj86oUg7oUo8n0k%2FS%2Bw%2Fo0xBnE5BpU9Br0ZKo1ZLmFZOjEhesGljuzllqW50tH14aS14qm17mX9%2Bx4GAgUCEx02JySqOvpSXvI%2BYvp2orqmpzeGrQh%2Bsr6yssa2ttK6v0bKxMBy01bm4zLu5yry7yb29x77BzMPCxsLEzMXFxsXGx8fI3PLJ08vKysrKy8rL2s3MzczOH8LR0dHW19bX19fZ2dna2trc3Nzd3d3d3t3f39%2FgtZTg4ODi4uLj4%2BPlGxLl5eXm5ubnRzPn5%2Bfo6Ojp6enqfmzq6urr6%2Bvt7e3t7u3uDwvugwbu7u7v6Obv8fDz8%2FP09PT2igP29vb4%2BPj6y376%2Bu%2F7%2Bfv9%2Ff39%2Fv3%2BkAH%2FAwf%2FtwD%2F9wCyh1KfAAAAKXRSTlMABQ4VGykqLjVCTVNgdXuHj5Kaq62vt77ExNPX2%2Bju8vX6%2Bvr7%2FP7%2B%2FiiUMfUAAADTSURBVAjXBcFRTsIwHAfgX%2FtvOyjdYDUsRkFjTIwkPvjiOTyX9%2FAIJt7BF570BopEdHOOstHS%2BX0s439RGwnfuB5gSFOZAgDqjQOBivtGkCc7j%2B2e8XNzefWSu%2BsZUD1QfoTq0y6mZsUSvIkRoGYnHu6Yc63pDCjiSNE2kYLdCUAWVmK4zsxzO%2BQQFxNs5b479NHXopkbWX9U3PAwWAVSY%2FpZf1udQ7rfUpQ1CzurDPpwo16Ff2cMWjuFHX9qCV0Y0Ok4Jvh63IABUNnktl%2B6sgP%2BARIxSrT%2FMhLlAAAAAElFTkSuQmCC)](http://spiceprogram.org/oss-sponsorship)
 
-Stacker is a Chrome extension that makes working with stacked pull requests easier both for PR authors and reviewers. Github's UI provides a lot of useful features for working with stacked PRs out of the box. However, many of those features require you to follow manual, repeatitive steps, that this extension automates for you.
+Reviewing and even creating a pull request on Github can be a very frustrating. Especially when you're reviewing a PR so large that no one can understand what's going on anymore. One of the only good solutions for this is to start thinking pull requests as smaller increments than, for example a feature. Dont get me wrong, they should still be logical increments and not just some random blobs of commits, but the idea remains the same. They should be small anyway you wanna do them.
+
+Stacker, on the other hand, is a Chrome extension that makes your life a tiny bit better 🤠
+
+It's like you may have already assumed, it's obviously packed with modern Github UI DOM manipulation trickery.
+If you already feel like you know what stacked pull requests are, jump right into [installation / features](#installation) to admire all the features.
 
 ## So what are stacked pull requests?
 
-Often you might find yourself in a situation, where you want to suggest two separate increments to your project, but the latter one relies on some implementation details of the former one. Maybe you want to translate your app to French, but for that to be possible you first need to implement an internationalization support.
+So now that you start splitting your PRs into smaller chunks, you soon notice that one PR's code is actually dependent on some other PR's code. You probably kept on working on top of the previous PR you made? That's alright. Now the only question is, whether you wanna with the **Upstream based pull request** style and keep your second PR's <a href="https://github.com/blog/2224-change-the-base-branch-of-a-pull-request">base</a> as upstream (master/develop, usually the selected by default.) or set it to be the branch your previous PR uses (this is what I will call a *Parent based pull request*).
 
-Even though in your case this might be trivial to implement, it sometimes makes the reviewers' job easier if the proposed changes are split into multiple pull requests. --> TODO -->
-
-There are few different approaches for tackling this problem. The first one (parent based pull request) being the one more suitable when you consider your changes as being one complete feature that should be published at one go and the second one (upstream based pull request) more suitable for those cases where the increments aren't that tightly coupled or you're otherwise happy to publish them at different times.
 
 ## Common pull request workflows
 
@@ -33,7 +35,7 @@ There are few different approaches for tackling this problem. The first one (par
           </strong>
           <br />
           PR's <a href="https://github.com/blog/2224-change-the-base-branch-of-a-pull-request">base</a>
-          is set to parent PR branch
+          is set to previous PR's branch
         </p>
       </td>
       <td width="50%" align="center">
@@ -47,7 +49,7 @@ There are few different approaches for tackling this problem. The first one (par
             Upstream based pull request
           </strong>
           <br />
-          PR shares the same history with its parent, while still keeping its base as <strong>upstream</strong>
+          Keeps the base as upstream and shares the commit history with its parent.
         </p>
       </td>
     </tr>
@@ -57,8 +59,7 @@ There are few different approaches for tackling this problem. The first one (par
       <td>
         <br />
         <p align="center">
-          <img alt="PR 2" src="./.github/PR2.png" height="11px" />
-          is a clear extension of <img alt="PR 1" src="./.github/PR1.png" width="30px" />.<br /> Together they form a working piece of new functionality.
+          <img alt="PR 2" src="./.github/PR2.png" height="11px" /> is a sequel to <img alt="PR 1" src="./.github/PR1.png" width="30px" />.<br /> For instance, in <img alt="PR 1" src="./.github/PR1.png" width="30px" /> you implement the tooling and boilerplate for localization and in the second one you add the localization itself.
         </p>
       </td>
       <td>
@@ -66,8 +67,8 @@ There are few different approaches for tackling this problem. The first one (par
           <br />
           <img alt="PR 2" src="./.github/PR2.png" height="11px" />
           requires some functionality from
-          <img alt="PR 1" src="./.github/PR1.png" width="30px" /> for it to work.
-          They can be considered as two separate increments.
+          <img alt="PR 1" src="./.github/PR1.png" width="30px" />, but the dependency doesn't go the other way.
+          They can be published as 2 separate pieces of functionality.
         </p>
       </td>
     </tr>
@@ -82,56 +83,67 @@ There are few different approaches for tackling this problem. The first one (par
 
 **<img alt="PR 2" src="./.github/PR2.png" height="11px" /> is easily reviewable once the reviewer understands changes proposed in <img alt="PR 1" src="./.github/PR1.png" width="30px" />.**
 
-- Github's "Files changed" - view only shows changes made in <img alt="PR 2" src="./.github/PR2.png" height="11px" />
+- The whole Github's PR - view only shows changes made in <img alt="PR 2" src="./.github/PR2.png" height="11px" />.
+- Reviewers may be able to figure out which PR is a sequel to the PR they just reviewed. Adding **[PART 2]** type labels to PR titles helps this a lot.
+
+****
 
 #### Bad parts
 
-**Feature can only be shipped forward after all child PRs are ready.**
+**The first PR (parent) can only be shipped forwards after all child PRs are reviewed and ready to be merged.**
 
 - <img alt="PR 1" src="./.github/PR1.png" height="11px" /> can't be merged to upstream before <img alt="PR 2" src="./.github/PR2.png" height="11px" /> is reviewed and merged to <img alt="PR 1" src="./.github/PR1.png" width="30px" />.
 
-**<img alt="PR 2" src="./.github/PR2.png" height="11px" /> can be accidentally merged to a stale branch**
+**<img alt="PR 2" src="./.github/PR2.png" height="11px" /> can accidentally be merged to a stale branch**
 
 - If <img alt="PR 1" src="./.github/PR1.png" width="30px" /> still gets merged first, failing to update <img alt="PR 2" src="./.github/PR2.png" height="11px" />'s
 base before merging will lead into it being merged to a stale branch.
+- ✨ This is when stacker shows you a warning on the parent PR. I'm starting with just a warning, but might be inclined to even take this as far as disabling the merge button completely. Drop an issue if you have an opinion about this.
+
+**Well, ok, it's quite bothersome to actually figure out the PR dependency tree**
+- ✨ Stacker actually fixes this with fancy labels on the PR titles, but more about that later on.
 
 ---
 ### Upstream based pull request
 
 #### Good parts
 
-**TODO**
+**Parent PRs can now be merged even when the children aren't ready**
+
+Obviously depends a bit of the PRs you decide to make. As a side note, I really wanna bring up this [great article about Feature Toggles](https://martinfowler.com/articles/feature-toggles.html) and how they can help you deploy your to production even when it's still a bit unpolished. There are also couple of other really inviting benefits this approach offers, but I'll let you read about them yourself.
+
 
 #### Bad parts
 
 **<img alt="PR 2" src="./.github/PR2.png" height="11px" /> includes changes from both PRs making it more difficult to review.**
 
-- ✨ This is where Stacker can help you. It changes Github's default "Files changed" - view to show you only changes from the pull request you're reviewing.
+- ✨ Yup, you guessed it. Totally want to fix this and this was actually the main reason I started writing this extension. In this case the extension changes Github's default "Files changed" - view to show you only changes from the pull request you're reviewing. Sweet!
 
 
-**There's no easy way of seeing that <img alt="PR 2" src="./.github/PR2.png" height="11px" /> is a continuum for <img alt="PR 1" src="./.github/PR1.png" width="30px" />**
+**There's no easy way of seeing that <img alt="PR 2" src="./.github/PR2.png" height="11px" /> is a sequel for <img alt="PR 1" src="./.github/PR1.png" width="30px" />**
 
-- ✨ We've added clear colored labels to Github's "Pull requests" - view showing you which PRs together form a complete feature. On top of this, each label includes a number to help you understand in which order the pull requests should be reviewed.
+- ✨ Stacker's colored labels on Github's "Pull requests" - view should help a lot with this. On top of this, each label has a number that helps understanding in which orders the pull requests should be reviewed.
 
 **<img alt="PR 1" src="./.github/PR1.png" width="30px" /> can get merged accidentally if <img alt="PR 2" src="./.github/PR2.png" height="11px" /> is merged first**
 
-- ✨ TODO
+- ✨ This is where the warning is shown on the child PR's summary.
 
 
 
 ---
 
 ## Installation
-**Give it a go** (public repositories):
+
+**"I just wanna see if it mines crypto on my MacBook" -package** (public repositories):
 
 1. Download [the extension](https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf)
 
-**If you like it and want to keep on using it** (+ private repositories):
+**"Ok, this is pretty good"** (+ private repositories):
 
 2. Generate a new [personal access token](https://github.com/settings/tokens) with following permissions: <br/><img alt="Required permissions" src="./.github/permissions.png" width="174px" />
 3. Open up Stacker options by clicking the extension icon at the right-top corner of your Chrome window. You'll notice that **access token** field for github.com domain is empty. Paste your token there and you're all set!
 
-**For Github Enterprise users:**
+**Enterprise edition** (+ self-hosted Github Enterprise)
 
 4. Add a new domain and a access token (same as step 3).
 
@@ -139,36 +151,22 @@ base before merging will lead into it being merged to a stale branch.
 
 ## Features
 
-### Mark pull request as dependent of your previous work
+### Check pull request as dependent of your previous work
 
 |<img alt="Pull request order visible in pull requests" src="./.github/list-view.png" width="513px" /> | <img alt="Select parent pull request" src="./.github/parent-selector.png" width="320px" /> |
 |--|--|
 
 
-When reviewing stacked pull requests, it's important to know in which order the work should be reviewed. Most commonly the proposed solution is to prefix pull request titles with <strong>[PART-2]</strong>, which works just fine. Stacker does this automatically for you and uses different colors to make distinction between the different stacks of pull requests.
+### View only changes made in the currently open pull request
 
-
-### View only changes made in this pull request
-
-|<img width="860px" alt="Only relevant changes visible" src="./.github/diff-all-visible.png" />|
+|<img  alt="Only relevant changes visible" src="./.github/diff-view.png" />|
 |--|
-|<img width="860px" alt="Only relevant changes visible" src="./.github/diff-pr-visible.png" />|
 
 
-By default on the "Files changed" - tab, Github shows you all changes from all commits included in your pull request. Oftentimes when working with stacked pull requests this is not what you want. Stacker automatically figures out which commits are actually part of the pull request and redirects you to a diff view with only these changes.
-
-### Automatic warnings on child pull requests
+### Automatic warnings on pull requests
 
 |<img width="789px" alt="Automatic warnings on child pull requests" src="./.github/warning.png" />|
 |--|
-
-**Upstream based pull requests:**
-
-Stacker adds a warning to every pull request that has been marked dependent on some other pull request. This is to prevent a situation where merging a child pull request would cause the parent getting merged too.
-
-**Parent based pull requests:**
-
-When a pull request has child pull requests a warning is shown suggesting you to first merge all children before merging the PR you're viewing. This warning helps you avoid the situation where child PRs accidentally get merged into a parent branch that has already been merged to upstream.
 
 ---
 
