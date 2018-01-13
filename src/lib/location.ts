@@ -25,7 +25,10 @@ export function isFilesView(location: Location) {
 }
 
 export function isFilesDiffView(location: Location) {
-  return /pull\/(\d+)\/files\/[a-z0-9]+\.\.[a-z0-9]+$/i.test(location.href);
+  return (
+    /pull\/(\d+)\/files\/[a-z0-9]+\.\.[a-z0-9]+$/i.test(location.pathname) ||
+    /pull\/(\d+)\/commits\/[a-z0-9]+$/i.test(location.pathname)
+  );
 }
 
 export function isPullHome(location: Location) {
