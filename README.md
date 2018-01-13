@@ -3,21 +3,31 @@
   <h1 align="center">Stacker</h1>
 </p>
 
-<p align="center">The best Github Pull Request Stacking Chrome Extension (Factory Bean) built so far<br/> <a href="https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf">Download the Chrome extension</a></p>
+<p align="center">The best Github Pull Request Stacking Chrome Extension built so far<br/> <a href="https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf">Download the Chrome extension</a></p>
 
 ![Status](https://travis-ci.com/rikukissa/stacker.svg?token=zwBSeTmkrmCBprBpJMHF&branch=develop)
 [![Sponsored](https://img.shields.io/badge/chilicorn-sponsored-brightgreen.svg?logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAA4AAAAPCAMAAADjyg5GAAABqlBMVEUAAAAzmTM3pEn%2FSTGhVSY4ZD43STdOXk5lSGAyhz41iz8xkz2HUCWFFhTFFRUzZDvbIB00Zzoyfj9zlHY0ZzmMfY0ydT0zjj92l3qjeR3dNSkoZp4ykEAzjT8ylUBlgj0yiT0ymECkwKjWqAyjuqcghpUykD%2BUQCKoQyAHb%2BgylkAyl0EynkEzmkA0mUA3mj86oUg7oUo8n0k%2FS%2Bw%2Fo0xBnE5BpU9Br0ZKo1ZLmFZOjEhesGljuzllqW50tH14aS14qm17mX9%2Bx4GAgUCEx02JySqOvpSXvI%2BYvp2orqmpzeGrQh%2Bsr6yssa2ttK6v0bKxMBy01bm4zLu5yry7yb29x77BzMPCxsLEzMXFxsXGx8fI3PLJ08vKysrKy8rL2s3MzczOH8LR0dHW19bX19fZ2dna2trc3Nzd3d3d3t3f39%2FgtZTg4ODi4uLj4%2BPlGxLl5eXm5ubnRzPn5%2Bfo6Ojp6enqfmzq6urr6%2Bvt7e3t7u3uDwvugwbu7u7v6Obv8fDz8%2FP09PT2igP29vb4%2BPj6y376%2Bu%2F7%2Bfv9%2Ff39%2Fv3%2BkAH%2FAwf%2FtwD%2F9wCyh1KfAAAAKXRSTlMABQ4VGykqLjVCTVNgdXuHj5Kaq62vt77ExNPX2%2Bju8vX6%2Bvr7%2FP7%2B%2FiiUMfUAAADTSURBVAjXBcFRTsIwHAfgX%2FtvOyjdYDUsRkFjTIwkPvjiOTyX9%2FAIJt7BF570BopEdHOOstHS%2BX0s439RGwnfuB5gSFOZAgDqjQOBivtGkCc7j%2B2e8XNzefWSu%2BsZUD1QfoTq0y6mZsUSvIkRoGYnHu6Yc63pDCjiSNE2kYLdCUAWVmK4zsxzO%2BQQFxNs5b479NHXopkbWX9U3PAwWAVSY%2FpZf1udQ7rfUpQ1CzurDPpwo16Ff2cMWjuFHX9qCV0Y0Ok4Jvh63IABUNnktl%2B6sgP%2BARIxSrT%2FMhLlAAAAAElFTkSuQmCC)](http://spiceprogram.org/oss-sponsorship)
 
-Reviewing and even creating a pull request on Github can be a very frustrating. Especially when you're reviewing a PR so large that no one can understand what's going on anymore. One of the only good solutions for this is to start thinking pull requests as smaller increments than, for example a feature. Dont get me wrong, they should still be logical increments and not just some random blobs of commits, but the idea remains the same. They should be small anyway you wanna do them.
+## TL;DR
+
+Stacker adds features to Github's UI which makes managing stacked pull requests easier. 
+
+**Features:**
+- [Mark pull request as dependent of your previous work](#mark-pull-request-as-dependent-of-your-previous-work) 
+- [Only see changes made in the PR you’re reviewing](#only-see-changes-made-in-the-pr-youre-reviewing) 
+- [Automatic warnings of pull request dependencies](#automatic-warnings-of-pull-request-dependencies)
+
+---
+
+Reviewing and even creating pull requests on Github can sometimes be very frustrating. Especially when you're reviewing a PR so large that no one can understand what's going on anymore. One of the only good solutions for this is to start thinking pull requests as smaller increments than, for example a feature. Dont get me wrong, they should still be logical increments and not just some random blobs of commits, but the idea remains the same. They should be small anyway you wanna do them.
 
 Stacker, on the other hand, is a Chrome extension that makes your life a tiny bit better 🤠
-
-It's like you may have already assumed, it's obviously packed with modern Github UI DOM manipulation trickery.
+Like you may have already assumed, it's obviously packed with modern Github UI DOM manipulation trickery.
 If you already feel like you know what stacked pull requests are, jump right into [installation / features](#installation) to admire all the features.
 
 ## So what are stacked pull requests?
 
-So now that you start splitting your PRs into smaller chunks, you soon notice that one PR's code is actually dependent on some other PR's code. You probably kept on working on top of the previous PR you made? That's alright. Now the only question is, whether you wanna with the **Upstream based pull request** style and keep your second PR's <a href="https://github.com/blog/2224-change-the-base-branch-of-a-pull-request">base</a> as upstream (master/develop, usually the selected by default.) or set it to be the branch your previous PR uses (this is what I will call a *Parent based pull request*).
+So now that you start splitting your PRs into smaller chunks, you soon notice that one PR's code is actually dependent on some other PR's code. You probably kept on working on top of the previous PR you made? That's alright. Now the only question is, whether you wanna proceed with the *Upstream based pull request* style and keep your second PR's <a href="https://github.com/blog/2224-change-the-base-branch-of-a-pull-request">base</a> as upstream (master/develop, usually the selected by default.) or set it to be the branch your previous PR uses (this is what I will call a *Parent based pull request*).
 
 
 ## Common pull request workflows
@@ -86,8 +96,6 @@ So now that you start splitting your PRs into smaller chunks, you soon notice th
 - The whole Github's PR - view only shows changes made in <img alt="PR 2" src="./.github/PR2.png" height="11px" />.
 - Reviewers may be able to figure out which PR is a sequel to the PR they just reviewed. Adding **[PART 2]** type labels to PR titles helps this a lot.
 
-****
-
 #### Bad parts
 
 **The first PR (parent) can only be shipped forwards after all child PRs are reviewed and ready to be merged.**
@@ -129,41 +137,38 @@ Obviously depends a bit of the PRs you decide to make. As a side note, I really 
 - ✨ This is where the warning is shown on the child PR's summary.
 
 
-
 ---
 
 ## Installation
 
-**"I just wanna see if it mines crypto on my MacBook" -package** (public repositories):
-
 1. Download [the extension](https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf)
 
-**"Ok, this is pretty good"** (+ private repositories):
+(+ private repositories):
 
-2. Generate a new [personal access token](https://github.com/settings/tokens) with following permissions: <br/><img alt="Required permissions" src="./.github/permissions.png" width="174px" />
+2. Generate a new [personal access token](https://github.com/settings/tokens) (no permissions needed).
 3. Open up Stacker options by clicking the extension icon at the right-top corner of your Chrome window. You'll notice that **access token** field for github.com domain is empty. Paste your token there and you're all set!
 
-**Enterprise edition** (+ self-hosted Github Enterprise)
+(+ self-hosted Github Enterprise)
 
-4. Add a new domain and a access token (same as step 3).
+4. Add a new domain and an access token (same as step 3).
 
 ---
 
 ## Features
 
-### Check pull request as dependent of your previous work
+### Mark pull request as dependent of your previous work
 
 |<img alt="Pull request order visible in pull requests" src="./.github/list-view.png" width="513px" /> | <img alt="Select parent pull request" src="./.github/parent-selector.png" width="320px" /> |
 |--|--|
 
 
-### View only changes made in the currently open pull request
+### Only see changes made in the PR you’re reviewing
 
 |<img  alt="Only relevant changes visible" src="./.github/diff-view.png" />|
 |--|
 
 
-### Automatic warnings on pull requests
+### Automatic warnings of pull request dependencies
 
 |<img width="789px" alt="Automatic warnings on child pull requests" src="./.github/warning.png" />|
 |--|
