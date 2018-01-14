@@ -16,15 +16,15 @@ import {
   isNewPullRequestView,
   isPullHome
 } from "../../lib/location";
-import { getStackerInfo, updateStackerInfo } from "../../lib/prInfo";
+import {
+  getStackerInfo,
+  IStackerInfo,
+  updateStackerInfo
+} from "../../lib/prInfo";
 import { toDOMNode } from "../../lib/vdom";
 import PRSelector, { ID } from "./components/PRSelector";
 
-function updateTextareaValue(newParent: IGithubPullRequest) {
-  const newStackerInfo = {
-    baseBranch: createIdForPullRequest(newParent)
-  };
-
+function updateTextareaValue(newStackerInfo: IStackerInfo) {
   const $textarea = getBodyTextarea();
   if ($textarea) {
     $textarea.value = updateStackerInfo($textarea.value, newStackerInfo);
@@ -40,10 +40,16 @@ async function selectParentPullRequest(
   context: IStackerContext,
   pullRequest: IGithubPullRequest,
   pullRequests: IGithubPullRequest[],
-  newParent: IGithubPullRequest
+  selectedParent: IGithubPullRequest
 ) {
+  const currentParent = getBasePullRequest(pullRequest, pullRequests);
+  const newParent =
+    currentParent === selectedParent
+      ? null
+      : createIdForPullRequest(selectedParent);
+
   const newStackerInfo = {
-    baseBranch: createIdForPullRequest(newParent)
+    baseBranch: newParent
   };
   const updatedComment = updateStackerInfo(pullRequest.body, newStackerInfo);
 
@@ -52,14 +58,14 @@ async function selectParentPullRequest(
     body: updatedComment
   });
 
-  updateTextareaValue(newParent);
+  updateTextareaValue(newStackerInfo);
 
   return updatedPullRequest;
 }
 
 function render(
   pullRequests: IGithubPullRequest[],
-  basePR: IGithubPullRequest | null,
+  parentPR: IGithubPullRequest | null,
   selectPullRequest: (pr: IGithubPullRequest) => void
 ) {
   const $milestone = document.querySelector(
@@ -77,7 +83,7 @@ function render(
   }
 
   $milestone.parentElement.insertBefore(
-    toDOMNode(PRSelector(pullRequests, basePR, selectPullRequest)),
+    toDOMNode(PRSelector(pullRequests, parentPR, selectPullRequest)),
     $milestone.nextSibling
   );
 }
@@ -134,13 +140,13 @@ async function initializeHome(context: IStackerContext) {
       pullRequests,
       newParentPR
     );
-    const newBasePR = getBasePullRequest(updatedPullRequest, pullRequests);
-    render(pullRequests, newBasePR || null, selectPullRequest);
+    const parentPR = getBasePullRequest(updatedPullRequest, pullRequests);
+    render(pullRequests, parentPR || null, selectPullRequest);
   }
 
-  const basePR = getBasePullRequest(pullRequest, pullRequests);
+  const newParent = getBasePullRequest(pullRequest, pullRequests);
 
-  render(pullRequests, basePR || null, selectPullRequest);
+  render(pullRequests, newParent || null, selectPullRequest);
 }
 
 async function initializeNewPullRequest(context: IStackerContext) {
@@ -151,15 +157,18 @@ async function initializeNewPullRequest(context: IStackerContext) {
   );
 
   async function selectPullRequest(newParentPR: IGithubPullRequest) {
-    updateTextareaValue(newParentPR);
+    updateTextareaValue({
+      baseBranch:
+        newParentPR === parentPR ? null : createIdForPullRequest(newParentPR)
+    });
     render(pullRequests, newParentPR, selectPullRequest);
   }
   const stackerInfo = getTextareaStackerInfo();
 
-  const basePR = stackerInfo
+  const parentPR = stackerInfo
     ? getBasePullRequestWithStackerInfo(stackerInfo, pullRequests)
     : null;
-  render(pullRequests, basePR, selectPullRequest);
+  render(pullRequests, parentPR, selectPullRequest);
 }
 
 export default async function initialize(context: IStackerContext) {

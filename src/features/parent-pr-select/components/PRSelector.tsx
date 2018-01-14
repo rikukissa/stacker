@@ -1,6 +1,7 @@
 import { h } from "preact";
 
 import { IGithubPullRequest } from "../../../api";
+import { createIdForPullRequest } from "../../../lib/base";
 import PullRequest from "./PullRequest";
 
 export const ID = "stacker-pr-selector";
@@ -125,8 +126,14 @@ export default function PRSelector(
         </div>
       </div>
 
-      <span className="css-truncate sidebar-projects">
-        {basePR ? `#${basePR.number} ${basePR.title}` : "None yet"}
+      <span className="css-truncate sidebar-parent-pull-request">
+        {basePR ? (
+          <span data-stacker-selected-parent={createIdForPullRequest(basePR)}>
+            #{basePR.number} {basePR.title}
+          </span>
+        ) : (
+          "None yet"
+        )}
       </span>
     </div>
   );

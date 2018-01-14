@@ -1,5 +1,5 @@
 export interface IStackerInfo {
-  baseBranch: string;
+  baseBranch: string | null;
 }
 
 const COMMENT_REGEXP = /<!--(.*)-->/;
