@@ -8,7 +8,7 @@ import {
 } from "../../lib/base";
 import { IStackerContext } from "../../lib/context";
 import { getBodyTextarea } from "../../lib/dom";
-import { getLocation, getPullRequestURL } from "../../lib/location";
+import { getLocation, getPullRequestURL, isPullHome } from "../../lib/location";
 import { getStackerInfo } from "../../lib/prInfo";
 import { toDOMNode } from "../../lib/vdom";
 
@@ -88,6 +88,10 @@ function render(node: JSX.Element, $container: Element) {
 }
 
 export default async function initialize(context: IStackerContext) {
+  if (!isPullHome(context.location)) {
+    return;
+  }
+
   const $comment = document.querySelector(".comment-body");
 
   if (!$comment) {
