@@ -1,8 +1,6 @@
 import * as puppeteer from "puppeteer";
 import { createPage } from "../../tests/utils";
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 500000;
-
 async function getFeature(
   page: puppeteer.Page
 ): Promise<puppeteer.ElementHandle> {

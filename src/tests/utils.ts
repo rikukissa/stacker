@@ -1,6 +1,8 @@
 import { join } from "path";
 import * as puppeteer from "puppeteer";
 
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+
 const PLUGIN_PATH = process.env.CI
   ? join(__dirname, "../../build")
   : join(__dirname, "../../dev");

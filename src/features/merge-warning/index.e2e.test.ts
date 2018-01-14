@@ -1,8 +1,6 @@
 import * as puppeteer from "puppeteer";
 import { createPage } from "../../tests/utils";
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000;
-
 describe("Merge warning", () => {
   let page: puppeteer.Page;
 

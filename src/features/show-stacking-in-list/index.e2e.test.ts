@@ -1,8 +1,6 @@
 import * as puppeteer from "puppeteer";
 import { createPage, getTextContent } from "../../tests/utils";
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-
 const COMMIT_PART = {
   "Add feature 1": 1,
   "Changes to feature 1": 2

@@ -1,8 +1,6 @@
 import * as puppeteer from "puppeteer";
 import { createPage } from "../../tests/utils";
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-
 describe("Automatic diff redirect", () => {
   let page: puppeteer.Page;
 
