@@ -10,11 +10,11 @@
 
 ## TL;DR
 
-Stacker adds features to Github's UI which makes managing stacked pull requests easier. 
+Stacker adds features to Github's UI which makes managing stacked pull requests easier.
 
 **Features:**
-- [✏️ Mark pull request as dependent of your previous work](#mark-pull-request-as-dependent-of-your-previous-work) 
-- [🔎 Only see changes made in the PR you’re reviewing](#only-see-changes-made-in-the-pr-youre-reviewing) 
+- [✏️ Mark pull request as dependent of your previous work](#mark-pull-request-as-dependent-of-your-previous-work)
+- [🔎 Only see changes made in the PR you’re reviewing](#only-see-changes-made-in-the-pr-youre-reviewing)
 - [⚠️ Automatic warnings of pull request dependencies](#automatic-warnings-of-pull-request-dependencies)
 
 ---
@@ -145,7 +145,10 @@ Obviously depends a bit of the PRs you decide to make. As a side note, I really 
 
 (+ private repositories):
 
-2. Generate a new [personal access token](https://github.com/settings/tokens) (no permissions needed).
+2. Generate a new [personal access token](https://github.com/settings/tokens) and add the following scopes:
+
+<img alt="scopes" src="./.github/permissions.png" width="450px" />
+
 3. Open up Stacker options by clicking the extension icon at the right-top corner of your Chrome window. You'll notice that **access token** field for github.com domain is empty. Paste your token there and you're all set!
 
 (+ self-hosted Github Enterprise)
