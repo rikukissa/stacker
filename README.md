@@ -94,7 +94,7 @@ As you start splitting your pull requests into smaller chunks, you come to notic
 **<img alt="PR 2" src="./.github/PR2.png" height="11px" /> is easily reviewable once the reviewer understands changes proposed in <img alt="PR 1" src="./.github/PR1.png" width="30px" />**
 
 - The entire Github's PR view only shows changes made in <img alt="PR 2" src="./.github/PR2.png" height="11px" />.
-- Reviewers are able to figure out which PR is a sequel to the PR they just reviewed. Adding colored **[PART 2]** type labels also makes this more prominent.
+- Reviewers are able to figure out which PR is a sequel to the PR they just reviewed. Adding **[PART 2]** type labels also makes this more prominent.
 
 #### Cons
 
@@ -107,7 +107,7 @@ As you start splitting your pull requests into smaller chunks, you come to notic
 - If <img alt="PR 1" src="./.github/PR1.png" width="30px" /> gets merged first, failing to update <img alt="PR 2" src="./.github/PR2.png" height="11px" />'s
 base before merging will lead it to being merged to a stale branch.
 
- ✨ This is when stacker helps. It shows you a warning on the parent PR. For this initial relased I've decided to just show a warning. Would disabling the merge button altogether be more useful? Create an issue if you have an opinion about this :).
+ ✨ This is when Stacker helps. It shows you a warning on the parent PR. For this initial release I've decided to just show a warning. Would disabling the merge button altogether be more useful? Create an issue if you have an opinion about this :).
 
 **Well, ok, it's quite bothersome to actually figure out the PR dependency tree**
 - ✨ Stacker actually fixes this with fancy labels on the PR titles, but more about that later on.
