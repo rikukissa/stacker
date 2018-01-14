@@ -76,8 +76,8 @@ So now that you start splitting your PRs into smaller chunks, you soon notice th
         <p align="center">
           <br />
           <img alt="PR 2" src="./.github/PR2.png" height="11px" />
-          requires some functionality from
-          <img alt="PR 1" src="./.github/PR1.png" width="30px" />, but the dependency doesn't go the other way.
+          depends on the functionality proposed in
+          <img alt="PR 1" src="./.github/PR1.png" width="30px" />, but the dependency doesn't go the other way.<br />
           They can be published as 2 separate pieces of functionality.
         </p>
       </td>
