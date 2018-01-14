@@ -13,9 +13,9 @@
 Stacker adds features to Github's UI which makes managing stacked pull requests easier. 
 
 **Features:**
-- [Mark pull request as dependent of your previous work](#mark-pull-request-as-dependent-of-your-previous-work) 
-- [Only see changes made in the PR you’re reviewing](#only-see-changes-made-in-the-pr-youre-reviewing) 
-- [Automatic warnings of pull request dependencies](#automatic-warnings-of-pull-request-dependencies)
+- [✏️ Mark pull request as dependent of your previous work](#mark-pull-request-as-dependent-of-your-previous-work) 
+- [🔎 Only see changes made in the PR you’re reviewing](#only-see-changes-made-in-the-pr-youre-reviewing) 
+- [⚠️ Automatic warnings of pull request dependencies](#automatic-warnings-of-pull-request-dependencies)
 
 ---
 
