@@ -19,7 +19,7 @@ Stacker adds features to Github's UI which makes managing stacked pull requests 
 
 ---
 
-Reviewing and even creating pull requests on Github can sometimes be very frustrating. Especially when you're reviewing a PR so large that it becomes difficult to follow what is happening. A solution for this is to start thinking of pull requests as smaller increments, for example a feature. Don't get me wrong, they should still be logical increments and not just some random blobs of commits, but the idea remains the same, they should be broken up into smaller pieces.
+Reviewing and even creating pull requests on Github can sometimes be very frustrating. Especially when you're reviewing a PR so large that it becomes difficult to follow what is happening. A solution for this is to start thinking of pull requests as smaller increments, for example a feature. Don't get me wrong, they should still be logical increments and not just some random blobs of commits, but the idea remains the same. They should be broken up into smaller pieces.
 
 Stacker is a Chrome extension that makes your life that tiny bit easier 🤠. It's packed with modern Github UI DOM manipulation trickery.
 
