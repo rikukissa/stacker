@@ -156,15 +156,11 @@ function render(
     $pullRequest &&
     $pullRequest.querySelector(".link-gray-dark.no-underline.h4");
 
-  // const $prName = $prInfo && $prInfo.querySelector(".d-inline-block");
-
   const listItemVisible = Boolean($pullRequest);
 
   if (!listItemVisible) {
     return;
   }
-
-  // const stackerInfo = getStackerInfo(pullRequest);
 
   if ($prInfo && $prInfo.parentElement) {
     $prInfo.parentElement.insertBefore(
@@ -228,6 +224,4 @@ export default async function initialize(context: IStackerContext) {
   Array.from(document.querySelectorAll(`.${badge}`)).forEach(el => el.remove());
 
   pullRequests.forEach(pr => render(pr, pullRequests, prGraph));
-
-  // console.log(pullRequests.map(getStackerInfo));
 }
