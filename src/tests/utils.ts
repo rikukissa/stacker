@@ -1,7 +1,7 @@
 import { join } from "path";
 import * as puppeteer from "puppeteer";
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
 
 const PLUGIN_PATH = process.env.CI
   ? join(__dirname, "../../build")
@@ -27,7 +27,6 @@ export async function emptyPopupPasswordField(page: puppeteer.Page) {
     (el: HTMLInputElement) => el.value || el.innerText || ""
   );
   await page.focus("input[type=password]");
-
   for (const _ of value) {
     await page.keyboard.press("Backspace");
   }
@@ -87,6 +86,7 @@ async function setToken(page: puppeteer.Page) {
   }
   await emptyPopupPasswordField(page);
   await $password.type(process.env.GITHUB_TOKEN as string);
+
   await $domain.focus();
   await page.waitFor(".access-token-valid");
 }
