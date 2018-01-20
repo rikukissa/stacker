@@ -16,6 +16,8 @@
 
 Stacker adds features to Github's UI which makes managing stacked pull requests easier.
 
+**Screencast:**
+
 <a href="https://www.youtube.com/watch?v=vy1LKpE1_wA">
   <img width="400px" alt="YouTube intro" src="./.github/intro.png" />
 </a>
@@ -26,7 +28,6 @@ Stacker adds features to Github's UI which makes managing stacked pull requests 
 - [⚠️ Automatic warnings of pull request dependencies](#automatic-warnings-of-pull-request-dependencies)
 
 
-Stacker adds features to Github's UI which makes managing stacked pull requests easier.
 ---
 
 Reviewing and even creating pull requests on Github can sometimes be very frustrating. Especially when you're reviewing a PR so large that it becomes difficult to follow what is happening. A solution for this is to start thinking of pull requests as smaller increments, for example a feature. Don't get me wrong, they should still be logical increments and not just some random blobs of commits, but the idea remains the same, they should be broken up into smaller pieces.
