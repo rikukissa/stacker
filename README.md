@@ -126,14 +126,14 @@ base before merging will lead it to being merged to a stale branch.
 ---
 ### Upstream based pull request
 
-#### Good parts
+#### Pros
 
 **Parent PRs can now be merged even when the children aren't ready**
 
 Obviously depends a bit of the PRs you decide to make. As a side note, I really wanna bring up this [great article about Feature Toggles](https://martinfowler.com/articles/feature-toggles.html) and how they can help you deploy your to production even when it's still a bit unpolished. There are also couple of other really inviting benefits this approach offers, but I'll let you read about them yourself.
 
 
-#### Bad parts
+#### Cons
 
 **<img alt="PR 2" src="./.github/PR2.png" height="11px" /> includes changes from both PRs making it more difficult to review.**
 
