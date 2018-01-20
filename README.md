@@ -14,6 +14,8 @@
 
 ## TL;DR
 
+Stacker adds features to Github's UI which makes managing stacked pull requests easier.
+
 <a href="https://www.youtube.com/watch?v=vy1LKpE1_wA">
   <img width="400px" alt="YouTube intro" src="./.github/intro.png" />
 </a>
