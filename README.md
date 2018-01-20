@@ -36,6 +36,45 @@ Stacker is a Chrome extension that makes your life that tiny bit easier 🤠. It
 
 If you already feel like you know what stacked pull requests are, jump right into [installation/features](#installation). If not, read on!
 
+## Installation
+
+1. Download [the extension](https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf)
+
+(+ private repositories):
+
+2. Generate a new [personal access token](https://github.com/settings/tokens) and add the following scopes:
+
+<img alt="scopes" src="./.github/permissions.png" width="450px" />
+
+3. Open up Stacker options by clicking the extension icon at the right-top corner of your Chrome window. You'll notice that **access token** field for github.com domain is empty. Paste your token there and you're all set!
+
+(+ self-hosted Github Enterprise)
+
+4. Add a new domain and an access token (same as step 3).
+
+---
+
+## Features
+
+### Mark pull request as dependent of your previous work
+
+|<img alt="Pull request order visible in pull requests" src="./.github/list-view.png" width="513px" /> | <img alt="Select parent pull request" src="./.github/parent-selector.png" width="320px" /> |
+|--|--|
+
+
+### Only see changes made in the PR you’re reviewing
+
+|<img  alt="Only relevant changes visible" src="./.github/diff-view.png" />|
+|--|
+
+
+### Automatic warnings of pull request dependencies
+
+|<img width="789px" alt="Automatic warnings on child pull requests" src="./.github/warning.png" />|
+|--|
+
+---
+
 ## So what are stacked pull requests?
 
 As you start splitting your pull requests into smaller chunks, you come to notice that one PR's code is actually dependent on anothers, and you continue to work on top of the previous PR you made. This is completely fine, but the question now is whether you want to proceed with the *Upstream based pull request* and keep your second PR's <a href="https://github.com/blog/2224-change-the-base-branch-of-a-pull-request">base</a> as upstream (master/develop, usually the selected by default) or set it to be the branch your previous PR uses (this is what I shall call a *Parent based pull request*).
@@ -151,44 +190,6 @@ Obviously depends a bit of the PRs you decide to make. As a side note, I really 
 
 ---
 
-## Installation
-
-1. Download [the extension](https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf)
-
-(+ private repositories):
-
-2. Generate a new [personal access token](https://github.com/settings/tokens) and add the following scopes:
-
-<img alt="scopes" src="./.github/permissions.png" width="450px" />
-
-3. Open up Stacker options by clicking the extension icon at the right-top corner of your Chrome window. You'll notice that **access token** field for github.com domain is empty. Paste your token there and you're all set!
-
-(+ self-hosted Github Enterprise)
-
-4. Add a new domain and an access token (same as step 3).
-
----
-
-## Features
-
-### Mark pull request as dependent of your previous work
-
-|<img alt="Pull request order visible in pull requests" src="./.github/list-view.png" width="513px" /> | <img alt="Select parent pull request" src="./.github/parent-selector.png" width="320px" /> |
-|--|--|
-
-
-### Only see changes made in the PR you’re reviewing
-
-|<img  alt="Only relevant changes visible" src="./.github/diff-view.png" />|
-|--|
-
-
-### Automatic warnings of pull request dependencies
-
-|<img width="789px" alt="Automatic warnings on child pull requests" src="./.github/warning.png" />|
-|--|
-
----
 
 ## Related work
 
