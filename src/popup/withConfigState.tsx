@@ -1,6 +1,7 @@
 import { AnyComponent, Component, h } from "preact";
+import { checkToken } from "../api";
 import { IConfig, IDomain, setConfig } from "../lib/config";
-import { IProps, Status } from "./Popup";
+import { IProps, IStatus } from "./Popup";
 
 /*
  * State mutators
@@ -46,12 +47,16 @@ async function domainChanged(
   };
 
   await storeConfig(newConfig);
-
   return newConfig;
 }
 
 async function getStatus(domain: IDomain) {
-  return true;
+  try {
+    await checkToken(domain.domain, domain.token);
+    return true;
+  } catch (err) {
+    return false;
+  }
 }
 
 type ActionHandler = (
@@ -60,8 +65,8 @@ type ActionHandler = (
 ) => Promise<IConfig> | IConfig;
 
 interface IState {
-  config: IConfig;
-  statuses: Status[];
+  config: IConfig | null;
+  statuses: IStatus[];
 }
 
 export default function withConfigState(
@@ -71,33 +76,54 @@ export default function withConfigState(
   return class extends Component<any, IState> {
     constructor() {
       super();
-      this.state.config = config;
+      this.state.config = null;
       this.state.statuses = [];
     }
     public async componentDidMount() {
       const statuses = await Promise.all(
-        this.state.config.domains.map(async domain => {
-          const status = await getStatus(domain);
-          return [domain, status];
+        config.domains.filter(({ token }) => token !== "").map(async domain => {
+          const valid = await getStatus(domain);
+          return { domain, valid };
         })
       );
-      this.setState(() => ({ statuses }));
+      this.setState((state: IState) => ({ config, statuses }));
     }
+
+    public checkStatus = async (oldDomain: IDomain, domain: IDomain) => {
+      await this.actionAndRerender(domainChanged)(oldDomain, domain);
+
+      if (domain.token === "") {
+        return;
+      }
+
+      const valid = await getStatus(domain);
+
+      this.setState((state: IState) => ({
+        ...state,
+        statuses: state.statuses.concat({ domain, valid })
+      }));
+    };
+
     public render() {
+      if (!this.state.config) {
+        return <div />;
+      }
       return (
         <WrappedComponent
           config={this.state.config}
           statuses={this.state.statuses}
           onAddDomain={this.actionAndRerender(addDomain)}
           onDeleteDomain={this.actionAndRerender(deleteDomain)}
-          onDomainChanged={this.actionAndRerender(domainChanged)}
+          onDomainChanged={this.checkStatus}
         />
       );
     }
 
     private actionAndRerender(handler: ActionHandler) {
       return async (...args: any[]) => {
-        this.setState({ config: await handler(this.state.config, ...args) });
+        const newConfig = await handler(this.state.config as IConfig, ...args);
+        this.setState({ config: newConfig });
+        return newConfig;
       };
     }
   };

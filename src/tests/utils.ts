@@ -21,6 +21,19 @@ export async function createPage(): Promise<puppeteer.Page> {
   return sharedBrowser.newPage();
 }
 
+export async function emptyPopupPasswordField(page: puppeteer.Page) {
+  const value = await page.$eval(
+    "input[type=password]",
+    (el: HTMLInputElement) => el.value || el.innerText || ""
+  );
+  await page.focus("input[type=password]");
+
+  for (const _ of value) {
+    await page.keyboard.press("Backspace");
+  }
+  await page.focus("input[type=text]");
+}
+
 async function createBrowser() {
   const browser = await puppeteer.launch({
     args: [
@@ -40,12 +53,16 @@ async function createBrowser() {
   return browser;
 }
 
+export async function getInputValue(element: puppeteer.JSHandle) {
+  const property = await element.getProperty("value");
+  return (await property).jsonValue();
+}
 export async function getTextContent(element: puppeteer.JSHandle) {
   const property = await element.getProperty("textContent");
   return (await property).jsonValue();
 }
 
-async function setToken(page: puppeteer.Page) {
+export async function getPopupUrl(page: puppeteer.Page): Promise<string> {
   await page.goto("chrome://extensions/");
 
   await page.waitFor(".extension-list-item-wrapper");
@@ -55,7 +72,11 @@ async function setToken(page: puppeteer.Page) {
   const extensionId =
     $extension && (await (await $extension.getProperty("id")).jsonValue());
 
-  await page.goto(`chrome-extension://${extensionId}/popup.html`);
+  return `chrome-extension://${extensionId}/popup.html`;
+}
+
+async function setToken(page: puppeteer.Page) {
+  await page.goto(await getPopupUrl(page));
 
   await page.waitFor("input[type=password]");
   const $domain = await page.$("input[type=text]");
@@ -64,11 +85,10 @@ async function setToken(page: puppeteer.Page) {
   if (!$password || !$domain) {
     throw new Error("Password field not found from extension page");
   }
-
-  await $password.type(process.env.GITHUB_TOKEN || "");
-
-  // To emit a change event from password field
+  await emptyPopupPasswordField(page);
+  await $password.type(process.env.GITHUB_TOKEN as string);
   await $domain.focus();
+  await page.waitFor(".access-token-valid");
 }
 
 async function login(page: puppeteer.Page) {
