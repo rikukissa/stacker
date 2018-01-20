@@ -4,7 +4,6 @@
 </p>
 
 <p align="center">The best damn Github Pull Request Stacking Chrome Extension built so far<br/> <a href="https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf">Download the Chrome extension</a><br /><br />
-<img alt="Intro" src="./.github/intro.gif" />
 </p>
 
 ---
@@ -14,6 +13,10 @@
 
 
 ## TL;DR
+
+<a href="https://www.youtube.com/watch?v=vy1LKpE1_wA">
+  <img width="400px" alt="YouTube intro" src="./.github/intro.png" />
+</a>
 
 **Features:**
 - [✏️ Mark pull request as a dependent of your previous work](#mark-pull-request-as-dependent-of-your-previous-work)
