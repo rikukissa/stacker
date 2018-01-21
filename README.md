@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/rikukissa/stacker.svg?branch=develop)](https://travis-ci.org/rikukissa/stacker)
+[![Sponsored](https://img.shields.io/badge/chilicorn-sponsored-brightgreen.svg?logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAA4AAAAPCAMAAADjyg5GAAABqlBMVEUAAAAzmTM3pEn%2FSTGhVSY4ZD43STdOXk5lSGAyhz41iz8xkz2HUCWFFhTFFRUzZDvbIB00Zzoyfj9zlHY0ZzmMfY0ydT0zjj92l3qjeR3dNSkoZp4ykEAzjT8ylUBlgj0yiT0ymECkwKjWqAyjuqcghpUykD%2BUQCKoQyAHb%2BgylkAyl0EynkEzmkA0mUA3mj86oUg7oUo8n0k%2FS%2Bw%2Fo0xBnE5BpU9Br0ZKo1ZLmFZOjEhesGljuzllqW50tH14aS14qm17mX9%2Bx4GAgUCEx02JySqOvpSXvI%2BYvp2orqmpzeGrQh%2Bsr6yssa2ttK6v0bKxMBy01bm4zLu5yry7yb29x77BzMPCxsLEzMXFxsXGx8fI3PLJ08vKysrKy8rL2s3MzczOH8LR0dHW19bX19fZ2dna2trc3Nzd3d3d3t3f39%2FgtZTg4ODi4uLj4%2BPlGxLl5eXm5ubnRzPn5%2Bfo6Ojp6enqfmzq6urr6%2Bvt7e3t7u3uDwvugwbu7u7v6Obv8fDz8%2FP09PT2igP29vb4%2BPj6y376%2Bu%2F7%2Bfv9%2Ff39%2Fv3%2BkAH%2FAwf%2FtwD%2F9wCyh1KfAAAAKXRSTlMABQ4VGykqLjVCTVNgdXuHj5Kaq62vt77ExNPX2%2Bju8vX6%2Bvr7%2FP7%2B%2FiiUMfUAAADTSURBVAjXBcFRTsIwHAfgX%2FtvOyjdYDUsRkFjTIwkPvjiOTyX9%2FAIJt7BF570BopEdHOOstHS%2BX0s439RGwnfuB5gSFOZAgDqjQOBivtGkCc7j%2B2e8XNzefWSu%2BsZUD1QfoTq0y6mZsUSvIkRoGYnHu6Yc63pDCjiSNE2kYLdCUAWVmK4zsxzO%2BQQFxNs5b479NHXopkbWX9U3PAwWAVSY%2FpZf1udQ7rfUpQ1CzurDPpwo16Ff2cMWjuFHX9qCV0Y0Ok4Jvh63IABUNnktl%2B6sgP%2BARIxSrT%2FMhLlAAAAAElFTkSuQmCC)](http://spiceprogram.org/oss-sponsorship)
+
 <p align="center" style="color: #343a40">
   <img src="./.github/logo.svg" alt="logo" height="150" width="150">
   <h1 align="center">Stacker</h1>
@@ -6,35 +9,39 @@
 <p align="center">The best damn Github Pull Request Stacking Chrome Extension built so far<br/> <a href="https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf">Download the Chrome extension</a><br /><br />
 </p>
 
-[![Build Status](https://travis-ci.org/rikukissa/stacker.svg?branch=develop)](https://travis-ci.org/rikukissa/stacker)
-[![Sponsored](https://img.shields.io/badge/chilicorn-sponsored-brightgreen.svg?logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAA4AAAAPCAMAAADjyg5GAAABqlBMVEUAAAAzmTM3pEn%2FSTGhVSY4ZD43STdOXk5lSGAyhz41iz8xkz2HUCWFFhTFFRUzZDvbIB00Zzoyfj9zlHY0ZzmMfY0ydT0zjj92l3qjeR3dNSkoZp4ykEAzjT8ylUBlgj0yiT0ymECkwKjWqAyjuqcghpUykD%2BUQCKoQyAHb%2BgylkAyl0EynkEzmkA0mUA3mj86oUg7oUo8n0k%2FS%2Bw%2Fo0xBnE5BpU9Br0ZKo1ZLmFZOjEhesGljuzllqW50tH14aS14qm17mX9%2Bx4GAgUCEx02JySqOvpSXvI%2BYvp2orqmpzeGrQh%2Bsr6yssa2ttK6v0bKxMBy01bm4zLu5yry7yb29x77BzMPCxsLEzMXFxsXGx8fI3PLJ08vKysrKy8rL2s3MzczOH8LR0dHW19bX19fZ2dna2trc3Nzd3d3d3t3f39%2FgtZTg4ODi4uLj4%2BPlGxLl5eXm5ubnRzPn5%2Bfo6Ojp6enqfmzq6urr6%2Bvt7e3t7u3uDwvugwbu7u7v6Obv8fDz8%2FP09PT2igP29vb4%2BPj6y376%2Bu%2F7%2Bfv9%2Ff39%2Fv3%2BkAH%2FAwf%2FtwD%2F9wCyh1KfAAAAKXRSTlMABQ4VGykqLjVCTVNgdXuHj5Kaq62vt77ExNPX2%2Bju8vX6%2Bvr7%2FP7%2B%2FiiUMfUAAADTSURBVAjXBcFRTsIwHAfgX%2FtvOyjdYDUsRkFjTIwkPvjiOTyX9%2FAIJt7BF570BopEdHOOstHS%2BX0s439RGwnfuB5gSFOZAgDqjQOBivtGkCc7j%2B2e8XNzefWSu%2BsZUD1QfoTq0y6mZsUSvIkRoGYnHu6Yc63pDCjiSNE2kYLdCUAWVmK4zsxzO%2BQQFxNs5b479NHXopkbWX9U3PAwWAVSY%2FpZf1udQ7rfUpQ1CzurDPpwo16Ff2cMWjuFHX9qCV0Y0Ok4Jvh63IABUNnktl%2B6sgP%2BARIxSrT%2FMhLlAAAAAElFTkSuQmCC)](http://spiceprogram.org/oss-sponsorship)
-
-
-## TL;DR
-
-Stacker adds features to Github's UI which makes managing stacked pull requests easier.
-
-**Screencast:**
-
-<a href="https://www.youtube.com/watch?v=vy1LKpE1_wA">
-  <img width="400px" alt="YouTube intro" src="./.github/intro.png" />
+<h2>TL;DR</h2>
+<a href="https://www.youtube.com/watch?v=29abmnoLS5w">
+  <img align="right" width="400px" alt="YouTube intro" src="./.github/intro.png" />
 </a>
 
-**Features:**
-- [✏️ Mark pull request as a dependent of your previous work](#mark-pull-request-as-dependent-of-your-previous-work)
-- [🔎 Only see changes made in the PR you’re reviewing](#only-see-changes-made-in-the-pr-youre-reviewing)
-- [⚠️ Automatic warnings of pull request dependencies](#automatic-warnings-of-pull-request-dependencies)
+Stacker adds features to Github's UI which makes managing and reviewing stacked pull requests easier.
 
+<strong>Features:</strong><br />
+<ul>
+  <li>
+    <a href="#mark-pull-request-as-dependent-of-your-previous-work">
+      ✏️ Mark pull request as a dependent of your previous work
+    </a><br />
+  </li>
+  <li>
+    <a href="#only-see-changes-made-in-the-pr-youre-reviewing">
+      🔎 Only see changes made in the PR you’re reviewing
+    </a><br />
+  </li>
+  <li>
+    <a href="#automatic-warnings-of-pull-request-dependencies">
+      ⚠️ Automatic warnings of pull request dependencies
+    </a>
+  </li>
+</ul>
+<br /><br />
 
----
 
 Reviewing and even creating pull requests on Github can sometimes be very frustrating. Especially when you're reviewing a PR so large that it becomes difficult to follow what is happening. A solution for this is to start thinking of pull requests as smaller increments, for example a feature. Don't get me wrong, they should still be logical increments and not just some random blobs of commits, but the idea remains the same. They should be broken up into smaller pieces.
 
 Stacker is a Chrome extension that makes your life that tiny bit easier 🤠. It's packed with modern Github UI DOM manipulation trickery.
 
 If you are not familiar with the concept of stacked pull requests, jump right into ["So what are stacked pull requests?"](#so-what-are-stacked-pull-requests) section.
-
----
 
 ## Installation
 
@@ -45,26 +52,6 @@ If you are not familiar with the concept of stacked pull requests, jump right in
 
 3. Open up Stacker options by clicking the extension icon at the right-top corner of your Chrome window. You'll notice that **access token** field for github.com domain is empty. Paste your token there and you're all set! Notice that you can also add more domains. This plugin also supports enterprise GitHub.
 
----
-
-## Features
-
-### Mark pull request as dependent of your previous work
-
-|<img alt="Pull request order visible in pull requests" src="./.github/list-view.png" width="513px" /> | <img alt="Select parent pull request" src="./.github/parent-selector.png" width="320px" /> |
-|--|--|
-
-
-### Only see changes made in the PR you’re reviewing
-
-|<img  alt="Only relevant changes visible" src="./.github/diff-view.png" />|
-|--|
-
-
-### Automatic warnings of pull request dependencies
-
-|<img width="789px" alt="Automatic warnings on child pull requests" src="./.github/warning.png" />|
-|--|
 
 ---
 
@@ -128,8 +115,6 @@ As you start splitting your pull requests into smaller chunks, you come to notic
   </tbody>
 </table>
 
----
-
 ### Parent based pull request
 
 #### Pros
@@ -155,7 +140,6 @@ base before merging will lead it to being merged to a stale branch.
 **Well, ok, it's quite bothersome to actually figure out the PR dependency tree**
 - ✨ Stacker actually fixes this with fancy labels on the PR titles, but more about that later on.
 
----
 ### Upstream based pull request
 
 #### Pros
@@ -183,6 +167,26 @@ Obviously depends a bit of the PRs you decide to make. As a side note, I really 
 
 ---
 
+## Features
+
+### Mark pull request as dependent of your previous work
+
+|<img alt="Pull request order visible in pull requests" src="./.github/list-view.png" width="513px" /> | <img alt="Select parent pull request" src="./.github/parent-selector.png" width="320px" /> |
+|--|--|
+
+
+### Only see changes made in the PR you’re reviewing
+
+|<img  alt="Only relevant changes visible" src="./.github/diff-view.png" />|
+|--|
+
+
+### Automatic warnings of pull request dependencies
+
+|<img width="789px" alt="Automatic warnings on child pull requests" src="./.github/warning.png" />|
+|--|
+
+---
 
 ## Related work
 
