@@ -128,14 +128,14 @@ As you start splitting your pull requests into smaller chunks, you come to notic
 
 **The first PR (parent) can only move forward after all child PRs are reviewed and ready to be merged.**
 
-<img alt="PR 1" src="./.github/PR1.png" height="11px" /> can't be merged to upstream before <img alt="PR 2" src="./.github/PR2.png" height="11px" /> is reviewed and merged to <img alt="PR 1" src="./.github/PR1.png" width="30px" />.
+- <img alt="PR 1" src="./.github/PR1.png" height="11px" /> can't be merged to upstream before <img alt="PR 2" src="./.github/PR2.png" height="11px" /> is reviewed and merged to <img alt="PR 1" src="./.github/PR1.png" width="30px" />.
 
 **<img alt="PR 2" src="./.github/PR2.png" height="11px" /> can accidentally be merged into a stale branch**
 
 - If <img alt="PR 1" src="./.github/PR1.png" width="30px" /> gets merged first, failing to update <img alt="PR 2" src="./.github/PR2.png" height="11px" />'s
 base before merging will lead it to being merged to a stale branch.
 
- ✨ This is when Stacker helps. It shows you a warning on the parent PR. For this initial release I've decided to just show a warning. Would disabling the merge button altogether be more useful? Create an issue if you have an opinion about this :).
+- ✨ This is when Stacker helps. It shows you a warning on the parent PR. For this initial release I've decided to just show a warning. Would disabling the merge button altogether be more useful? Create an issue if you have an opinion about this :).
 
 **Well, ok, it's quite bothersome to actually figure out the PR dependency tree**
 - ✨ Stacker actually fixes this with fancy labels on the PR titles, but more about that later on.
@@ -146,7 +146,7 @@ base before merging will lead it to being merged to a stale branch.
 
 **Parent PRs can now be merged even when the children aren't ready**
 
-Obviously depends a bit of the PRs you decide to make. As a side note, I really wanna bring up this [great article about Feature Toggles](https://martinfowler.com/articles/feature-toggles.html) and how they can help you deploy your to production even when it's still a bit unpolished. There are also couple of other really inviting benefits this approach offers, but I'll let you read about them yourself.
+- Obviously depends a bit of the PRs you decide to make. As a side note, I really wanna bring up this [great article about Feature Toggles](https://martinfowler.com/articles/feature-toggles.html) and how they can help you deploy your to production even when it's still a bit unpolished. There are also couple of other really inviting benefits this approach offers, but I'll let you read about them yourself.
 
 
 #### Cons
