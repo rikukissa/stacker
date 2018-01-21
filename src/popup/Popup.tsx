@@ -97,19 +97,28 @@ const link = css`
   }
 `;
 
-// const domainStatus = css`
-//   background: #c2e0c6;
-//   padding: 5px 12px;
-//   text-align: center;
-//   font-size: 16px;
-//   border-radius: 5px;
-// `;
+const domainStatus = css`
+  width: 40px;
+  background: #77ef87;
+  padding: 5px 12px;
+  text-align: center;
+  font-size: 16px;
+  cursor: help;
+  border-radius: 5px;
+`;
 
-export type Status = [IDomain, boolean];
+const domainStatusInvalid = css`
+  background: #ef606d;
+`;
+
+export interface IStatus {
+  domain: IDomain;
+  valid: boolean;
+}
 
 export interface IProps {
   config: IConfig;
-  statuses: Status[];
+  statuses: IStatus[];
   onAddDomain: () => void;
   onDeleteDomain: (domain: IDomain) => void;
   onDomainChanged: (oldDomain: IDomain, domain: IDomain) => void;
@@ -117,6 +126,7 @@ export interface IProps {
 
 export default function Popup({
   config,
+  statuses,
   onAddDomain,
   onDeleteDomain,
   onDomainChanged
@@ -151,46 +161,66 @@ export default function Popup({
                 </tr>
               </thead>
               <tbody>
-                {config.domains.map(domain => (
-                  <tr>
-                    <td>
-                      <input
-                        className={input}
-                        type="text"
-                        placeholder="github.com"
-                        value={domain.domain}
-                        onChange={event =>
-                          onDomainChanged(domain, {
-                            ...domain,
-                            domain: (event.target as HTMLInputElement).value
-                          })
-                        }
-                      />
-                    </td>
-                    <td>
-                      <input
-                        className={input}
-                        type="password"
-                        value={domain.token}
-                        onChange={event =>
-                          onDomainChanged(domain, {
-                            ...domain,
-                            token: (event.target as HTMLInputElement).value
-                          })
-                        }
-                      />
-                    </td>
-                    {/* <td className={domainStatus}>👍</td> */}
-                    <td>
-                      <button
-                        className={actionLink}
-                        onClick={() => onDeleteDomain(domain)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {config.domains.map(domain => {
+                  const status = statuses.find(stat => stat.domain === domain);
+                  return (
+                    <tr>
+                      <td>
+                        <input
+                          className={input}
+                          type="text"
+                          placeholder="github.com"
+                          value={domain.domain}
+                          onChange={event =>
+                            onDomainChanged(domain, {
+                              ...domain,
+                              domain: (event.target as HTMLInputElement).value
+                            })
+                          }
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className={input}
+                          type="password"
+                          value={domain.token}
+                          onChange={event =>
+                            onDomainChanged(domain, {
+                              ...domain,
+                              token: (event.target as HTMLInputElement).value
+                            })
+                          }
+                        />
+                      </td>
+                      <td>
+                        <button
+                          className={actionLink}
+                          onClick={() => onDeleteDomain(domain)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                      {status &&
+                        status.valid && (
+                          <td
+                            title="Yay! Access token is valid."
+                            className={`${domainStatus} access-token-valid`}
+                          >
+                            👍
+                          </td>
+                        )}
+                      {status &&
+                        !status.valid && (
+                          <td
+                            title="Invalid access token. Make sure domain matches the given access token."
+                            className={`${domainStatus} ${domainStatusInvalid} access-token-invalid`}
+                          >
+                            👎
+                          </td>
+                        )}
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           )}

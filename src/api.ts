@@ -48,6 +48,41 @@ export interface IGithubCommit {
   parents: Array<{ sha: string }>;
 }
 
+function call(url: string, params: any) {
+  return axios({
+    url,
+    ...params
+  })
+    .then(response => response.data)
+    .catch(err => {
+      if (err.response.status === 403) {
+        throw new APILimitError();
+      }
+      if (err.response.status === 404 || err.response.status === 401) {
+        throw new UnauthorizedError();
+      }
+      throw Error(err.response.statusText);
+    });
+}
+
+const PROTOCOL_REGEXP = /^https?:\/\//;
+
+function getApiRoot(host: string) {
+  const hostProtocolMatches = host.match(PROTOCOL_REGEXP);
+
+  if (hostProtocolMatches) {
+    const protocol = hostProtocolMatches[0];
+    const isGithub = host.replace(PROTOCOL_REGEXP, "") === "github.com";
+
+    return isGithub
+      ? `${protocol}api.github.com`
+      : `${protocol}${host.replace(PROTOCOL_REGEXP, "")}/api/v3`;
+  } else {
+    const isGithub = host === "github.com";
+    return isGithub ? `https://api.github.com` : `https://${host}/api/v3`;
+  }
+}
+
 async function makeRequest(
   path: string,
   context: IStackerContext,
@@ -65,24 +100,9 @@ async function makeRequest(
 
   const nocachePath = `${path}?${Date.now()}`;
 
-  const isGithub = context.location.host === "github.com";
+  const url = `${getApiRoot(context.location.host)}${nocachePath}`;
 
-  return axios({
-    url: isGithub
-      ? `//api.github.com${nocachePath}`
-      : `//${context.location.host}/api/v3${nocachePath}`,
-    ...params
-  })
-    .then(response => response.data)
-    .catch(err => {
-      if (err.response.status === 403) {
-        throw new APILimitError();
-      }
-      if (err.response.status === 404 || err.response.status === 401) {
-        throw new UnauthorizedError();
-      }
-      throw Error(err.response.statusText);
-    });
+  return call(url, params);
 }
 
 export function getPullRequest(context: IStackerContext) {
@@ -134,4 +154,10 @@ export function savePullRequest(context: IStackerContext) {
       }
     );
   };
+}
+
+export function checkToken(domain: string, accessToken: string) {
+  return call(getApiRoot(domain), {
+    headers: { Authorization: `Bearer ${accessToken}` }
+  });
 }
