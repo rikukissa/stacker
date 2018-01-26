@@ -6,7 +6,7 @@
   <h1 align="center">Stacker</h1>
 </p>
 
-<p align="center">The best damn Github Pull Request Stacking Chrome Extension built so far<br/> <a href="https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf">Download the Chrome extension</a><br /><br />
+<p align="center">Because no one really reviews a 4000 line PR<br/> <a href="https://chrome.google.com/webstore/detail/apkgobbdndlnnelabdjdapopocfcgbhf">Download the Chrome extension</a><br /><br />
 </p>
 
 <h2>TL;DR</h2>
