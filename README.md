@@ -14,23 +14,23 @@
   <img align="right" width="400px" alt="YouTube intro" src="./.github/intro.png" />
 </a>
 
-Stacker adds features to Github's UI which makes managing and reviewing stacked pull requests easier.
+Stacker adds features to Github's UI which makes managing and reviewing pull requests easier.
 
 <strong>Features:</strong><br />
 <ul>
   <li>
     <a href="#mark-pull-request-as-dependent-of-your-previous-work">
-      ✏️ Mark pull request as a dependent of your previous work
+      📝 Visualizes pull request dependencies
     </a><br />
   </li>
   <li>
     <a href="#only-see-changes-made-in-the-pr-youre-reviewing">
-      🔎 Only see changes made in the PR you’re reviewing
+      🔎 Only shows you relevant changes when reviewing a pull request
     </a><br />
   </li>
   <li>
     <a href="#automatic-warnings-of-pull-request-dependencies">
-      ⚠️ Automatic warnings of pull request dependencies
+      ⚠️ Prevents accidental merges of unfinished work
     </a>
   </li>
 </ul>
