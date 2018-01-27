@@ -4,7 +4,8 @@ import {
   getPullRequestCommits,
   getPullRequests,
   IGithubCommit,
-  IGithubPullRequest
+  IGithubPullRequest,
+  checkUrlValidity
 } from "../../api";
 import { getBasePullRequest, isBasedOn } from "../../lib/base";
 import { getConfig, setConfig } from "../../lib/config";
@@ -53,7 +54,9 @@ async function redirectToPullRequestView(
   newCommits: IGithubCommit[]
 ) {
   const newUrl = getDiffViewUrl(context.location, newCommits);
+
   if (newUrl) {
+    await checkUrlValidity(context, newUrl);
     window.location.href = newUrl;
   }
 }

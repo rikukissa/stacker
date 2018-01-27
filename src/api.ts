@@ -48,7 +48,7 @@ export interface IGithubCommit {
   parents: Array<{ sha: string }>;
 }
 
-function call(url: string, params: any) {
+function call(url: string, params: any = {}) {
   return axios({
     url,
     ...params
@@ -160,4 +160,8 @@ export function checkToken(domain: string, accessToken: string) {
   return call(getApiRoot(domain), {
     headers: { Authorization: `Bearer ${accessToken}` }
   });
+}
+
+export function checkUrlValidity(context: IStackerContext, url: string) {
+  return call(url);
 }
