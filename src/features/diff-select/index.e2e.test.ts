@@ -57,4 +57,19 @@ describe("Automatic diff redirect", () => {
       );
     });
   });
+  describe("when PR's history doesn't match the parent PR's history", () => {
+    beforeEach(async () => {
+      await page.goto(
+        "https://github.com/rikukissa/stacker-e2e-repo/pull/11/files"
+      );
+    });
+
+    it("doesn't redirect the browser anywhere", async () => {
+      await page.waitForSelector(".stacker-diff-view-initialized");
+
+      expect(page.url()).toEqual(
+        "https://github.com/rikukissa/stacker-e2e-repo/pull/11/files"
+      );
+    });
+  });
 });

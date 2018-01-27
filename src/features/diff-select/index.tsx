@@ -1,5 +1,6 @@
 import { h } from "preact";
 import {
+  checkUrlValidity,
   getPullRequest,
   getPullRequestCommits,
   getPullRequests,
@@ -53,12 +54,24 @@ async function redirectToPullRequestView(
   newCommits: IGithubCommit[]
 ) {
   const newUrl = getDiffViewUrl(context.location, newCommits);
+
   if (newUrl) {
+    await checkUrlValidity(context, newUrl);
     window.location.href = newUrl;
   }
 }
 
+function markInitialized() {
+  document.body.classList.add("stacker-diff-view-initialized");
+}
+
+function markUninitialized() {
+  document.body.classList.remove("stacker-diff-view-initialized");
+}
+
 export default async function initialize(context: IStackerContext) {
+  markUninitialized();
+
   const config = await getConfig();
   const $stats = document.querySelector(".float-right.pr-review-tools");
 
@@ -79,7 +92,7 @@ export default async function initialize(context: IStackerContext) {
     const parentPullRequest = getBasePullRequest(pullRequest, pullRequests);
 
     if (!parentPullRequest || isBasedOn(pullRequest, parentPullRequest)) {
-      return $stats.classList.add("stacker-diff-view-initialized");
+      return markInitialized();
     }
 
     const newCommits = await getNewCommits(
@@ -87,8 +100,13 @@ export default async function initialize(context: IStackerContext) {
       pullRequest,
       parentPullRequest
     );
+
     if (!config.noAutomaticDiff) {
-      return redirectToPullRequestView(context, newCommits);
+      try {
+        await redirectToPullRequestView(context, newCommits);
+      } catch (err) {
+        return markInitialized();
+      }
     }
 
     const diffViewUrl = getDiffViewUrl(context.location, newCommits);
@@ -122,12 +140,12 @@ export default async function initialize(context: IStackerContext) {
   if (isFilesDiffView(context.location)) {
     const $viewAllLink = document.querySelector(".stale-files-tab-link");
 
-    if (!$viewAllLink) {
-      return;
+    if ($viewAllLink) {
+      $viewAllLink.addEventListener("click", () => {
+        setConfig({ noAutomaticDiff: true });
+      });
     }
 
-    $viewAllLink.addEventListener("click", () => {
-      setConfig({ noAutomaticDiff: true });
-    });
+    markInitialized();
   }
 }
