@@ -5,8 +5,7 @@ import {
   getPullRequestCommits,
   getPullRequests,
   IGithubCommit,
-  IGithubPullRequest,
-  checkUrlValidity
+  IGithubPullRequest
 } from "../../api";
 import { getBasePullRequest, isBasedOn } from "../../lib/base";
 import { getConfig, setConfig } from "../../lib/config";
