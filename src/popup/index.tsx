@@ -15,5 +15,5 @@ export default async function initialize() {
 
   const StatefulPopup = withConfigState(config, Popup);
 
-  render(<StatefulPopup />, document.getElementById("stacker-popup"));
+  render(<StatefulPopup />, document.getElementById("stacker-popup")!);
 }

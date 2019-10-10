@@ -7,9 +7,9 @@
     "@types/qs": "^6.5.1",
     "axios": "^0.17.1",
     "emotion": "^8.0.12",
-    "preact": "^8.2.7",
+    "preact": "^8.5.2",
     "puppeteer": "^0.13.0",
-    "react-scripts-ts": "2.8.0",
+    "react-scripts-ts": "3.1.0",
     "select-dom": "^4.1.1"
   },
   "scripts": {
@@ -29,6 +29,7 @@
     "postinstall-prepare": "^1.0.1",
     "prettier": "^1.9.2",
     "svgexport": "^0.3.2",
-    "tslint-config-prettier": "^1.6.0"
+    "tslint-config-prettier": "^1.6.0",
+    "typescript": "^3.6.4"
   }
 }

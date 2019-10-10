@@ -11,7 +11,10 @@ export default function PullRequest(
       className="select-menu-item js-navigation-item js-navigation-open js-pull-base-branch-item"
       role="menuitem"
       data-pr={createIdForPullRequest(pullRequest)}
-      onClick={event => event.stopPropagation() || onSelect(pullRequest)}
+      onClick={event => {
+        event.stopPropagation();
+        onSelect(pullRequest);
+      }}
     >
       <svg
         aria-hidden="true"

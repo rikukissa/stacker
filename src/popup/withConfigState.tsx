@@ -74,17 +74,18 @@ export default function withConfigState(
   WrappedComponent: AnyComponent<IProps, any>
 ) {
   return class extends Component<any, IState> {
-    constructor() {
-      super();
-      this.state.config = null;
-      this.state.statuses = [];
-    }
+    public state = {
+      config: null,
+      statuses: []
+    };
     public async componentDidMount() {
       const statuses = await Promise.all(
-        config.domains.filter(({ token }) => token !== "").map(async domain => {
-          const valid = await getStatus(domain);
-          return { domain, valid };
-        })
+        config.domains
+          .filter(({ token }) => token !== "")
+          .map(async domain => {
+            const valid = await getStatus(domain);
+            return { domain, valid };
+          })
       );
       this.setState((state: IState) => ({ config, statuses }));
     }
@@ -110,7 +111,7 @@ export default function withConfigState(
       }
       return (
         <WrappedComponent
-          config={this.state.config}
+          config={this.state.config!}
           statuses={this.state.statuses}
           onAddDomain={this.actionAndRerender(addDomain)}
           onDeleteDomain={this.actionAndRerender(deleteDomain)}
@@ -121,7 +122,7 @@ export default function withConfigState(
 
     private actionAndRerender(handler: ActionHandler) {
       return async (...args: any[]) => {
-        const newConfig = await handler(this.state.config as IConfig, ...args);
+        const newConfig = await handler(this.state.config!, ...args);
         this.setState({ config: newConfig });
         return newConfig;
       };
