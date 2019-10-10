@@ -69,7 +69,7 @@ function render(
   selectPullRequest: (pr: IGithubPullRequest) => void
 ) {
   const $milestone = document.querySelector(
-    ".sidebar-milestone"
+    ".sidebar-progress-bar"
   ) as HTMLElement | null;
 
   if (!$milestone || !$milestone.parentElement) {
