@@ -8,7 +8,7 @@
     "axios": "^0.17.1",
     "emotion": "^8.0.12",
     "preact": "^8.2.7",
-    "puppeteer": "^0.13.0",
+    "puppeteer": "^1.13.0",
     "react-scripts-ts": "2.8.0",
     "select-dom": "^4.1.1"
   },
